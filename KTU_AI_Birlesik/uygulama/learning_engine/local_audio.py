@@ -5,6 +5,7 @@ import os
 import queue
 import subprocess
 import threading
+import sys
 from pathlib import Path
 
 import httpx
@@ -41,15 +42,22 @@ def start():
         python = BASE_DIR / environment / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
         model = BASE_DIR / "local_models" / model_filename()
         setup = BASE_DIR / 'setup_local_audio.ps1'
-        if not python.exists():
+        packaged=Path(sys.executable).parent/'speech'/'LocalSpeech.exe' if getattr(sys,'frozen',False) else None
+        if packaged:
+            model=packaged.parent/'models'/model_filename()
+            if not packaged.exists(): raise RuntimeError('Yerel ses paketi eksik. Teslim ZIP dosyasını tamamen çıkarın.')
+        if not packaged and not python.exists():
             raise RuntimeError(f'Yerel sesin Python ortamı eksik: {environment}. Kurulum: powershell -ExecutionPolicy Bypass -File "{setup}"')
         if not model.exists():
             raise RuntimeError(f'Yerel ses modeli eksik: {model.name}. Kurulum: powershell -ExecutionPolicy Bypass -File "{setup}"')
-        with (BASE_DIR / "local_tts.log").open("a", encoding="utf-8") as log:
+        log_root=Path(os.environ.get('OM_LOCAL_DATA_DIR',str(BASE_DIR)))
+        log_root.mkdir(parents=True,exist_ok=True)
+        command=[str(packaged),'--model',str(model)] if packaged else [str(python),'-u','-m','learning_engine.local_tts_api','--model',str(model)]
+        with (log_root / "local_tts.log").open("a", encoding="utf-8") as log:
             _process = subprocess.Popen(
-                [str(python), "-u", "-m", "learning_engine.local_tts_api", "--model", str(model)],
+                command,
                 stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=log,
-                text=True, encoding="utf-8", cwd=str(BASE_DIR.parent),
+                text=True, encoding="utf-8", cwd=str(packaged.parent if packaged else BASE_DIR.parent),
                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
             )
         ready = queue.Queue()

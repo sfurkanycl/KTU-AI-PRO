@@ -181,6 +181,9 @@ def init_extras():
             student_id INTEGER NOT NULL,starts_at TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',system_error TEXT);
             CREATE TABLE IF NOT EXISTS demo_seed(version TEXT PRIMARY KEY);''')
         c.execute('CREATE TABLE IF NOT EXISTS student_avatars(student_id INTEGER PRIMARY KEY,asset TEXT NOT NULL)')
+        c.execute('''CREATE TABLE IF NOT EXISTS answer_metadata(record_kind TEXT NOT NULL,record_id INTEGER NOT NULL,
+            subject TEXT NOT NULL,concept TEXT NOT NULL,seconds REAL NOT NULL DEFAULT 0,is_support INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY(record_kind,record_id))''')
 
 
 def avatar_for(student_id):
@@ -332,7 +335,9 @@ def tasks(identity, student_id=None):
                 sid = student_id or identity.student_id
                 task['completed'] = c.execute('''SELECT COUNT(DISTINCT question_id) FROM student_results
                     WHERE student_id=? AND assignment_id=?''', (sid, task['id'])).fetchone()[0]
-            planned=c.execute('SELECT starts_at,status,system_error FROM task_schedules WHERE assignment_id=? ORDER BY id DESC LIMIT 1',(task['id'],)).fetchone()
+            schedule_student=student_id or (identity.student_id if identity.role=='student' else None)
+            planned=c.execute('SELECT starts_at,status,system_error FROM task_schedules WHERE assignment_id=? AND student_id=? AND status!=? ORDER BY id DESC LIMIT 1',
+                (task['id'],schedule_student,'cancelled')).fetchone() if schedule_student else None
             if planned:
                 task.update(scheduled_at=planned['starts_at'],schedule_status=planned['status'],schedule_error=planned['system_error'])
             result.append(task)
@@ -358,6 +363,10 @@ def create_task(identity, title, skill, count, student_id=None, class_id=None, d
         raise ValueError('Öğrenci görev oluşturamaz.')
     if skill not in dict(qb.skills_for_grade(grade)):
         raise ValueError('Konu bu sınıf düzeyinde kullanılamıyor.')
+    if custom_questions is not None:
+        from teaching_materials import validate_questions
+        custom_questions=validate_questions(custom_questions)
+        if len(custom_questions)!=count: raise ValueError('Soru sayısı hazırlanan paketle uyuşmuyor.')
     bank = list(custom_questions) if custom_questions else qb.reviewed_bank(skill, grade)
     mapping = {'m3_toplama': 'addition', 'm4_kesir': 'fraction_compare'}
     mapped = mapping.get(skill, skill)
@@ -431,23 +440,39 @@ def task_questions(identity, assignment_id):
         return result
 
 
-def save_answer(identity, question, choice, hint, assignment_id=None):
+def save_answer(identity, question, choice, hint, assignment_id=None,seconds=0):
     if identity.role != 'student':
         raise ValueError('Yalnızca öğrenci cevap kaydedebilir.')
     if not 0 <= choice < len(question['choices']):
         raise ValueError('Geçersiz cevap.')
-    correct = choice == question['answer']
     if assignment_id is not None:
         allowed = task_questions(identity, assignment_id)
-        if not any(q['id'] == question['id'] for q in allowed):
+        original=next((q for q in allowed if q['id']==question['id']),None)
+        if original is None:
             raise ValueError('Soru tamamlanmış veya bu göreve ait değil.')
-        school.record_result(identity.student_id, assignment_id, question['id'], question['choices'][choice], correct, hint)
-    else:
-        import questions as qb
-        with school.get_connection() as c:
-            c.execute('''INSERT INTO practice_attempts(student_id,skill,topic,question_text,is_correct,hint_used)
-                VALUES (?,?,?,?,?,?)''', (identity.student_id, question['skill'], qb.skill_name(question['skill']),
-                                         question['text'], int(correct), int(hint)))
+        question=original
+    import questions as qb
+    from curriculum import subject_for_skill
+    curriculum=question.get('curriculum') or {}
+    topic=curriculum.get('title') or question.get('topic') or qb.skill_name(question['skill'])
+    grade=require_student(identity,identity.student_id)['grade']
+    subject=curriculum.get('subject') or subject_for_skill(question['skill'],grade)
+    concept=question.get('concept') or topic
+    correct=choice==question['answer']
+    with school.get_connection() as c:
+        c.execute('BEGIN IMMEDIATE')
+        if assignment_id is not None:
+            if c.execute('SELECT 1 FROM student_results WHERE student_id=? AND assignment_id=? AND question_id=?',
+                         (identity.student_id,assignment_id,question['id'])).fetchone(): raise ValueError('Bu soru zaten cevaplandı.')
+            cursor=c.execute('''INSERT INTO student_results(student_id,assignment_id,question_id,answer_text,is_correct,hint_used)
+                VALUES (?,?,?,?,?,?)''',(identity.student_id,assignment_id,question['id'],question['choices'][choice],int(correct),int(hint)))
+            kind='task'
+        else:
+            cursor=c.execute('''INSERT INTO practice_attempts(student_id,skill,topic,question_text,is_correct,hint_used)
+                VALUES (?,?,?,?,?,?)''',(identity.student_id,question['skill'],topic,question['text'],int(correct),int(hint)))
+            kind='practice'
+        c.execute('INSERT INTO answer_metadata(record_kind,record_id,subject,concept,seconds,is_support) VALUES (?,?,?,?,?,?)',
+            (kind,cursor.lastrowid,subject,concept,max(0,float(seconds)),int(bool(question.get('_support_question')))))
     return correct
 
 
@@ -456,15 +481,27 @@ def analytics(identity, student_id=None, class_id=None):
         require_student(identity, student_id)
     ids = [student_id] if student_id else [s['id'] for s in students(identity, class_id)]
     if not ids:
-        return {'total': 0, 'correct': 0, 'wrong': 0, 'rate': 0, 'topics': [], 'trend': [], 'students': []}
+        return {'total': 0, 'correct': 0, 'wrong': 0, 'rate': 0, 'topics': [], 'trend': [], 'students': [],'subjects':[],'concepts':[]}
     placeholders = ','.join('?' for _ in ids)
     with school.get_connection() as c:
-        query = f'''SELECT r.student_id,t.title topic,r.is_correct,r.hint_used,r.answered_at FROM student_results r
-            JOIN assignments a ON a.id=r.assignment_id JOIN topics t ON t.id=a.topic_id WHERE r.student_id IN ({placeholders})
-            UNION ALL SELECT student_id,topic,is_correct,hint_used,answered_at FROM practice_attempts WHERE student_id IN ({placeholders})'''
+        query = f'''SELECT r.student_id,t.title topic,r.is_correct,r.hint_used,r.answered_at,t.subject,
+            COALESCE(m.concept,t.title) concept,COALESCE(m.is_support,0) is_support,m.seconds,t.grade,NULL skill
+            FROM student_results r JOIN assignments a ON a.id=r.assignment_id JOIN topics t ON t.id=a.topic_id
+            LEFT JOIN answer_metadata m ON m.record_kind='task' AND m.record_id=r.id WHERE r.student_id IN ({placeholders})
+            UNION ALL SELECT p.student_id,p.topic,p.is_correct,p.hint_used,p.answered_at,m.subject,
+            COALESCE(m.concept,p.topic),COALESCE(m.is_support,0),m.seconds,s.grade,p.skill FROM practice_attempts p
+            JOIN students s ON s.id=p.student_id LEFT JOIN answer_metadata m ON m.record_kind='practice' AND m.record_id=p.id
+            WHERE p.student_id IN ({placeholders})'''
         rows = [dict(r) for r in c.execute(query, ids + ids)]
     topics, people, days = {}, {}, {}
+    concepts,subjects={},{}
     for r in rows:
+        from curriculum import subject_for_skill
+        subject=r['subject'] or subject_for_skill(r['skill'],r['grade'])
+        for collection,key in ((subjects,subject),(concepts,(subject,r['topic'],r['concept']))):
+            bucket=collection.setdefault(key,dict(total=0,correct=0,wrong=0,hints=0,clean=0,support=0))
+            bucket['total']+=1;bucket['correct']+=r['is_correct'];bucket['wrong']+=1-r['is_correct']
+            bucket['hints']+=r['hint_used'];bucket['clean']+=int(r['is_correct'] and not r['hint_used']);bucket['support']+=r['is_support']
         for collection, key in ((topics, r['topic']), (people, r['student_id'])):
             bucket = collection.setdefault(key, {'total': 0, 'correct': 0, 'wrong': 0, 'hints': 0})
             bucket['total'] += 1
@@ -486,6 +523,12 @@ def analytics(identity, student_id=None, class_id=None):
     today = datetime.now(istanbul).date()
     trend = [( (today-timedelta(days=i)).strftime('%d.%m'), local_days.get((today-timedelta(days=i)).isoformat(), 0)) for i in reversed(range(7))]
     roster = students(identity, class_id)
+    def assessment(v):
+        rate=round(v['correct']*100/max(1,v['total']))
+        status='Veri birikiyor' if v['total']<5 else 'Tekrar önerilir' if rate<60 or v['hints']/v['total']>.5 else 'Güçleniyor' if rate>=80 and v['clean']/v['total']>=.6 else 'Pekiştiriliyor'
+        return dict(v,rate=rate,status=status)
     return dict(total=total, correct=correct, wrong=total-correct, rate=round(100*correct/total) if total else 0,
                 topics=[dict(topic=k, **v) for k,v in topics.items()], trend=trend,
+                subjects=[dict(subject=k,**assessment(v)) for k,v in subjects.items()],
+                concepts=[dict(subject=k[0],topic=k[1],concept=k[2],**assessment(v)) for k,v in concepts.items()],
                 students=[dict(s, **people.get(s['id'], {'total':0,'correct':0,'wrong':0,'hints':0})) for s in roster if s['id'] in ids])

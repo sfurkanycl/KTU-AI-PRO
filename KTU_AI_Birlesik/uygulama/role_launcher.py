@@ -11,6 +11,7 @@ def main():
     parser.add_argument('--no-native-guard', action='store_true')
     parser.add_argument('--legacy-admin', action='store_true')
     parser.add_argument('--schedule-id', type=int)
+    parser.add_argument('--smoke-test',action='store_true',help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.legacy_admin:
         sys.argv.remove('--legacy-admin')
@@ -19,7 +20,14 @@ def main():
     if sys.version_info[:2] != (3, 12):
         raise SystemExit('Korunan Windows modülleri Python 3.12 gerektiriyor.')
     from dotenv import load_dotenv
-    load_dotenv(args.env or Path(__file__).with_name('.env'))
+    settings_path=Path(__file__).with_name('.env')
+    if getattr(sys,'frozen',False):
+        local_data=Path(os.environ.get('LOCALAPPDATA',str(Path.home())))/'OgrenmeMolasi'
+        local_data.mkdir(parents=True,exist_ok=True)
+        os.environ.setdefault('OM_LOCAL_DATA_DIR',str(local_data))
+        os.environ.setdefault('OM_SCHOOL_DB_PATH',str(local_data/'school_records.db'))
+        settings_path=local_data/'.env'
+    load_dotenv(args.env or settings_path)
     if not os.getenv('AUDIO_PROVIDER') or (os.getenv('AUDIO_PROVIDER', '').lower() == 'elevenlabs' and not os.getenv('ELEVENLABS_API_KEY', '').strip()):
         os.environ['AUDIO_PROVIDER'] = 'elevenlabs' if os.getenv('ELEVENLABS_API_KEY', '').strip() else 'piper'
     os.environ.setdefault('LOCAL_TTS_VOICE', 'dfki')
@@ -30,6 +38,9 @@ def main():
     with native:
         from PyQt6.QtWidgets import QApplication
         from data import database as db
+        if getattr(sys,'frozen',False):
+            db.DATA_DIR=Path(os.environ['OM_LOCAL_DATA_DIR'])
+            db.DB_PATH=db.DATA_DIR/'legacy_sessions.db'
         db.init_db()
         app = QApplication(sys.argv)
         from PyQt6.QtNetwork import QLocalServer, QLocalSocket
@@ -61,6 +72,9 @@ def main():
                 window.show();window.raise_();window.activateWindow()
         listener.newConnection.connect(incoming)
         window.show()
+        if args.smoke_test:
+            from PyQt6.QtCore import QTimer
+            QTimer.singleShot(1500,app.quit)
         if args.schedule_id:
             from PyQt6.QtCore import QTimer
             QTimer.singleShot(300,window.check_schedules)
@@ -68,6 +82,8 @@ def main():
         from integrated_ui import shutdown_voice_requests
         app.aboutToQuit.connect(shutdown_narration)
         app.aboutToQuit.connect(shutdown_voice_requests)
+        from material_ui import shutdown_material_workers
+        app.aboutToQuit.connect(shutdown_material_workers)
         from keyboard_guard import guard
         app.aboutToQuit.connect(guard.stop)
         app.aboutToQuit.connect(listener.close)

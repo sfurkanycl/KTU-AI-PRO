@@ -178,6 +178,92 @@ class RoleTests(unittest.TestCase):
         store.share_class(self.teacher,self.class_id)
         self.assertEqual(len(store.notifications(self.parent)),1)
 
+    def test_scheduled_task_opens_without_student_button(self):
+        from datetime import datetime, timedelta
+        import role_schedule as scheduler
+        from PyQt6.QtWidgets import QPushButton
+        aid = store.create_task(self.parent, 'Otomatik görev', 'traffic', 2, student_id=self.child)
+        with patch.object(scheduler, 'register_windows'):
+            scheduler.schedule(self.parent, aid, self.child, (datetime.now()+timedelta(days=1)).isoformat(timespec='seconds'))
+        window = RoleWindow()
+        self.windows.append(window)
+        window.identity = self.student
+        window.student_home()
+        self.assertFalse(any(b.text() == 'Göreve başla' for b in window.findChildren(QPushButton)))
+        with school.get_connection() as c:
+            c.execute("UPDATE task_schedules SET starts_at='2000-01-01T12:00:00'")
+        window.identity = None
+        with patch.object(window, 'start_quiz') as launch:
+            window.check_schedules()
+            launch.assert_called_once_with(aid)
+            self.assertEqual(window.identity.student_id, self.child)
+            window.check_schedules()
+            launch.assert_called_once()
+        window.schedule_timer.stop()
+
+    def test_student_practice_filters_count_and_no_task_start(self):
+        from PyQt6.QtWidgets import QPushButton
+        from curriculum import subject_for_skill
+        store.create_task(self.parent, 'Saati bekleniyor', 'traffic', 2, student_id=self.child)
+        window=RoleWindow();self.windows.append(window);window.identity=self.student;window.student_home()
+        texts=[b.text() for b in window.findChildren(QPushButton)]
+        self.assertNotIn('Göreve başla',texts);self.assertNotIn('Göreve devam et',texts)
+        window.practice_subject.setCurrentText('Türkçe')
+        skills=[window.practice_topic.itemData(i) for i in range(1,window.practice_topic.count())]
+        self.assertTrue(skills)
+        self.assertTrue(all(subject_for_skill(k,3)=='Türkçe' for k in skills))
+        window.practice_count.setValue(37)
+        with patch.object(window,'start_quiz') as launch:
+            next(b for b in window.findChildren(QPushButton) if b.text()=='Alıştırmaya başla').click()
+            self.assertEqual(launch.call_args.kwargs['count'],37)
+            self.assertEqual(launch.call_args.kwargs['skills'],skills)
+        window.practice_continuous.setChecked(True)
+        self.assertFalse(window.practice_count.isEnabled())
+        Path('test_artifacts').mkdir(exist_ok=True)
+        window.resize(1240,850);window.show();self.app.processEvents()
+        window.grab().save('test_artifacts/student_pastel.png')
+        window.schedule_timer.stop()
+
+    def test_continuous_practice_extends_selected_subject(self):
+        session=AccountSession(self.student,practice_questions(self.student,1,['homework_turkce']),continuous=True,practice_skills=['homework_turkce'])
+        first=session.next_question();session.answer(first['answer'],10)
+        self.assertFalse(session.goal_reached())
+        next_question=session.next_question()
+        self.assertEqual(next_question['skill'],'homework_turkce')
+        self.assertGreater(len(session.questions),1)
+        with self.assertRaises(ValueError):practice_questions(self.student,0)
+
+    def test_schedule_interrupts_free_practice(self):
+        from datetime import datetime,timedelta
+        import role_schedule as scheduler
+        from unittest.mock import Mock
+        aid=store.create_task(self.parent,'Saat geldi','traffic',2,student_id=self.child)
+        with patch.object(scheduler,'register_windows'):
+            scheduler.schedule(self.parent,aid,self.child,(datetime.now()+timedelta(days=1)).isoformat(timespec='seconds'))
+        with school.get_connection() as c:c.execute("UPDATE task_schedules SET starts_at='2000-01-01T12:00:00'")
+        window=RoleWindow();self.windows.append(window)
+        quiz=Mock();quiz._allow_close=False;quiz.learning.assignment_id=None;window.quiz=quiz
+        with patch.object(window,'start_quiz') as launch:
+            window.check_schedules();launch.assert_called_once_with(aid)
+            quiz._finish.assert_called_once_with('saatli_gorev')
+        window.quiz=None;window.schedule_timer.stop()
+
+    def test_schedule_is_per_child_and_replaces_old_time(self):
+        from datetime import datetime,timedelta
+        import role_schedule as scheduler
+        aid=store.create_task(self.teacher,'Sınıf görevi','traffic',2,class_id=self.class_id)
+        first=(datetime.now()+timedelta(days=1)).isoformat(timespec='seconds')
+        second=(datetime.now()+timedelta(days=2)).isoformat(timespec='seconds')
+        with patch.object(scheduler,'register_windows'):
+            scheduler.schedule(self.parent,aid,self.child,first)
+            self.assertIn('scheduled_at',store.tasks(self.student)[0])
+            self.assertNotIn('scheduled_at',store.tasks(self.student2)[0])
+            scheduler.schedule(self.parent,aid,self.child,second)
+        with school.get_connection() as c:
+            rows=c.execute('SELECT status FROM task_schedules WHERE assignment_id=? ORDER BY id',(aid,)).fetchall()
+        self.assertEqual([r[0] for r in rows],['cancelled','pending'])
+        self.assertEqual(store.tasks(self.student)[0]['scheduled_at'],second)
+
     def test_schedule_persistence_and_single_claim(self):
         from datetime import datetime,timedelta
         import role_schedule as scheduler

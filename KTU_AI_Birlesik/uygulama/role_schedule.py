@@ -19,6 +19,7 @@ def schedule(identity, assignment_id, student_id, starts_at):
         raise ValueError('Başlangıç zamanı gelecekte olmalı.')
     store.init_extras()
     with school.get_connection() as c:
+        c.execute("UPDATE task_schedules SET status='cancelled' WHERE assignment_id=? AND student_id=? AND status='pending'",(assignment_id,student_id))
         sid = c.execute('INSERT INTO task_schedules(assignment_id,student_id,starts_at) VALUES (?,?,?)',
                         (assignment_id,student_id,when.isoformat(timespec='seconds'))).lastrowid
     try:
@@ -50,9 +51,10 @@ def register_windows(schedule_id,when):
     node(settings,'StartWhenAvailable','true');node(settings,'ExecutionTimeLimit','PT0S')
     actions=node(root,'Actions',Context='Author'); action=node(actions,'Exec')
     pythonw=Path(sys.executable).with_name('pythonw.exe')
-    node(action,'Command',str(pythonw if pythonw.exists() else Path(sys.executable)))
-    node(action,'Arguments',f'"{Path(__file__).with_name("main.py")}" --schedule-id {schedule_id}')
-    node(action,'WorkingDirectory',str(Path(__file__).parent))
+    frozen=bool(getattr(sys,'frozen',False))
+    node(action,'Command',str(Path(sys.executable) if frozen else pythonw if pythonw.exists() else Path(sys.executable)))
+    node(action,'Arguments',f'--schedule-id {schedule_id}' if frozen else f'"{Path(__file__).with_name("main.py")}" --schedule-id {schedule_id}')
+    node(action,'WorkingDirectory',str(Path(sys.executable).parent if frozen else Path(__file__).parent))
     path=None
     try:
         with tempfile.NamedTemporaryFile(suffix='.xml',delete=False) as f:

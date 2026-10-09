@@ -58,3 +58,24 @@ Korunan eski yönetim ekranı gerekirse `python main.py --legacy-admin` ile aç�
 Bu sürüm aynı bilgisayardaki yerel SQLite kayıtlarını kullanır. Bildirimler bu veritabanındaki hesaplara ulaşır; ayrı bilgisayarlara internet üzerinden gönderim/eşitleme içermez. Örnek ilerlemeler yalnızca açıkça etiketlenmiş örnek öğrencilere eklenir. Görev ve sınıf oluşturma arayüzü ilkokul 1–4. sınıf içindir.
 
 Şifreler düz metin saklanmaz; PBKDF2 ile türetilen değerler saklanır. Beş hatalı girişten sonra hesap beş dakika bekletilir.
+
+## Soru atölyesi ve yeni raporlar
+
+Veli veya öğretmen menüsündeki **Soru atölyesi** ile PDF, DOCX, TXT ve MD belgelerini okuyabilir, ders ve MEB temasını seçebilir, soruları ayrı alanlarda düzenleyebilirsiniz. Belgeden otomatik taslak üretimi `.env` içindeki `GEMINI_GENERATOR_KEY` ile çalışır; yalnızca üret düğmesine basınca belge metni Gemini hizmetine gönderilir. Taranmış, metinsiz PDF için önce OCR gerekir. Taslaklar kontrol edilip açıkça onaylanmadan görev olarak kullanılamaz. Paketler yalnızca oluşturan yetişkin hesabına görünür.
+
+Yanlış cevaplarda önce ipucu, ardından açıklama ve mevcutsa çözümlü örnek gösterilir. Uygun olduğunda aynı kavramdan farklı soru öne alınır. Yerel sorularda en fazla iki ek destek sorusu verilir; bunlar asıl ödevin tamamlanma sayısını değiştirmez. Öğretmenin onayladığı belge paketine dışarıdan soru karıştırılmaz.
+
+Raporlar ders/kavram, ipucu, yardımsız doğru ve destek sorusu bilgilerini içerir. CSV çıktısı seçili çocuğun/sınıfın erişilebilir kayıtlarıyla sınırlıdır. Yeterli kayıt yokken “Veri birikiyor” gösterilir; durum etiketleri eğitimsel özetlerdir.
+
+## Windows teslim paketi
+
+`python build_release.py` yerel ses modeli dahil `dist/OgrenmeMolasi-Windows.zip` oluşturur. ZIP tamamen çıkarıldıktan sonra `OgrenmeMolasi.exe` açılır. Paket, kaynak projenin kişisel veritabanını veya API anahtarlarını içermez. İlk ekranda örnek hesapları yükleyebilir veya kendi hesaplarınızı oluşturabilirsiniz. Paket sürümünün kayıtları ve isteğe bağlı `.env` dosyası `%LOCALAPPDATA%\OgrenmeMolasi` altında tutulur. Yerel ses için hedef bilgisayarda Python veya `.venv` gerekmez.
+
+
+## 10 Ekim: öğrenci keşif ekranı ve otomatik çalışmalar
+
+Öğrenci ekranında görev başlatma/devam düğmesi bulunmaz. Veli yeni görev verirken tarih ve saati seçer. Öğretmenin verdiği veya önceden saatsiz oluşturulmuş görev için veli **Görevler → Başlangıç saatini ayarla** yolunu kullanır. Zamanlama çocuk bazındadır; aynı sınıftaki kardeşin saatini etkilemez. Saat değiştirilince önceki bekleyen zamanlama iptal edilir. Uygulama açıkken saniyelik kontrol yapılır; kapalıyken Windows Görev Zamanlayıcısı açar. Bilgisayar ve Windows kullanıcı oturumu açık olmalıdır. Planlı çalışma, devam eden serbest alıştırmanın önüne geçer; kaydedilmiş cevaplar korunur.
+
+Serbest keşifte renkli ders kartı, konu ve 1–1000 soru seçilir. “Soru sınırı olmadan devam et” seçilirse sorular bitince aynı ders/konudan yeni bir grup yüklenir. Mevcut oturum süresi ve ebeveyn doğrulaması korunur. Öğrenciye sunulan konular uygulamadaki hazır soru kaynaklarıyla sınırlıdır.
+
+`homework 2.zip` arşivinden yalnızca rol/mascot görselleri ve görünüm fikirleri alındı: yuvarlak portreler, turuncu–mor–yeşil giriş geçişi, pastel ders kartları, yetişkin panellerinin rol renkleri ve quiz kartları. Arşivin hesap, veritabanı, PIN, ses veya soru çözme mantığı aktarılmadı.

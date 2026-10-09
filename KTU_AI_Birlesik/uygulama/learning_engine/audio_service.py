@@ -17,8 +17,8 @@ import httpx
 
 
 BASE_DIR = Path(__file__).resolve().parent
-CACHE_DIR = BASE_DIR / "audio_cache"
-CACHE_DIR.mkdir(exist_ok=True)
+CACHE_DIR = Path(os.environ['OM_LOCAL_DATA_DIR'])/'audio_cache' if os.environ.get('OM_LOCAL_DATA_DIR') else BASE_DIR / "audio_cache"
+CACHE_DIR.mkdir(parents=True,exist_ok=True)
 
 load_dotenv(BASE_DIR / ".env")
 
