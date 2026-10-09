@@ -1,0 +1,14 @@
+{
+  "tests_passed": 27,
+  "syntax": "passed",
+  "original_entries_preserved": 236,
+  "archives": {
+    "ktu.aı.pro.zip": 8,
+    "homework.zip": 24,
+    "OgrenmeMolasi-Windows.zip": 204
+  },
+  "native_dll_test": "not_run; mocked in tests",
+  "source_limitation": "Windows EXE modules preserved as Python 3.12 bytecode",
+  "live_merged_audio_test": "not_run",
+  "local_credentials_copied": false
+}

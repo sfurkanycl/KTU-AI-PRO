@@ -1,0 +1,462 @@
+[
+  {
+    "path": "BIRLESTIRME_RAPORU.json",
+    "bytes": 396,
+    "sha256": "bd939663244a78369f3f3795c4824296b2539fc798a8cfed5fd61c9fa6024b79"
+  },
+  {
+    "path": "KAYNAK_ENVANTERI.json",
+    "bytes": 52987,
+    "sha256": "87c0e48ac422888fc07f7c68df8f478e5d4c6d6e211bb8c80670ba2c30066a7c"
+  },
+  {
+    "path": "README.md",
+    "bytes": 5551,
+    "sha256": "ebf0a6e5608867be474822bf2293238521fac5b7901fb1afc498727397746575"
+  },
+  {
+    "path": "orijinaller/OgrenmeMolasi-Windows.zip",
+    "bytes": 42749239,
+    "sha256": "1d633c061a9ddeefa2b822bc99ca0bfa866d37bbc3532aac88b8ed71aca12c61"
+  },
+  {
+    "path": "orijinaller/bizim_kaynaklar.zip",
+    "bytes": 73750,
+    "sha256": "d2a5abab026ea629ce176dc3ef08533b12c3dcb336982510ce87f25aa1c2c5fe"
+  },
+  {
+    "path": "orijinaller/homework.zip",
+    "bytes": 2617366,
+    "sha256": "bb8edb3f71cbad22192adf1c45706ee6183b33a53bb11c9de9cd5e4d012dba87"
+  },
+  {
+    "path": "orijinaller/ktu.aı.pro.zip",
+    "bytes": 11154,
+    "sha256": "338ccc6163d8738641cf8275ba1d9be4cfae9e9b3c7e1688470d01de8d475b79"
+  },
+  {
+    "path": "uygulama/.env.example",
+    "bytes": 244,
+    "sha256": "a7f7ca07eb91f5bc13d90eddddd320a595d565222abdf0912981947b2a752be2"
+  },
+  {
+    "path": "uygulama/BASLAT.bat",
+    "bytes": 187,
+    "sha256": "0a439b7f4d0303cb723ecd56c055739e7463ab001e6c602cc953f1a8903a9bc0"
+  },
+  {
+    "path": "uygulama/BASLAT_KLAVYE_KILIDI.bat",
+    "bytes": 151,
+    "sha256": "4eb5e68a38f23a96448d647d9087a3409796844342bd3db50b1014025c83739b"
+  },
+  {
+    "path": "uygulama/_arka_plan_sil.py",
+    "bytes": 8819,
+    "sha256": "6fab74d6cedbbb81c2da879e6035e504f9ffad73949151d257f53d232a5230d4"
+  },
+  {
+    "path": "uygulama/_arka_plan_sil_v2.py",
+    "bytes": 4616,
+    "sha256": "8d4c9ddb4c2caaa491a906e47bc13fc5fbf4108fa5527be8b00b68029a34bea9"
+  },
+  {
+    "path": "uygulama/assets/parent.png",
+    "bytes": 674645,
+    "sha256": "cf8561094764ee90fae8e8a154dd94a5ccdb9d44db837a6d72cff8d5917244d4"
+  },
+  {
+    "path": "uygulama/assets/student_boy.png",
+    "bytes": 563415,
+    "sha256": "5f3cc2b8107bc3ca5ea62bd12be443a42a5b997de92b84894921f158f82f2cc3"
+  },
+  {
+    "path": "uygulama/assets/student_girl.png",
+    "bytes": 612740,
+    "sha256": "7b105dd12c5b3a07e5f5984b89d9c7ef29511df355c16f6888ebc2ac5c298b04"
+  },
+  {
+    "path": "uygulama/assets/teacher.png",
+    "bytes": 644106,
+    "sha256": "539997d18b13bbf410d5b0dc707a37994d2d752fef0aa54fd0915c57e0301252"
+  },
+  {
+    "path": "uygulama/audio_narrator.py",
+    "bytes": 2094,
+    "sha256": "ebe4b0965d5f97eaf8f58026fef84ae520569758f2a4766985ef00439ea5dae3"
+  },
+  {
+    "path": "uygulama/audio_service.py",
+    "bytes": 45,
+    "sha256": "93418eca654e4c989859f503568bb9f82976cc70d74f43cd6c1938e646bf01c6"
+  },
+  {
+    "path": "uygulama/data/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "uygulama/data/database.py",
+    "bytes": 265,
+    "sha256": "7f3f45f9000ffdc9a791f2a88d37f2cb2780e959f5a516c482039b525d01051f"
+  },
+  {
+    "path": "uygulama/data/education_database.py",
+    "bytes": 15622,
+    "sha256": "d20efab0e700d46416c1d082efb03b8679f926915576c0d4eeee6e58e7fd9b87"
+  },
+  {
+    "path": "uygulama/education_panel.py",
+    "bytes": 9673,
+    "sha256": "31a63279e010491b73cd95e095fc6871571038539c8b813056a66ceeab4e668d"
+  },
+  {
+    "path": "uygulama/eleven_audio.py",
+    "bytes": 44,
+    "sha256": "5b22e39d9d192789a2f6fcb3fb15e020545ed977ef41738d7f6a81e5cc8c3cd3"
+  },
+  {
+    "path": "uygulama/homework_ui.py",
+    "bytes": 145552,
+    "sha256": "9c3fa7d132306bb6af9edc481e9aaeb56863be45325cf794b417618a9861412b"
+  },
+  {
+    "path": "uygulama/integrated_ui.py",
+    "bytes": 8910,
+    "sha256": "9f738f33d8dbc54adb7d8e5a4c63ea5e250ab871f8a98ffcddb1901ceb56678d"
+  },
+  {
+    "path": "uygulama/keyboard_guard.dll",
+    "bytes": 100411,
+    "sha256": "d05eedd23f8a90181184bd525ae6f358c3cbff403b1daf7170193ddd2cdf4c66"
+  },
+  {
+    "path": "uygulama/keyboard_guard.py",
+    "bytes": 148,
+    "sha256": "31e02b56e4c3a1dc779f578fcd1cbdcfaf9cfb38a9ba599495caf39b405b55dc"
+  },
+  {
+    "path": "uygulama/kurulum.ps1",
+    "bytes": 403,
+    "sha256": "29cf3364b5b18ee23363c835318700cb7d12e5ba20ba4e5e6d0a3b9b419a4f4d"
+  },
+  {
+    "path": "uygulama/learning.py",
+    "bytes": 2180,
+    "sha256": "f72ce082e15d537d4859b4a4da378aad123259e21862d857434049fbb84558bf"
+  },
+  {
+    "path": "uygulama/learning_engine/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "uygulama/learning_engine/audio_service.py",
+    "bytes": 8050,
+    "sha256": "44a80f23a7cdac7ac4f8a98ed202b3cfa198a12bd15db422ac68fa2234092e25"
+  },
+  {
+    "path": "uygulama/learning_engine/check_local_audio.py",
+    "bytes": 2963,
+    "sha256": "fc7a8dd5fb32fd0d6df59d048f62bbdec82b63997950681f10e28965cb220ed0"
+  },
+  {
+    "path": "uygulama/learning_engine/check_question_api.py",
+    "bytes": 3008,
+    "sha256": "477143874fd22b2f5ab2ca259064d27c27362a0776e45592dff407e5cb5c19cd"
+  },
+  {
+    "path": "uygulama/learning_engine/demo_ui.py",
+    "bytes": 14548,
+    "sha256": "8d182689af820b137146f03727f69db38381b9b7c64c59446e246afc1c3a093d"
+  },
+  {
+    "path": "uygulama/learning_engine/download_local_voice.py",
+    "bytes": 1465,
+    "sha256": "f847627d1fd1cb21230cd2468322b626c9315f5d3cd57644b5648daf6a8cbc24"
+  },
+  {
+    "path": "uygulama/learning_engine/eleven_audio.py",
+    "bytes": 3923,
+    "sha256": "ddac66cb5721396f6b5a6e5fcc51b4fcd262e49f1ec9063efd515046c6f05af5"
+  },
+  {
+    "path": "uygulama/learning_engine/elevenlabs.env.example",
+    "bytes": 367,
+    "sha256": "6575fe5d9e822c45a6c53b70e2ea559895af3ee6dab6f0c9add55c353ff40822"
+  },
+  {
+    "path": "uygulama/learning_engine/female_voice.py",
+    "bytes": 4201,
+    "sha256": "9605979f2f9a2d99946454974bbe0a5945b727fd2c7d0dee73679aa9cba13cb4"
+  },
+  {
+    "path": "uygulama/learning_engine/gemini_questions.py",
+    "bytes": 13211,
+    "sha256": "bad0aeefd08a3c3cda1d6e6d5e99815fdc7cba0b8c305cd03f68dc6573a9eb36"
+  },
+  {
+    "path": "uygulama/learning_engine/learning_core.py",
+    "bytes": 21384,
+    "sha256": "2fa21a91821364ede4bf175f205eb4df6db61e6a53bc868ae18f96208e1fec2d"
+  },
+  {
+    "path": "uygulama/learning_engine/lesson_service.py",
+    "bytes": 4501,
+    "sha256": "9e19383a9dee4c52a90de5395c7a6ae8ba64e7379a4c7779146c2911694b1ca9"
+  },
+  {
+    "path": "uygulama/learning_engine/local_audio.py",
+    "bytes": 3461,
+    "sha256": "a45d7c01a55616424f7daa320ba850db823fe95367d157d102c4d470cb977b1c"
+  },
+  {
+    "path": "uygulama/learning_engine/local_tts_api.py",
+    "bytes": 4371,
+    "sha256": "458ae325cb7a49b9a68fd56f45be178344ba7dc7d567475705da8d9e8ab75a68"
+  },
+  {
+    "path": "uygulama/learning_engine/narrator.py",
+    "bytes": 113,
+    "sha256": "a9890a7e9dc8d06a7851a58d01d6b460b51f389570ce6b5880e77061dd9d4c22"
+  },
+  {
+    "path": "uygulama/learning_engine/prepare_questions.py",
+    "bytes": 3307,
+    "sha256": "b51355be629af1f0e4dca0a4cb7e6b827af991704d225fe35d84ab845761df09"
+  },
+  {
+    "path": "uygulama/learning_engine/question_bank.json",
+    "bytes": 42562,
+    "sha256": "c168efd6c9b17ba338798f0a6c0af28400f1b2e76bf814377a878e2e510d3660"
+  },
+  {
+    "path": "uygulama/learning_engine/school_content.py",
+    "bytes": 11471,
+    "sha256": "d65eae2e0c69e47117ef6135aa1a58c47b9d886142595d6fc58a23d3469e3912"
+  },
+  {
+    "path": "uygulama/learning_engine/setup_local_audio.ps1",
+    "bytes": 1166,
+    "sha256": "bf7a9c14c4b30ef61c337a1cc92b8ebffbd12998572e8123f8681a9a8f39efc8"
+  },
+  {
+    "path": "uygulama/learning_engine/test_eleven_audio.py",
+    "bytes": 3756,
+    "sha256": "5a06b90d4321e22b628bd1222a1d59e579e139c3502e42c7254d5fb4686fd4a0"
+  },
+  {
+    "path": "uygulama/learning_engine/test_local_audio.py",
+    "bytes": 2155,
+    "sha256": "587264829898ba96c3a0e0097e6bdccc2a2f4d3e18653798f13e9a60ca379d87"
+  },
+  {
+    "path": "uygulama/learning_engine/test_school_questions.py",
+    "bytes": 6761,
+    "sha256": "5e44658fd80ba7d53f6c79876b9c41cc706a9dc41ca2273be8f6407e8822e593"
+  },
+  {
+    "path": "uygulama/learning_engine/test_turkish_text.py",
+    "bytes": 2239,
+    "sha256": "733754cda0b35477c31314cc20498aaab6f64f15b120f5eddddb3c7e3903f519"
+  },
+  {
+    "path": "uygulama/learning_engine/turkish_text.py",
+    "bytes": 9382,
+    "sha256": "a0cc4a78264101759293acdb3f937eed4001b73c547f8b666ae0e5d40c5ce5ec"
+  },
+  {
+    "path": "uygulama/learning_engine/vendor/DRIFTING_LICENSE",
+    "bytes": 1066,
+    "sha256": "86f750defa962604d2d78ae55afb1863d8f7ab58cec688a9ddee3df627fdb900"
+  },
+  {
+    "path": "uygulama/learning_engine/vendor/NOTICE.md",
+    "bytes": 508,
+    "sha256": "0995a53dc996aa71bc252c70b561c09dd5c2b3d34259690a80131474b01f62d6"
+  },
+  {
+    "path": "uygulama/learning_engine/vendor/drifting_text.py",
+    "bytes": 12844,
+    "sha256": "523165e730b8dbf64d96059f54d1fcc42e630f13b93436b3ca38495070e09b69"
+  },
+  {
+    "path": "uygulama/learning_engine/visual_help.py",
+    "bytes": 34494,
+    "sha256": "8d295a8a153d95ff5ed7898c0fe4f819d4dda154e1ef32e9a4670e0944564ea4"
+  },
+  {
+    "path": "uygulama/learning_engine/voice_config.py",
+    "bytes": 744,
+    "sha256": "325b5130ba1b1203254d4636bd2a1a09df8e87c3f47c2505b42848484dcac996"
+  },
+  {
+    "path": "uygulama/legacy_loader.py",
+    "bytes": 592,
+    "sha256": "b4f515c9eed2e8c059c70015944df4b043b881aef719c84495f866ae917db555"
+  },
+  {
+    "path": "uygulama/legacy_runtime/README.md",
+    "bytes": 536,
+    "sha256": "d42fd94617cc731a27781075e8d9394b8fdf0c6cf3960dfda5a3da26c32e586d"
+  },
+  {
+    "path": "uygulama/legacy_runtime/audio_narrator.pyc",
+    "bytes": 3368,
+    "sha256": "2d7f690842a221f90db4c351cf039f454a3ca7f0e33e881bf32d611dbe8c3c13"
+  },
+  {
+    "path": "uygulama/legacy_runtime/data.database.pyc",
+    "bytes": 15442,
+    "sha256": "3218c9220c6dd509d836d730bded60de4e21b2dc5044cf4fa24c476a70d51f99"
+  },
+  {
+    "path": "uygulama/legacy_runtime/eleven_audio.pyc",
+    "bytes": 6199,
+    "sha256": "6bb047c441965960c1c9162c4283866934270435505c4e277e1b58111ff8ef19"
+  },
+  {
+    "path": "uygulama/legacy_runtime/keyboard_guard.pyc",
+    "bytes": 3926,
+    "sha256": "21a9e7b023cfcb68723571fd11a340142b184e0ca5dc20317189d3d869131284"
+  },
+  {
+    "path": "uygulama/legacy_runtime/learning.pyc",
+    "bytes": 6432,
+    "sha256": "a5b66d6421eaf1ec89e83acf8da6d861db6b96e09bf9d83756916c52d2eb0fdd"
+  },
+  {
+    "path": "uygulama/legacy_runtime/parent_panel.pyc",
+    "bytes": 41204,
+    "sha256": "c42dc557c82307143491ad56591a2f5201f498bdc9ff6c869e11dc103d4a1f72"
+  },
+  {
+    "path": "uygulama/legacy_runtime/pin_security.pyc",
+    "bytes": 2348,
+    "sha256": "09001dc404543f22fcb6c735553c1d3bab82f3490dec9cf15d3e9d10855363dd"
+  },
+  {
+    "path": "uygulama/legacy_runtime/question_api.pyc",
+    "bytes": 5413,
+    "sha256": "9fa8ce31c4cb549b6a0a1e4e96ea894c8d87db75107061a468867e751014aaff"
+  },
+  {
+    "path": "uygulama/legacy_runtime/questions.pyc",
+    "bytes": 12555,
+    "sha256": "3122f98893090c7a33a9642a4507b4b5dd0b9b87f7a663d0089b4ac73db26ec7"
+  },
+  {
+    "path": "uygulama/legacy_runtime/resources.pyc",
+    "bytes": 689,
+    "sha256": "4ee1f48bf8e019d0e4f5496c06741ca37b91e01481001992d365c45f4bfff893"
+  },
+  {
+    "path": "uygulama/legacy_runtime/school_content.pyc",
+    "bytes": 14105,
+    "sha256": "eb09fa74fcf4fdc166efc4f69f9869007000be0723b1d91516af2d87c788beac"
+  },
+  {
+    "path": "uygulama/legacy_runtime/session_runner.pyc",
+    "bytes": 9667,
+    "sha256": "e6bdf3a44383f3b24d09e94a68f890f455e6865279103e45a49f325cf4e1271f"
+  },
+  {
+    "path": "uygulama/legacy_runtime/student_panel.pyc",
+    "bytes": 36364,
+    "sha256": "33e68ebfb1ce52ba555ace962f7ab03ed2b6bc1e9062f592e656b12c6d97dd42"
+  },
+  {
+    "path": "uygulama/legacy_runtime/turkish_text.pyc",
+    "bytes": 10311,
+    "sha256": "18b49ac30f59319eefcd980408ef8016a89e07e823770d87e410b7c396cb4b46"
+  },
+  {
+    "path": "uygulama/main.py",
+    "bytes": 1737,
+    "sha256": "1c46dd1c68b37d5a06abb4f7dbe3e4cb8bc36df951e2309dc07d4593069118a3"
+  },
+  {
+    "path": "uygulama/parent_panel.py",
+    "bytes": 146,
+    "sha256": "298372daf5fe36f3fa745e508d0fba9d3c96e60dc56f0e4189529bb233977252"
+  },
+  {
+    "path": "uygulama/pin_security.py",
+    "bytes": 146,
+    "sha256": "0ca05703a92bae37587f2c7187e3ed5fd560d7120c2561a81a676bd685e1898d"
+  },
+  {
+    "path": "uygulama/question_api.py",
+    "bytes": 146,
+    "sha256": "fd8f508e0956552cb740252a3f092f1cd489a70c192a1396d61525024f510fdc"
+  },
+  {
+    "path": "uygulama/questions.py",
+    "bytes": 5392,
+    "sha256": "187de54c43674083f08fd70db7d5ffcfdf7cc99fe9b8424d8d5e20af183ab1fd"
+  },
+  {
+    "path": "uygulama/requirements.txt",
+    "bytes": 107,
+    "sha256": "4230a1c702743a4a1f550bfc6972f2c493e9417b275cfa925d639b590250eaff"
+  },
+  {
+    "path": "uygulama/resources.py",
+    "bytes": 143,
+    "sha256": "52de1bde84faf1804aa5476de604cfc73c9c90ff8f90d75d91b6ea129971883c"
+  },
+  {
+    "path": "uygulama/school_content.py",
+    "bytes": 148,
+    "sha256": "607d3cbca345e122692ea2f5902ebca78241351f98cf531ea95baf2f0da43f1e"
+  },
+  {
+    "path": "uygulama/session_runner.py",
+    "bytes": 148,
+    "sha256": "c637bfdafa3502efbec49fd7c74983d0ccf84de1bd63ab98df8a5a67764a0ebf"
+  },
+  {
+    "path": "uygulama/sorular.json",
+    "bytes": 4350,
+    "sha256": "2870d8a6f35bedf79f00655bacf7483627eaff0c20594151ed8765b7bd9fbe97"
+  },
+  {
+    "path": "uygulama/student_panel.py",
+    "bytes": 303,
+    "sha256": "8a402ff551290682fba2faa417f7fad668645f398353bc23a4d3362243585c9b"
+  },
+  {
+    "path": "uygulama/test_artifacts/parent.png",
+    "bytes": 66168,
+    "sha256": "d95cd625980a157d0f40d1902b000c3fc0bdc4966e028d1444bbfed9b0e2889a"
+  },
+  {
+    "path": "uygulama/test_artifacts/quiz.png",
+    "bytes": 46860,
+    "sha256": "b526d4d2ee632ec2a0362b9bf286c71dc5a87d2fdb6bb2688f6a9fcc5e5602b1"
+  },
+  {
+    "path": "uygulama/test_integration.py",
+    "bytes": 6700,
+    "sha256": "73255a4045f9cf929609f9b25301051271e6c3b1daac222fe56e2f70cbb12fd8"
+  },
+  {
+    "path": "uygulama/turkish_text.py",
+    "bytes": 44,
+    "sha256": "ff84aa087d1f86ae46de853ff54713b9cfbadcbe979693348f328e1597c43523"
+  },
+  {
+    "path": "uygulama/ui_fonts.py",
+    "bytes": 538,
+    "sha256": "5ebc4718e67e7e7e7bd7adb3aaa028f5272e62fd74fb152d265f16a39eeb909b"
+  },
+  {
+    "path": "uygulama/unified_parent.py",
+    "bytes": 5006,
+    "sha256": "fd372e286245076af7970ca9165b04d8777caafd698245cc726517180c7ba306"
+  },
+  {
+    "path": "uygulama/voice_config.py",
+    "bytes": 44,
+    "sha256": "036ea17911c12396c8008e0639cc5243856cb7e0659f9cae1f8911c74dd6ff9e"
+  }
+]

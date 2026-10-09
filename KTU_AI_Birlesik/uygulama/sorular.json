@@ -1,0 +1,242 @@
+[
+  {
+    "soru": "7 + 5 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 1
+  },
+  {
+    "soru": "15 - 8 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 1
+  },
+  {
+    "soru": "3 × 4 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "7",
+      "9",
+      "12",
+      "15"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 1
+  },
+  {
+    "soru": "Elinde 9 çikolata var, 4 tanesini arkadaşına verdi. Kaç çikolatan kaldı?",
+    "secenekler": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 2
+  },
+  {
+    "soru": "20 + 35 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "45",
+      "50",
+      "55",
+      "60"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 2
+  },
+  {
+    "soru": "100 - 43 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "53",
+      "57",
+      "63",
+      "67"
+    ],
+    "dogru": 1,
+    "kategori": "matematik",
+    "zorluk": 2
+  },
+  {
+    "soru": "Bir sayıyı 5 ile çarptığında 30 buluyorsun. O sayı kaçtır?",
+    "secenekler": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 3
+  },
+  {
+    "soru": "12 ÷ 3 işleminin sonucu kaçtır?",
+    "secenekler": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "dogru": 2,
+    "kategori": "matematik",
+    "zorluk": 2
+  },
+  {
+    "soru": "Şu harflerden SESLİ harf hangisidir?",
+    "secenekler": [
+      "Ç",
+      "Ş",
+      "Ü",
+      "T"
+    ],
+    "dogru": 2,
+    "kategori": "türkçe",
+    "zorluk": 1
+  },
+  {
+    "soru": "Aşağıdaki kelimelerden hangisi EYLEM (fiil)dir?",
+    "secenekler": [
+      "Kalem",
+      "Koşmak",
+      "Okul",
+      "Mavi"
+    ],
+    "dogru": 1,
+    "kategori": "türkçe",
+    "zorluk": 2
+  },
+  {
+    "soru": "\"Ev\" kelimesinin çoğulu hangisidir?",
+    "secenekler": [
+      "Evler",
+      "Evim",
+      "Evde",
+      "Evin"
+    ],
+    "dogru": 0,
+    "kategori": "türkçe",
+    "zorluk": 1
+  },
+  {
+    "soru": "Aşağıdakilerden hangisi birleşik yazılır?",
+    "secenekler": [
+      "bilgisayar",
+      "pazartesi",
+      "her gün",
+      "elma"
+    ],
+    "dogru": 0,
+    "kategori": "türkçe",
+    "zorluk": 3
+  },
+  {
+    "soru": "Aşağıdakilerden hangisi bir MEVSİMdir?",
+    "secenekler": [
+      "Pazartesi",
+      "İlkbahar",
+      "Sabah",
+      "Ocak"
+    ],
+    "dogru": 1,
+    "kategori": "genel",
+    "zorluk": 1
+  },
+  {
+    "soru": "Aşağıdakilerden hangisi bir HAYVANDIR?",
+    "secenekler": [
+      "Gül",
+      "Köpek",
+      "Masa",
+      "Öğretmen"
+    ],
+    "dogru": 1,
+    "kategori": "genel",
+    "zorluk": 1
+  },
+  {
+    "soru": "İstanbul hangi ülkede bulunur?",
+    "secenekler": [
+      "Almanya",
+      "Fransa",
+      "Türkiye",
+      "İtalya"
+    ],
+    "dogru": 2,
+    "kategori": "genel",
+    "zorluk": 2
+  },
+  {
+    "soru": "Aşağıdakilerden hangisi bir TAŞITtır?",
+    "secenekler": [
+      "Uçak",
+      "Kedi",
+      "Portakal",
+      "Güneş"
+    ],
+    "dogru": 0,
+    "kategori": "genel",
+    "zorluk": 1
+  },
+  {
+    "soru": "Ankara Türkiye'nin hangisidir?",
+    "secenekler": [
+      "En büyük şehri",
+      "Başkenti",
+      "En eski şehri",
+      "Sahil şehri"
+    ],
+    "dogru": 1,
+    "kategori": "genel",
+    "zorluk": 2
+  },
+  {
+    "soru": "Güneş doğudan batıya doğru hareket ediyormuş gibi görünür. Bunun nedeni nedir?",
+    "secenekler": [
+      "Dünyanın kendi ekseni etrafında dönmesi",
+      "Güneşin dünyanın etrafında dönmesi",
+      "Ayın dünya etrafında dönmesi",
+      "Yıldızların hareketi"
+    ],
+    "dogru": 0,
+    "kategori": "fen",
+    "zorluk": 3
+  },
+  {
+    "soru": "Su sıfır derecede ne olur?",
+    "secenekler": [
+      "Kaynar",
+      "Donar",
+      "Buharlaşır",
+      "Rengini değiştirir"
+    ],
+    "dogru": 1,
+    "kategori": "fen",
+    "zorluk": 2
+  },
+  {
+    "soru": "Vücudumuzdaki en büyük organ hangisidir?",
+    "secenekler": [
+      "Kalp",
+      "Akciğer",
+      "Cilt",
+      "Beyin"
+    ],
+    "dogru": 2,
+    "kategori": "fen",
+    "zorluk": 3
+  }
+]

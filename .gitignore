@@ -1,0 +1,32 @@
+# Local secrets and environments
+.env
+.env.*
+*.env
+!*.example
+.venv*/
+venv/
+env/
+# Local student records and generated media
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.log
+*.wav
+*.mp3
+*.onnx
+*.onnx.json
+local_models/
+test_artifacts/
+orijinaller/
+*.zip
+*.bak
+*.pem
+*.key
+*.pfx
+# Python caches; preserved runtime modules are required
+__pycache__/
+*.py[cod]
+!KTU_AI_Birlesik/uygulama/legacy_runtime/*.pyc
+.codex/
+.agents/

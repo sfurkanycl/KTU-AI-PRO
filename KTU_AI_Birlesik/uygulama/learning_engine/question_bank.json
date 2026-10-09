@@ -1,0 +1,1034 @@
+{
+  "version": 1,
+  "packs": {
+    "4:matematik:fraction_compare": [
+      {
+        "signature": "fraction:2:3",
+        "prompt": "1/2 ile 1/3 arasına hangi isaret gelir?",
+        "options": [
+          ">",
+          "<",
+          "="
+        ],
+        "correct_index": 0,
+        "hint": "Payları eşit olan kesirlerde paydasi küçük olan kesir daha büyüktür çünkü pasta daha az dilime bölünür.",
+        "explanation": "1/2 kesri 1/3 kesrinden büyüktür çünkü bir bütün 2 eşit parçaya bölündüğünde her bir parça 3 eşit parçaya bölündüğündekinden daha büyük olur.",
+        "example": "Bir pizzayı 2 kişiye bölüştürürsen mi yoksa 3 kişiye bölüştürürsen mi daha büyük dilim düşer? Tabii ki 2 kişiye bölüştürürsen daha büyük dilim düşer, bu yüzden 1/2 büyüktür 1/3."
+      },
+      {
+        "signature": "fraction:2:4",
+        "prompt": "1/2 ile 1/4 arasına hangi isaret gelir?",
+        "options": [
+          ">",
+          "=",
+          "<"
+        ],
+        "correct_index": 0,
+        "hint": "Paydaları incele. Paydasi küçük olan kesir daha geniş dilimleri gösterir.",
+        "explanation": "1/2 kesri 1/4 kesrinden büyüktür çünkü 2 parçaya bölünen bir bütün, 4 parçaya bölünen bir bütünden daha büyük parçalara ayrılmıştır.",
+        "example": "Bir elmayı 2 eşit parçaya bölmek, 4 eşit parçaya bölmekten daha büyük parçalar elde etmeni sağlar. Yani 1/2 > 1/4."
+      },
+      {
+        "signature": "fraction:3:5",
+        "prompt": "1/3 ile 1/5 arasına hangi isaret gelir?",
+        "options": [
+          "<",
+          "=",
+          ">"
+        ],
+        "correct_index": 2,
+        "hint": "Paylar aynı olduğu için paydasi küçük olan kazanır.",
+        "explanation": "1/3 kesri 1/5 kesrinden büyüktür. Payda küçük olduğunda parça sayısı az olur ve her bir parçanın boyutu daha büyük kalir.",
+        "example": "Aynı boyuttaki iki çikolatadan birini 3 parçaya, diğerini 5 parçaya bölersek 3 parçaya bölünen çikolatanın dilimleri daha büyük olur."
+      },
+      {
+        "signature": "fraction:4:6",
+        "prompt": "1/4 ile 1/6 arasına hangi isaret gelir?",
+        "options": [
+          "=",
+          ">",
+          "<"
+        ],
+        "correct_index": 1,
+        "hint": "Paylar aynı iken paydaları karşılaştırarak karar ver.",
+        "explanation": "1/4 kesri 1/6 kesrinden büyüktür. 4 payda, 6 paydadan küçük olduğu için 1/4'un dilimleri daha geniştir.",
+        "example": "Bir pastayi 4 parçaya böldüğünde her dilim, 6 parçaya böldüğündeki dilimden daha büyüktür. Bu yüzden 1/4 büyüktür 1/6."
+      },
+      {
+        "signature": "fraction:5:7",
+        "prompt": "1/5 ile 1/7 arasına hangi isaret gelir?",
+        "options": [
+          "=",
+          ">",
+          "<"
+        ],
+        "correct_index": 1,
+        "hint": "Paydalar aralarındaki farka değil, bütünü kaç parçaya böldüklerine bakar.",
+        "explanation": "1/5 kesri 1/7 kesrinden büyüktür. 5 paydasi 7 paydasindan küçük olduğundan, 1/5 kesrinin temsil ettiği parça daha büyüktür.",
+        "example": "Karpuzu 5 dilime ayırmak mi yoksa 7 dilime ayırmak mi daha büyük dilimler verir? 5 dilim daha büyüktür."
+      },
+      {
+        "signature": "fraction:6:8",
+        "prompt": "1/6 ile 1/8 arasına hangi isaret gelir?",
+        "options": [
+          "<",
+          "=",
+          ">"
+        ],
+        "correct_index": 2,
+        "hint": "Küçük payda her zaman daha büyük birim kesir demektir.",
+        "explanation": "1/6 kesri 1/8 kesrinden büyüktür çünkü 6 parçaya bölünen bir bütün, 8 parçaya bölünene göre daha az parçaya ayrılmıştır ve parçalar daha iridir.",
+        "example": "Bir kurdele 6 eşit parçaya kesildiğinde elde edilen parça, 8 eşit parçaya kesildiğindekinden daha uzundur."
+      },
+      {
+        "signature": "fraction:7:9",
+        "prompt": "1/7 ile 1/9 arasına hangi isaret gelir?",
+        "options": [
+          "=",
+          "<",
+          ">"
+        ],
+        "correct_index": 2,
+        "hint": "Paylar aynı ise paydasi büyük olan daha küçük bir deger alır.",
+        "explanation": "1/7 kesri 1/9 kesrinden büyüktür. 7 paydasi 9 paydasindan küçük olduğu için 1/7 kesri daha büyük bir miktarı ifade eder.",
+        "example": "Bir süt şişesini 7 bardağa doldurmak ile 9 bardağa doldurmak arasında bir fark vardır. 7 bardağa doldurursan her bardaktaki süt miktarı daha fazla olur."
+      },
+      {
+        "signature": "fraction:8:10",
+        "prompt": "1/8 ile 1/10 arasına hangi isaret gelir?",
+        "options": [
+          ">",
+          "=",
+          "<"
+        ],
+        "correct_index": 0,
+        "hint": "Hangi payda daha az parça gösteriyorsa o kesir daha büyüktür.",
+        "explanation": "1/8 kesri 1/10 kesrinden büyüktür. 8 paydasi 10 paydasindan küçük olduğu için 1/8'lik dilim 1/10'luk dilimden daha geniştir.",
+        "example": "Bir tarlanın 8'de biri mi yoksa 10'da biri mi daha geniştir? 8'de biri daha geniştir çünkü daha az parçaya bölünmüştür."
+      },
+      {
+        "signature": "fraction:9:11",
+        "prompt": "1/9 ile 1/11 arasına hangi isaret gelir?",
+        "options": [
+          ">",
+          "=",
+          "<"
+        ],
+        "correct_index": 0,
+        "hint": "Paydalar aralarındaki büyüklüğe göre ters sırada sıralanır.",
+        "explanation": "1/9 kesri 1/11 kesrinden büyüktür. 9 sayısı 11 sayısından küçük olduğu için, payı 1 olan bu kesir diğerinden daha büyüktür.",
+        "example": "Bir kumaş parçasını 9 eşit parçaya bölersek her parça 11 eşit parçaya bölündüğündeki parçadan daha uzun olur."
+      },
+      {
+        "signature": "fraction:10:12",
+        "prompt": "1/10 ile 1/12 arasına hangi isaret gelir?",
+        "options": [
+          "<",
+          "=",
+          ">"
+        ],
+        "correct_index": 2,
+        "hint": "Paylar aynı iken payda küçükse kesir büyüktür.",
+        "explanation": "1/10 kesri 1/12 kesrinden büyüktür çünkü 10 parçaya bölünen bir bütün, 12 parçaya bölünen bir bütüne göre daha iri parçalara ayrılır.",
+        "example": "Bir oyun hamurunu 10 parçaya ayırmak, 12 parçaya ayırmaktan daha büyük parçacıklar elde etmeni sağlar. Yani 1/10 > 1/12."
+      },
+      {
+        "signature": "fraction:11:13",
+        "prompt": "1/11 ile 1/13 arasına hangi isaret gelir?",
+        "options": [
+          ">",
+          "=",
+          "<"
+        ],
+        "correct_index": 0,
+        "hint": "Paydasi daha küçük olan kesri seç.",
+        "explanation": "1/11 kesri 1/13 kesrinden büyüktür. Payda küçük olduğunda bütün daha az parçaya bölünmüş demektir ve bu da her bir parçanın boyutunu artırır.",
+        "example": "Bir defterin sayfalarını grupta paylaştırırken 11 kişiye bölüştürmek, 13 kişiye bölüştürmekten her kişiye daha fazla sayfa düşmesini sağlar."
+      },
+      {
+        "signature": "fraction:12:14",
+        "prompt": "1/12 ile 1/14 arasına hangi isaret gelir?",
+        "options": [
+          "<",
+          ">",
+          "="
+        ],
+        "correct_index": 1,
+        "hint": "Paylar aynı ise küçük payda her zaman büyüktür.",
+        "explanation": "1/12 kesri 1/14 kesrinden büyüktür. 12 sayısı 14 sayısından küçük olduğu için 1/12 kesri daha büyük bir değeri temsil eder.",
+        "example": "Bir meyve suyunu 12 bardağa paylaştırmak ile 14 bardağa paylaştırmak karşılaştırılırsa 12 bardaktaki miktar daha fazladir."
+      }
+    ],
+    "4:fen:living_needs": [
+      {
+        "prompt": "Saksıdaki bitkinin yapraklarının solmaması için ne vermeliyiz?",
+        "options": [
+          "Su",
+          "Oyuncak",
+          "Defter",
+          "Televizyon"
+        ],
+        "correct_index": 0,
+        "hint": "Canlıların hayatta kalmak için sıvıdan aldığı temel maddelerden biridir.",
+        "explanation": "Bitkiler toprağın nemli kalması ve büyümek için suya ihtiyaç duyar.",
+        "example": "Saksıdaki çiçeğimizi her sabah bir çay bardağı su ile sularız.",
+        "visual": {
+          "scene_id": "plant_water"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:2a3e313d8374276337da1976"
+      },
+      {
+        "prompt": "Pencere kenarındaki bitkinin yaşaması ve gelişmesi için ne şarttır?",
+        "options": [
+          "Oyuncak araba",
+          "Güneş ışığı",
+          "Kalem kutusu",
+          "Televizyon"
+        ],
+        "correct_index": 1,
+        "hint": "Gökyüzünden gelen parlak ve sıcak kaynaktır.",
+        "explanation": "Güneş ışığı bitkilerin kendi besinlerini üretmesini sağlayan en önemli kaynaktır.",
+        "example": "Evdeki çiçekleri güneş alan balkona koyarız.",
+        "visual": {
+          "scene_id": "plant_light"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:973ec7f55d99686724755d29"
+      },
+      {
+        "prompt": "Akvaryum içinde hareket eden bu hayvanın nefes aldığı ortam nedir?",
+        "options": [
+          "Kitaplık",
+          "Su",
+          "Kuru kum",
+          "Okul çantası"
+        ],
+        "correct_index": 1,
+        "hint": "Denizlerde ve nehirlerde bolca bulunan sıvı maddedir.",
+        "explanation": "Balıklar suda yaşar ve solungaç solunumu yapar.",
+        "example": "Akvaryumdaki japon balığının yaşaması için su seviyesini koruruz.",
+        "visual": {
+          "scene_id": "fish_water"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:462d3af0a59046efd0a4292e"
+      },
+      {
+        "prompt": "Yemligin başındaki kuşun karnini doyurmak için ne yemesi gerekir?",
+        "options": [
+          "Silgi",
+          "Plastik oyuncak",
+          "Defter",
+          "Besin"
+        ],
+        "correct_index": 3,
+        "hint": "Canlıların açlığını gidermek için tükettiği her seydir.",
+        "explanation": "Kuşlar hayatta kalmak ve uçabilmek için çeşitli tohum ve besinler yer.",
+        "example": "Pencere önüne kuşlar için buğday ve ekmek kırıntıları koyarız.",
+        "visual": {
+          "scene_id": "bird_food"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:3893f23471e17b110fb9376a"
+      },
+      {
+        "prompt": "Saksıdaki bitkinin köklerinin beslenebilmesi için hangisi gereklidir?",
+        "options": [
+          "Su",
+          "Silgi",
+          "Top",
+          "Sandalye"
+        ],
+        "correct_index": 0,
+        "hint": "Susuz kalan toprak çatlar ve bitki kurur.",
+        "explanation": "Bitkiler kökleri aracılığıyla topraktaki suyu ve mineralleri alır.",
+        "example": "Yaz aylarında balkondaki çiçekleri akşamları suleriz.",
+        "visual": {
+          "scene_id": "plant_water"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:b989c671e7dc15edb86f45c0"
+      },
+      {
+        "prompt": "Pencere yanındaki bitkinin yapraklarının yeşil kalması neye bağlıdır?",
+        "options": [
+          "Güneş ışığı",
+          "Ayakkabı",
+          "Bardak",
+          "Çanta"
+        ],
+        "correct_index": 0,
+        "hint": "Gündüzleri ortamı aydinlatan doğal ışık kaynağı.",
+        "explanation": "Bitkiler fotosentez yapmak için güneş ışığına ihtiyaç duyar.",
+        "example": "Salonun en çok güneş alan koseine yeşil yapraklı bitki koyarız.",
+        "visual": {
+          "scene_id": "plant_light"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:e00bbf12801cb8d208ac4607"
+      },
+      {
+        "prompt": "Akvaryumda yaşayan bu canlının hareket etmesini sağlayan yer neresidir?",
+        "options": [
+          "Halinin üstü",
+          "Su",
+          "Toprak",
+          "Ağaç dali"
+        ],
+        "correct_index": 1,
+        "hint": "Balıkların yüzgeçlerini kullanarak yüzdüğü sıvı ortam.",
+        "explanation": "Balıklar sadece sulu ortamlarda hareket edebilir ve yaşayabilir.",
+        "example": "Evdeki cam kapta iki tane kırmızı balık besleriz.",
+        "visual": {
+          "scene_id": "fish_water"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:e368b935402db54a21d1f084"
+      },
+      {
+        "prompt": "Kuşun uçabilmek için gerekli gücü nereden alması beklenir?",
+        "options": [
+          "Besin",
+          "Taş",
+          "Demir",
+          "Tahta"
+        ],
+        "correct_index": 0,
+        "hint": "Canlıların güç toplamak için tükettiği maddelerdir.",
+        "explanation": "Enerji üretimi için canlıların düzenli beslenmesi şarttır.",
+        "example": "Kuş kafesine her gün taze buğday taneleri dökeriz.",
+        "visual": {
+          "scene_id": "bird_food"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:4a94e65767b95fac410804db"
+      },
+      {
+        "prompt": "Saksıda duran bitkinin canlı kalabilmesi için hangisi şarttır?",
+        "options": [
+          "Su",
+          "Gazete",
+          "Anahtar",
+          "Pil"
+        ],
+        "correct_index": 0,
+        "hint": "İçtiğimiz ve bitkileri suladığımız sıvı.",
+        "explanation": "Bitkiler susuzluğa belli bir süre dayanabilir ama mutlaka suya ihtiyaç duyar.",
+        "example": "Sınıfımızdaki saksı çiçeğini haftada iki kez suluyoruz.",
+        "visual": {
+          "scene_id": "plant_water"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:e8af38465aaa2ab9a26fe555"
+      },
+      {
+        "prompt": "Pencere yanındaki bitkinin büyümesi için hangisi en önemlidir?",
+        "options": [
+          "Güneş ışığı",
+          "Kutu",
+          "Tarak",
+          "Masa"
+        ],
+        "correct_index": 0,
+        "hint": "Gündüzleri etrafı ısıtan gökyüzündeki cisim.",
+        "explanation": "Güneş ışığı bitkilerin gelişmesinde temel enerji kaynağıdır.",
+        "example": "Okulun laboratuvarındaki bitkileri pencere önüne dizeriz.",
+        "visual": {
+          "scene_id": "plant_light"
+        },
+        "concept": "plant_needs",
+        "source": "gemini",
+        "signature": "gemini:4f987f3c252753c4505e17da"
+      },
+      {
+        "prompt": "Akvaryumda yüzerek hayatını sürdüren balığın yaşam alanı nedir?",
+        "options": [
+          "Su",
+          "Orman",
+          "Cadde",
+          "Toprak"
+        ],
+        "correct_index": 0,
+        "hint": "Denizlerde ve göllerde bulunan berrak sıvı.",
+        "explanation": "Balıklar sudan başka bir ortamda nefes alamaz ve yaşayamaz.",
+        "example": "Veteriner balıkların temiz suda beslenmesi gerektiğini söyledi.",
+        "visual": {
+          "scene_id": "fish_water"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:5f4eef11faa92a73b6295709"
+      },
+      {
+        "prompt": "Yemligin yanındaki kuşun gücünü koruması için ne alması gerekir?",
+        "options": [
+          "Besin",
+          "Kâğıt",
+          "Kablo",
+          "Cam"
+        ],
+        "correct_index": 0,
+        "hint": "Kuşların gagasıyla toplayip yedigi taneler.",
+        "explanation": "Canlılar hayatta kalmak ve büyümek için beslenmek zorundadır.",
+        "example": "Bahçedeki ağaca kuşlar için bir kapta buğday bırakırız.",
+        "visual": {
+          "scene_id": "bird_food"
+        },
+        "concept": "animal_needs",
+        "source": "gemini",
+        "signature": "gemini:21d58b78e7d6b6e1821ad240"
+      }
+    ],
+    "4:sosyal:traffic": [
+      {
+        "prompt": "Görselde yaya ışığı kırmızı yanmaktadır. Bu durumda yaya geçen biri ne yapmalıdır?",
+        "options": [
+          "Beklemeli",
+          "Yola koşmalı",
+          "Gözlerini kapatmali",
+          "Yolda oynamalı"
+        ],
+        "correct_index": 0,
+        "hint": "Dur ışığının rengine dikkat ederek güvenli bir şekilde hareket etmeliyiz.",
+        "explanation": "Yayalar kırmızı ışıkta kesinlikle beklemelidir. Yeşil ışık yanmadan yola adım atmak tehlikelidir.",
+        "example": "Sabah okula giderken karşıya geçmek için caddeye geldiğinde ışığın kırmızı yandığını görüp kaldirimda beklemek.",
+        "visual": {
+          "scene_id": "traffic_red"
+        },
+        "concept": "pedestrian_signal",
+        "source": "gemini",
+        "signature": "gemini:4657551204085832d7e3b9d7"
+      },
+      {
+        "prompt": "Yaya ışığı yeşil renkte yanmaktadır. Yayalar güvenle geçiş yapmak için nasıl davranmalidir?",
+        "options": [
+          "Kontrol ederek geçmeli",
+          "Yola koşmalı",
+          "Gözlerini kapatmali",
+          "Yolda oynamalı"
+        ],
+        "correct_index": 0,
+        "hint": "Yeşil ışık geçiş hakkı verse de etrafı incelemek her zaman önemlidir.",
+        "explanation": "Yayalar yeşil ışıkta geçiş yapabilir ancak yine de sağını solunu kontrol ederek dikkatlice yürümelidir.",
+        "example": "Alışveriş merkezine girerken yeşil ışığın yandığını görüp etraftaki araçların durduğundan emin olarak karşıya geçmek.",
+        "visual": {
+          "scene_id": "traffic_green"
+        },
+        "concept": "pedestrian_signal",
+        "source": "gemini",
+        "signature": "gemini:26fe8cc24e49f8625460a423"
+      },
+      {
+        "prompt": "Caddenin karşı tarafına güvenli bir şekilde ulaşmak için hangi alanı tercih etmeliyiz?",
+        "options": [
+          "Yaya geçidi",
+          "Araçların arası",
+          "Yolun ortası",
+          "Viraj"
+        ],
+        "correct_index": 0,
+        "hint": "Sürücülerin yayalari rahatça görebildiği ve çizgilerle belirlenen yeri kullanmalıyız.",
+        "explanation": "Yaya geçidi, yayaların güvenle karşıdan karşıya geçmesi için özel olarak tasarlanmış güvenli alandir.",
+        "example": "Okuldan çıktıktan sonra evimize gitmek üzere caddede beyaz şeritlerle boyanmış alandan karşıya geçmek.",
+        "visual": {
+          "scene_id": "crossing"
+        },
+        "concept": "safe_crossing",
+        "source": "gemini",
+        "signature": "gemini:1a837a12ba4dd015465abac2"
+      },
+      {
+        "prompt": "Otomobil yolculuğu yapan bir öğrenci güvenliğini sağlamak için ne takmalıdır?",
+        "options": [
+          "Emniyet kemeri",
+          "Okul çantası",
+          "Oyuncak gözlük",
+          "Yüzme simidi"
+        ],
+        "correct_index": 0,
+        "hint": "Ani frenlerde koltukta sabit kalmamıza yardımcı olan güvenlik ekipmanıdır.",
+        "explanation": "Yolcuların ani duruşlarda savrulmaması ve yaralanmaması için emniyet kemeri takması zorunludur.",
+        "example": "Ailemizle hafta sonu pikniğe giderken araca binip hareket etmeden önce bağlantıyı tık sesini duyarak takmak.",
+        "visual": {
+          "scene_id": "belt"
+        },
+        "concept": "vehicle_safety",
+        "source": "gemini",
+        "signature": "gemini:49b3113ac3286a595f70f8ea"
+      },
+      {
+        "prompt": "Yaya ışığında kırmızı ışık yanarken karşıya geçmeye çalışmak neye yol açar?",
+        "options": [
+          "Tehlikeye",
+          "Hızlı varmaya",
+          "Mutluluğa",
+          "Başarıya"
+        ],
+        "correct_index": 0,
+        "hint": "Kurallara uymamak can güvenliğimizi risk atar.",
+        "explanation": "Kırmızı ışık yayalar için dur anlamına gelir. Bu kurala uymamak kazalara neden olabilir.",
+        "example": "Aceleiz bırakın otobüse yetismek için kırmızı ışıkta yola atlayan birinin tehlike atlattığını görmek.",
+        "visual": {
+          "scene_id": "traffic_red"
+        },
+        "concept": "pedestrian_signal",
+        "source": "gemini",
+        "signature": "gemini:79220ec92c4e02847a2d11e4"
+      },
+      {
+        "prompt": "Yaya ışığında yeşil ışık yandığında aşağıdaki durumlardan hangisi geçerlidir?",
+        "options": [
+          "Geçiş hakkı yayadadir",
+          "Araçlar hızlanır",
+          "Yollar kapanir",
+          "Kimse yürümez"
+        ],
+        "correct_index": 0,
+        "hint": "Yeşil ışık yayalara yolun başına geçme izni verir.",
+        "explanation": "Yeşil ışık yandığında yayalar kontrollü bir şekilde geçiş yapma hakkına sahip olur.",
+        "example": "Kütüphaneye gitmek için caddede yeşil ışığın yanmasıyla birlikte diğer insanlarla beraber güvenle yürümek.",
+        "visual": {
+          "scene_id": "traffic_green"
+        },
+        "concept": "pedestrian_signal",
+        "source": "gemini",
+        "signature": "gemini:041240405ba60145cf92a3b5"
+      },
+      {
+        "prompt": "Görseldeki yaya geçidinin özelliği aşağıdakilerden hangisidir?",
+        "options": [
+          "Güvenli geçiş sağlar",
+          "Oyun alanıdır",
+          "Araç park yeridir",
+          "Bisiklet yarış yeridir"
+        ],
+        "correct_index": 0,
+        "hint": "Bu bölge yayaların yola daha rahat ve güvenli adım atması içindir.",
+        "explanation": "Yaya geçitleri trafikte yayaların can güvenliğini artıran en temelisaretli geçiş bölgeleridir.",
+        "example": "Mahalledeki markete ekmek almak için giderken yol üzerindeki yaya geçidini kullanarak güvenle karşıya geçmek.",
+        "visual": {
+          "scene_id": "crossing"
+        },
+        "concept": "safe_crossing",
+        "source": "gemini",
+        "signature": "gemini:b8e97a47d274f18e0d63d163"
+      },
+      {
+        "prompt": "Araç hareket hâlindeyken emniyet kemeri takmak niacin önemlidir?",
+        "options": [
+          "Kazalardan korumak için",
+          "Sosu güzel göstermek için",
+          "Daha hızlı gitmek için",
+          "Yakıt tasarrufu için"
+        ],
+        "correct_index": 0,
+        "hint": "Vücudumuzu koltuğa bağlayarak olası sarsıntılardan korur.",
+        "explanation": "Emniyet kemeri olası bir kaza veya ani frende yolcunun çarpmalardan korunmasını sağlar.",
+        "example": "Taksiyle hastaneye giderken şoförün uyarısıyla hepimizin emniyet kemerlerini takarak yolculuk yapması.",
+        "visual": {
+          "scene_id": "belt"
+        },
+        "concept": "vehicle_safety",
+        "source": "gemini",
+        "signature": "gemini:a4fe4847e43f1e6159e584f1"
+      },
+      {
+        "prompt": "Yeşil yaya ışığının yanıyor olması yayalara hangi mesaji verir?",
+        "options": [
+          "Geçiş yapabilirsiniz",
+          "Hemen geri dönün",
+          "Olduğunuz yerde oturun",
+          "Gözlerinizi kapatin"
+        ],
+        "correct_index": 0,
+        "hint": "Bu renk geçiş serbestliğini temsil eder.",
+        "explanation": "Yeşil ışık yandığında yayalar güvenli bir şekilde yolun karşısına geçiş yapabilir.",
+        "example": "Okul gezisi sırasında rehberimizle birlikte yeşil ışık yanınca sırayla caddeyi geçmek.",
+        "visual": {
+          "scene_id": "traffic_green"
+        },
+        "concept": "pedestrian_signal",
+        "source": "gemini",
+        "signature": "gemini:dbd91c6c4415fa10144ce8b4"
+      },
+      {
+        "prompt": "Yaya geçidinden geçerken aşağıdaki davranislardan hangisi doğrudur?",
+        "options": [
+          "Etrafı kontrol etmek",
+          "Koşarak yarış yapmak",
+          "Telefonla oynamak",
+          "Ortada durup beklemek"
+        ],
+        "correct_index": 0,
+        "hint": "Geçiş sırasında çevreye dikkat etmek her zaman hayat kurtarir.",
+        "explanation": "Yaya geçidinde olsak bile gelen araçların durduğundan emin olmak için etrafımızı kontrol etmeliyiz.",
+        "example": "Sinemaya gitmek için yaya geçidinden geçerken önce sola sonra sağa bakıp güvenli şekilde adım atmak.",
+        "visual": {
+          "scene_id": "crossing"
+        },
+        "concept": "safe_crossing",
+        "source": "gemini",
+        "signature": "gemini:be8a5c9ce681f728189f7b3f"
+      },
+      {
+        "prompt": "Araçtaki emniyet kemeri görseli bize neyi hatırlatır?",
+        "options": [
+          "Yolcu güvenliğini",
+          "Aracın hızını",
+          "Hava durumunu",
+          "Yakıt miktarını"
+        ],
+        "correct_index": 0,
+        "hint": "Can güvenliğimiz herseyden önce gelir.",
+        "explanation": "Emniyet kemeri araçta seyahat edenlerin güvenliğini sağlayan en önemli tedbirdir.",
+        "example": "Şehirlerarası otobüs yolculuğuna başlamadan önce koltuktaki kemeri belimize göre ayarlayip klik sesile kilitlemek.",
+        "visual": {
+          "scene_id": "belt"
+        },
+        "concept": "vehicle_safety",
+        "source": "gemini",
+        "signature": "gemini:fdc9c2141369c6b7df7a5213"
+      }
+    ],
+    "4:fen:matter_states": [
+      {
+        "prompt": "Görseldeki buz küpleri maddenin hangi hâlini temsil eder?",
+        "options": [
+          "Katı",
+          "Sıvı",
+          "Gaz"
+        ],
+        "correct_index": 0,
+        "hint": "Bu nesneleri elinize aldığınızda şeklini ve sertliğini hissedebilirsiniz.",
+        "explanation": "Buz küpleri katıdır çünkü belirli bir şekilleri vardır ve dış etken olmadıkça bu şekilleri bozulmaz.",
+        "example": "Kahvaltıda masaya konulan sert bir tahta kaşık da katıdır.",
+        "visual": {
+          "scene_id": "ice"
+        },
+        "concept": "kati",
+        "source": "gemini",
+        "signature": "gemini:2506abcb7f393ccb587891f9"
+      },
+      {
+        "prompt": "Görselde yer alan taş maddenin hangi hâline örnektir?",
+        "options": [
+          "Sıvı",
+          "Katı",
+          "Gaz"
+        ],
+        "correct_index": 1,
+        "hint": "Sert yapılı ve duruşunu koruyan nesneleri inceleyiniz.",
+        "explanation": "Taş katıdır çünkü hacmi ve belirli bir geometrik duruşu olan, akışkan olmayan maddeler sınıfındadır.",
+        "example": "Bahçede oyun oynarken bulduğumuz sert bir oyun çizgi taşı da katıdır.",
+        "visual": {
+          "scene_id": "stone"
+        },
+        "concept": "kati",
+        "source": "gemini",
+        "signature": "gemini:dfd37d5c8e5974fc771fbe56"
+      },
+      {
+        "prompt": "Bardağın içindeki su maddenin hangi hâlindedir?",
+        "options": [
+          "Katı",
+          "Gaz",
+          "Sıvı"
+        ],
+        "correct_index": 2,
+        "hint": "Akışkan özellik gösteren ve döküldüğünde yayılan maddeleri düşünün.",
+        "explanation": "Su sıvıdır çünkü akışkan bir yapısı vardır ve içine konulduğu bardağın şeklini kolayca alır.",
+        "example": "Yemekten sonra ellerimizi yıkadığımız musluktan akan su da sıvıdır.",
+        "visual": {
+          "scene_id": "water"
+        },
+        "concept": "sivi",
+        "source": "gemini",
+        "signature": "gemini:e5340a4dd216de0abce60f4d"
+      },
+      {
+        "prompt": "Bardaktaki süt maddenin hangi fiziksel hâlini gösterir?",
+        "options": [
+          "Sıvı",
+          "Katı",
+          "Gaz"
+        ],
+        "correct_index": 0,
+        "hint": "Bardağa doldurulduğunda onun biçimini alan akışkan maddeleri hatırlayın.",
+        "explanation": "Süt bir sıvıdır çünkü akma özelliğine sahiptir ve bulunduğu kabın içini doldurarak o kabın şeklini alır.",
+        "example": "Sabah kahvaltısı için bardağa doldurulan meyve suyu da sıvıdır.",
+        "visual": {
+          "scene_id": "milk"
+        },
+        "concept": "sivi",
+        "source": "gemini",
+        "signature": "gemini:40d9976f035a4d0185c24d64"
+      },
+      {
+        "prompt": "Balonun içindeki hava maddenin hangi hâlindedir?",
+        "options": [
+          "Katı",
+          "Sıvı",
+          "Gaz"
+        ],
+        "correct_index": 2,
+        "hint": "Göze görünmeyen ancak içine dolduğu nesneyi şişiren maddeleri düşünün.",
+        "explanation": "Hava gaz hâlindedir çünkü bulunduğu balonun içini tamamen doldurur ve her yöne yayılma eğilimindedir.",
+        "example": "Doğum günü partisinde şişirilen başka bir renkli balonun içindeki hava da gazdır.",
+        "visual": {
+          "scene_id": "air"
+        },
+        "concept": "gaz",
+        "source": "gemini",
+        "signature": "gemini:f49f285b20d4c92e7b30ec73"
+      },
+      {
+        "prompt": "Topun içinde bulunan hava maddenin hangi hâlini oluşturur?",
+        "options": [
+          "Gaz",
+          "Katı",
+          "Sıvı"
+        ],
+        "correct_index": 0,
+        "hint": "Esnek cisimleri şişirmeye yarayan ve içeriyi dolduran maddeyi hatırlayın.",
+        "explanation": "Topun içindeki hava gazdır çünkü skistirilabilir ve bulunduğu kapali alanın her noktasına basınç uygular.",
+        "example": "Bisikletin tekerlegine pompalanan hava da gaz maddesine örnektir.",
+        "visual": {
+          "scene_id": "air_ball"
+        },
+        "concept": "gaz",
+        "source": "gemini",
+        "signature": "gemini:0eb6e6aadb06e47367cdecc0"
+      },
+      {
+        "prompt": "Görseldeki taşın madde hâli aşağıdakilerden hangisidir?",
+        "options": [
+          "Gaz",
+          "Sıvı",
+          "Katı"
+        ],
+        "correct_index": 2,
+        "hint": "Bulunduğu yere göre şeklini değiştirmeyen sert maddeleri düşünün.",
+        "explanation": "Taş katıdır çünkü dışarıdan zorlanmadığı sürece şeklini muhafaza eder ve akışkan değildir.",
+        "example": "Sınıf tahtasina yazı yazmak için kullanılan tebeşir de katıdır.",
+        "visual": {
+          "scene_id": "stone"
+        },
+        "concept": "kati",
+        "source": "gemini",
+        "signature": "gemini:0ac3534518b6567db65a8188"
+      },
+      {
+        "prompt": "Bardaktaki suyun madde hal tercihi hangisi olmalıdır?",
+        "options": [
+          "Gaz",
+          "Sıvı",
+          "Katı"
+        ],
+        "correct_index": 1,
+        "hint": "Akışkanlık özelliğine sahip maddelerin sınıflandırmasını hatırlayın.",
+        "explanation": "Su sıvıdır çünkü serbestçe akabilir ve konulduğu kabın tabanina göre şeklini ayarlar.",
+        "example": "Banyo yaparken küveti doldurduğumuz su da sıvıdır.",
+        "visual": {
+          "scene_id": "water"
+        },
+        "concept": "sivi",
+        "source": "gemini",
+        "signature": "gemini:b3e10928c0667375ade61e1d"
+      },
+      {
+        "prompt": "Bardaktaki süt hangi madde hâlini bizlere gösterir?",
+        "options": [
+          "Katı",
+          "Gaz",
+          "Sıvı"
+        ],
+        "correct_index": 2,
+        "hint": "İçilebilen ve akışkan olan tüm içeceklerin durumunu düşünün.",
+        "explanation": "Süt sıvıdır çünkü katılar gibi belirli bir kalipta durmaz, akarak kabın biçimini alır.",
+        "example": "Sıcak günde içilen soğuk limonata da sıvıdır.",
+        "visual": {
+          "scene_id": "milk"
+        },
+        "concept": "sivi",
+        "source": "gemini",
+        "signature": "gemini:34ff0e310966ce4157242c89"
+      },
+      {
+        "prompt": "Balonun şişkin durmasını sağlayan hava hangi hâldedir?",
+        "options": [
+          "Sıvı",
+          "Gaz",
+          "Katı"
+        ],
+        "correct_index": 1,
+        "hint": "Boşlukları dolduran ve serbestçe hareket eden akışkan gazlari düşünün.",
+        "explanation": "Balonun içindeki hava gazdır çünkü sınırlı bir alana hapsedildiğinde o alanı tamamen kaplar.",
+        "example": "Odadaki kaloriferin yaydığı sıcak hava da gazdır.",
+        "visual": {
+          "scene_id": "air"
+        },
+        "concept": "gaz",
+        "source": "gemini",
+        "signature": "gemini:68645406e4f0d1da914786ca"
+      },
+      {
+        "prompt": "Topun şişip yuvarlak olmasını sağlayan hava madde hâllerinden hangisidir?",
+        "options": [
+          "Katı",
+          "Sıvı",
+          "Gaz"
+        ],
+        "correct_index": 2,
+        "hint": "Esnek cisimlerin içini şişirerek dolduran maddeyi hatırlayın.",
+        "explanation": "Topun içindeki hava gazdır çünkü gazlar bulundukları kabın içinde genişleyerek her yöne yayılır.",
+        "example": "Deniz simidini şişirdiğimiz zaman içine dolan madde de gazdır.",
+        "visual": {
+          "scene_id": "air_ball"
+        },
+        "concept": "gaz",
+        "source": "gemini",
+        "signature": "gemini:b886cbed3290b00baa297666"
+      }
+    ],
+    "4:sosyal:directions": [
+      {
+        "prompt": "Verilen krokiye göre park, okulun hangi yönünde bulunmaktadır?",
+        "options": [
+          "Kuzey",
+          "Güney",
+          "Doğu",
+          "Batı"
+        ],
+        "correct_index": 0,
+        "hint": "Krokilerde üst kısım her zaman temel bir yönü gösterir.",
+        "explanation": "Krokide üst taraf kuzey yönünü isaret ettiği için park okulun kuzeyindedir.",
+        "example": "Sabah evden çıkıp yukarı doğru yürürken pusulamız kuzeyi gösterir.",
+        "visual": {
+          "scene_id": "map_north"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:b0c7259239555656b54c5255"
+      },
+      {
+        "prompt": "Görselde yer alan krokiye göre park, okulun neresindedir?",
+        "options": [
+          "Batı",
+          "Doğu",
+          "Kuzey",
+          "Güney"
+        ],
+        "correct_index": 3,
+        "hint": "Krokilerde alt kısım genellikle bir yönü ifade eder.",
+        "explanation": "Krokide alt taraf güney yönünü belirttigi için park okulun güneyindedir.",
+        "example": "Köyümüzdeki camı okulun aşağı tarafındaki güneyinde kalmaktadir.",
+        "visual": {
+          "scene_id": "map_south"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:b87ba349c5b23ac1c9d870bb"
+      },
+      {
+        "prompt": "İncelenen krokide park, okulun hangi yönünde yer alır?",
+        "options": [
+          "Doğu",
+          "Batı",
+          "Kuzey",
+          "Güney"
+        ],
+        "correct_index": 0,
+        "hint": "Krokilerde sağ taraf yönlerin gösteriminde önemlidir.",
+        "explanation": "Krokide sağ taraf doğu yönünü gösterdiği için park okulun doğusundadır.",
+        "example": "Güneşin doğduğu yön olan sağ tarafa doğru elimizi uzattığımızda doğuyu buluruz.",
+        "visual": {
+          "scene_id": "map_east"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:04e8bd9abb018a3b70417bf8"
+      },
+      {
+        "prompt": "Kroki görseline bakıldığında park, okulun hangi yönündedir?",
+        "options": [
+          "Güney",
+          "Doğu",
+          "Batı",
+          "Kuzey"
+        ],
+        "correct_index": 2,
+        "hint": "Krokilerde sol taraf ana yönlerden birini temsil eder.",
+        "explanation": "Krokide sol taraf batı yönünü isaret ettiği için park okulun batısındadır.",
+        "example": "Aksem üstü güneşin battığı sol yön batı olarak adlandirilir.",
+        "visual": {
+          "scene_id": "map_west"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:42a4c8f1795fdf50f6c4203d"
+      },
+      {
+        "prompt": "Krokiye göre okulun konumuna kıyasla park nerede kalmaktadir?",
+        "options": [
+          "Kuzey",
+          "Güney",
+          "Batı",
+          "Doğu"
+        ],
+        "correct_index": 0,
+        "hint": "Harita ve krokilerde üst kısmın ifade ettiği yönü hatırla.",
+        "explanation": "Krokide okul merkez alındığında yukarısı yani kuzey yönünde park bulunur.",
+        "example": "Şehir merkezinin üst kısmı yani kuzeyi yaz aylarında daha serin olur.",
+        "visual": {
+          "scene_id": "map_north"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:a6bc2a06c2b96951765d90a4"
+      },
+      {
+        "prompt": "Bu yön kroki görseline göre park, okulun ne tarafındadır?",
+        "options": [
+          "Doğu",
+          "Güney",
+          "Kuzey",
+          "Batı"
+        ],
+        "correct_index": 1,
+        "hint": "Krokide aşağı yön hangi ana yönü gösterir?",
+        "explanation": "Krokide aşağı yön güney olduğu için park okulun güneyindedir.",
+        "example": "Bahçemizdeki kulübe evin aşağı tarafındaki güney cephesindedir.",
+        "visual": {
+          "scene_id": "map_south"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:865bab72b1ff98d0632cef2d"
+      },
+      {
+        "prompt": "Kroki üzerinde yapılan incelemede park hangi yönde yer almaktadır?",
+        "options": [
+          "Batı",
+          "Güney",
+          "Doğu",
+          "Kuzey"
+        ],
+        "correct_index": 2,
+        "hint": "Krokide sağ tarafta kalan yönü düşün.",
+        "explanation": "Krokide sağ taraf doğu yönünü gösterir, bu yüzden park doğudadır.",
+        "example": "Sınıfımızın sağ penceresi okul bahçesinin doğu cephesine bakar.",
+        "visual": {
+          "scene_id": "map_east"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:5a65b4ec1146dba606cba324"
+      },
+      {
+        "prompt": "Verilen krokide yer alan bilgilere göre park okulun neresindedir?",
+        "options": [
+          "Kuzey",
+          "Batı",
+          "Doğu",
+          "Güney"
+        ],
+        "correct_index": 1,
+        "hint": "Krokide sol taraftaki yönü bulmaya çalış.",
+        "explanation": "Krokide sol taraf batı yönünü gösterdiğinden park batı tarafındadır.",
+        "example": "Manav dükkânımız mahallemizin sol tarafındaki batı caddesindedir.",
+        "visual": {
+          "scene_id": "map_west"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:d331e3f2c5af0cd24827bec3"
+      },
+      {
+        "prompt": "Okul ve parkın gösterildiği krokide park hangi yönde bulunur?",
+        "options": [
+          "Kuzey",
+          "Doğu",
+          "Batı",
+          "Güney"
+        ],
+        "correct_index": 0,
+        "hint": "Krokinin en üst kısmını kontrol et.",
+        "explanation": "Krokinin üst bölümü kuzeyi gösterdiği için doğru cevap kuzeydir.",
+        "example": "Haritanin en üst köşesinde yer alan ok kuzey yönünü gösterir.",
+        "visual": {
+          "scene_id": "map_north"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:9d83bd1f4f0ed7a751a7e02a"
+      },
+      {
+        "prompt": "Görseldeki krokide park ile okulun yön ilişkisi nasıldır?",
+        "options": [
+          "Doğu",
+          "Güney",
+          "Kuzey",
+          "Batı"
+        ],
+        "correct_index": 1,
+        "hint": "Krokinin alt kısmına odaklan.",
+        "explanation": "Park, okulun alt kısmına yani güney yönüne yerleştirilmiştir.",
+        "example": "Parktaki kaydirak oyun alanının güneyinde yer almaktadır.",
+        "visual": {
+          "scene_id": "map_south"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:f05237a4c7d4a60efcd53f59"
+      },
+      {
+        "prompt": "Okul ve park görselindeki krokiye göre doğru yön hangisidir?",
+        "options": [
+          "Batı",
+          "Güney",
+          "Doğu",
+          "Kuzey"
+        ],
+        "correct_index": 2,
+        "hint": "Krokinin sağ tarafına dikkat et.",
+        "explanation": "Park okulun sağında olduğu için doğu yönünde yer alır.",
+        "example": "Evimizin sağ tarafındaki market binanin doğusundadır.",
+        "visual": {
+          "scene_id": "map_east"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:a27cbe3060a23e80a606a786"
+      },
+      {
+        "prompt": "Krokide gösterilen parka ulaşmak için okuldan hangi yöne gidilmelidir?",
+        "options": [
+          "Kuzey",
+          "Batı",
+          "Doğu",
+          "Güney"
+        ],
+        "correct_index": 1,
+        "hint": "Krokinin sol bölümüne bakman yeterlidir.",
+        "explanation": "Park okulun solunde, yani batı yönünde yer aldığı için batı seçilmelidir.",
+        "example": "Kütüphaneye gitmek için koridorun soluna yani batı yönüne yöneldik.",
+        "visual": {
+          "scene_id": "map_west"
+        },
+        "concept": "map_directions",
+        "source": "gemini",
+        "signature": "gemini:b6d10fd12336e885dbaf4489"
+      }
+    ]
+  }
+}

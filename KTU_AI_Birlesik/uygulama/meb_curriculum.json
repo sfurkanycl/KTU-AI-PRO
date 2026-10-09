@@ -1,0 +1,1003 @@
+{
+  "retrieved": "2026-10-09",
+  "school_year": "2026-2027",
+  "courses": [
+    {
+      "subject": "Matematik",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-matematik-dersi/2",
+      "units": [
+        {
+          "title": "1. Tema: Sayılar Ve Nicelikler (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/45"
+        },
+        {
+          "title": "2. Tema: Sayılar Ve Nicelikler (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/86"
+        },
+        {
+          "title": "3. Tema: Sayılar Ve Nicelikler (3)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/95"
+        },
+        {
+          "title": "4. Tema: İşlemlerden Cebirsel Düşünmeye",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/99"
+        },
+        {
+          "title": "5. Tema: Nesnelerin Geometrisi (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/109"
+        },
+        {
+          "title": "6. Tema: Nesnelerin Geometrisi (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/113"
+        },
+        {
+          "title": "7. Tema: Veriye Dayalı Araştırma",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/115"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Matematik",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-matematik-dersi/3",
+      "units": [
+        {
+          "title": "1. Tema: Sayılar Ve Nicelikler (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/116"
+        },
+        {
+          "title": "2. Tema: Sayılar Ve Nicelikler (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/125"
+        },
+        {
+          "title": "3. Tema: İşlemlerden Cebirsel Düşünmeye",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/164"
+        },
+        {
+          "title": "4. Tema: Nesnelerin Geometrisi (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/165"
+        },
+        {
+          "title": "5. Tema: Nesnelerin Geometrisi (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/166"
+        },
+        {
+          "title": "6. Tema: Veriye Dayalı Araştırma",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/240"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Matematik",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-matematik-dersi/4",
+      "units": [
+        {
+          "title": "1. Tema: Sayılar Ve Nicelikler (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/249"
+        },
+        {
+          "title": "2. Tema: Sayılar Ve Nicelikler (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/254"
+        },
+        {
+          "title": "3. Tema: İşlemlerden Cebirsel Düşünmeye",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/264"
+        },
+        {
+          "title": "4. Tema: Nesnelerin Geometrisi (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/275"
+        },
+        {
+          "title": "5. Tema: Nesnelerin Geometrisi (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/284"
+        },
+        {
+          "title": "6. Tema: Veriye Dayalı Araştırma",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/288"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Matematik",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-matematik-dersi/5",
+      "units": [
+        {
+          "title": "1. Tema: Sayılar Ve Nicelikler (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/294"
+        },
+        {
+          "title": "2. Tema: Sayılar Ve Nicelikler (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/299"
+        },
+        {
+          "title": "3. Tema: İşlemlerden Cebirsel Düşünmeye",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/300"
+        },
+        {
+          "title": "4. Tema: Nesnelerin Geometrisi (1)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/301"
+        },
+        {
+          "title": "5. Tema: Nesnelerin Geometrisi (2)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/302"
+        },
+        {
+          "title": "6. Tema: Nesnelerin Geometrisi (3)",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/303"
+        },
+        {
+          "title": "7. Tema: Olayların Olasılığı Ve Veriye Dayalı Araştırma",
+          "url": "https://tymm.meb.gov.tr/ilkokul-matematik-dersi/unite/304"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Türkçe",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-turkce-dersi/2",
+      "units": [
+        {
+          "title": "1. Tema: Güzel Davranışlarımız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/265"
+        },
+        {
+          "title": "2. Tema: Mustafa Kemal’den Atatürk’e",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/269"
+        },
+        {
+          "title": "3. Tema: Çevremizdeki Yaşam",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/286"
+        },
+        {
+          "title": "4. Tema: Yol Arkadaşımız Kitaplar",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/289"
+        },
+        {
+          "title": "5. Tema: Yeteneklerimizi Keşfediyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/292"
+        },
+        {
+          "title": "6. Tema: Minik Kâşifler",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/326"
+        },
+        {
+          "title": "7. Tema: Atalarımızın İzleri",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/337"
+        },
+        {
+          "title": "8. Tema: Sorumluluklarımızın Farkındayız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/347"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Türkçe",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-turkce-dersi/3",
+      "units": [
+        {
+          "title": "1. Tema: Değerlerimizle Varız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/353"
+        },
+        {
+          "title": "2. Tema: Atatürk Ve Çocuk",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/357"
+        },
+        {
+          "title": "3. Tema: Doğada Neler Oluyor?",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/373"
+        },
+        {
+          "title": "4. Tema: Okuma Serüvenimiz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/374"
+        },
+        {
+          "title": "5. Tema: Yeteneklerimizi Tanıyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/378"
+        },
+        {
+          "title": "6. Tema: Mucit Çocuk",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/380"
+        },
+        {
+          "title": "7. Tema: Kültür Hazinemiz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/382"
+        },
+        {
+          "title": "8. Tema: Haklarımızı Biliyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/385"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Türkçe",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-turkce-dersi/4",
+      "units": [
+        {
+          "title": "1. Tema: Değerlerimizle Yaşıyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/354"
+        },
+        {
+          "title": "2. Tema: Atatürk Ve Kahramanlarımız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/360"
+        },
+        {
+          "title": "3. Tema: Doğayı Tanıyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/381"
+        },
+        {
+          "title": "4. Tema: Bilgi Hazinemiz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/387"
+        },
+        {
+          "title": "5. Tema: Yeteneklerimizi Kullanıyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/391"
+        },
+        {
+          "title": "6. Tema: Bilim Yolculuğu",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/395"
+        },
+        {
+          "title": "7. Tema: Millî Kültürümüz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/396"
+        },
+        {
+          "title": "8. Tema: Hak Ve Sorumluluklarımız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/393"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Türkçe",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ilkokul-turkce-dersi/5",
+      "units": [
+        {
+          "title": "1. Tema: Erdemler",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/390"
+        },
+        {
+          "title": "2. Tema: Millî Mücadele Ve Atatürk",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/392"
+        },
+        {
+          "title": "3. Tema: Doğa Ve İnsan",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/398"
+        },
+        {
+          "title": "4. Tema: Kütüphanemiz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/397"
+        },
+        {
+          "title": "5. Tema: Kendimizi Geliştiriyoruz",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/401"
+        },
+        {
+          "title": "6. Tema: Bilim Ve Teknoloji",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/406"
+        },
+        {
+          "title": "7. Tema: Geçmişten Geleceğe Mirasımız",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/403"
+        },
+        {
+          "title": "8. Tema: Demokratik Yaşam",
+          "url": "https://tymm.meb.gov.tr/ilkokul-turkce-dersi/unite/400"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Hayat Bilgisi",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/hayat-bilgisi-dersi/2",
+      "units": [
+        {
+          "title": "1. Öğrenme Alanı: Ben Ve Okulum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/96"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Sağlığım Ve Güvenliğim",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/102"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Ailem Ve Toplum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/105"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Yaşadığım Yer Ve Ülkem",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/117"
+        },
+        {
+          "title": "5. Öğrenme Alanı: Doğa Ve Çevre",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/126"
+        },
+        {
+          "title": "6. Öğrenme Alanı: Bilim, Teknoloji Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/127"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Hayat Bilgisi",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/hayat-bilgisi-dersi/3",
+      "units": [
+        {
+          "title": "1. Öğrenme Alanı: Ben Ve Okulum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/238"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Sağlığım Ve Güvenliğim",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/239"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Ailem Ve Toplum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/241"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Yaşadığım Yer Ve Ülkem",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/245"
+        },
+        {
+          "title": "5. Öğrenme Alanı: Doğa Ve Çevre",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/246"
+        },
+        {
+          "title": "6. Öğrenme Alanı: Bilim, Teknoloji Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/308"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Hayat Bilgisi",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/hayat-bilgisi-dersi/4",
+      "units": [
+        {
+          "title": "1. Öğrenme Alanı: Ben Ve Okulum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/310"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Sağlığım Ve Güvenliğim",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/311"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Ailem Ve Toplum",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/313"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Yaşadığım Yer Ve Ülkem",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/320"
+        },
+        {
+          "title": "5. Öğrenme Alanı: Doğa Ve Çevre",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/324"
+        },
+        {
+          "title": "6. Öğrenme Alanı: Bilim, Teknoloji Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/hayat-bilgisi-dersi/unite/328"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Fen Bilimleri",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/fen-bilimleri-dersi/4",
+      "units": [
+        {
+          "title": "1. Ünite: Bilimsel Keşif Yolculuğu",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/327"
+        },
+        {
+          "title": "2. Ünite: Canlılar Dünyasına Yolculuk",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/331"
+        },
+        {
+          "title": "3. Ünite: Yer Bilimciler İş Başında",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/454"
+        },
+        {
+          "title": "4. Ünite: Maddeyi Tanıyalım, Karıştırıp Ayıralım",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/334"
+        },
+        {
+          "title": "5. Ünite: Hareketi Keşfediyorum",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/336"
+        },
+        {
+          "title": "6. Ünite: Yaşamımızı Kolaylaştıran Elektrik",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/339"
+        },
+        {
+          "title": "7. Ünite: Toprağı Tanıyorum, Tarımı Keşfediyorum",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/342"
+        },
+        {
+          "title": "8. Ünite: Canlıların Yaşam Alanlarına Yolculuk",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/344"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Fen Bilimleri",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/fen-bilimleri-dersi/5",
+      "units": [
+        {
+          "title": "1. Ünite: Bilime Yolculuk",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/352"
+        },
+        {
+          "title": "2. Ünite: Sağlıklı Besleniyorum",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/356"
+        },
+        {
+          "title": "3. Ünite: Dünya’mızı Keşfedelim",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/359"
+        },
+        {
+          "title": "4. Ünite: Maddenin Değişimi",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/361"
+        },
+        {
+          "title": "5. Ünite: Mıknatısı Keşfediyorum",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/363"
+        },
+        {
+          "title": "6. Ünite: Elektrik Ve Enerji Kaynakları",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/364"
+        },
+        {
+          "title": "7. Ünite: Işığı Tanıyalım",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/365"
+        },
+        {
+          "title": "8. Ünite: Sürdürülebilir Yaşam Alanları",
+          "url": "https://tymm.meb.gov.tr/fen-bilimleri-dersi/unite/366"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Sosyal Bilgiler",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/sosyal-bilgiler-dersi/5",
+      "units": [
+        {
+          "title": "1. Öğrenme Alanı: Birlikte Yaşamak",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/338"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Evimiz Dünya",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/343"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Ortak Mirasımız",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/346"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Yaşayan Demokrasimiz",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/349"
+        },
+        {
+          "title": "5. Öğrenme Alanı: Hayatımızdaki Ekonomi",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/375"
+        },
+        {
+          "title": "6. Öğrenme Alanı: Teknoloji Ve Sosyal Bilimler",
+          "url": "https://tymm.meb.gov.tr/sosyal-bilgiler-dersi/unite/376"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "İngilizce",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ingilizce-dersi-temel-egitim/3",
+      "units": [
+        {
+          "title": "Theme 1: School Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/629"
+        },
+        {
+          "title": "Theme 2: Classroom Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/634"
+        },
+        {
+          "title": "Theme 3: Personal Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/756"
+        },
+        {
+          "title": "Theme 4: Famıly Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/763"
+        },
+        {
+          "title": "Theme 5: Homes & Houses & Neıghbourhoods",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/766"
+        },
+        {
+          "title": "Theme 6: Lıfe In The Cıty & The World",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/776"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "İngilizce",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ingilizce-dersi-temel-egitim/4",
+      "units": [
+        {
+          "title": "Theme 1: School Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/765"
+        },
+        {
+          "title": "Theme 2: Classroom Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/773"
+        },
+        {
+          "title": "Theme 3: Personal Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/779"
+        },
+        {
+          "title": "Theme 4: Famıly Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/780"
+        },
+        {
+          "title": "Theme 5: Homes & Houses & The Neıghbourhood",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/781"
+        },
+        {
+          "title": "Theme 6: Lıfe In The Cıty & The World",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/782"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "İngilizce",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/ingilizce-dersi-temel-egitim/5",
+      "units": [
+        {
+          "title": "Theme 1: School Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/632"
+        },
+        {
+          "title": "Theme 2: Classroom Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/639"
+        },
+        {
+          "title": "Theme 3: Personal Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/648"
+        },
+        {
+          "title": "Theme 4: Famıly Lıfe",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/725"
+        },
+        {
+          "title": "Theme 5: Homes & Houses & The Neıghbourhood",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/735"
+        },
+        {
+          "title": "Theme 6: Lıfe In The Cıty & The World",
+          "url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/737"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Görsel Sanatlar",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/gorsel-sanatlar-dersi-temel-egitim/2",
+      "units": [
+        {
+          "title": "1. Tema: Hayat Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/822"
+        },
+        {
+          "title": "2. Tema: Sanatın Görsel Dili",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/823"
+        },
+        {
+          "title": "3. Tema: Sanatçılar Ve Eserleri",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/824"
+        },
+        {
+          "title": "4. Tema: Çizim Ve Görsel İfade",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/825"
+        },
+        {
+          "title": "5. Tema: Renk Ve Estetik",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/826"
+        },
+        {
+          "title": "6. Tema: Millî Değerler Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/827"
+        },
+        {
+          "title": "7. Tema: Müze Ve Kültür",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/828"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Görsel Sanatlar",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/gorsel-sanatlar-dersi-temel-egitim/3",
+      "units": [
+        {
+          "title": "1. Tema: Hayat Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/829"
+        },
+        {
+          "title": "2. Tema: Sanatın Görsel Dili",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/830"
+        },
+        {
+          "title": "3. Tema: Sanatçılar Ve Eserleri",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/831"
+        },
+        {
+          "title": "4. Tema: Çizim Ve Görsel İfade",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/832"
+        },
+        {
+          "title": "5. Tema: Renk Ve Estetik",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/833"
+        },
+        {
+          "title": "6. Tema: Millî Değerler Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/834"
+        },
+        {
+          "title": "7. Tema: Müze Ve Kültür",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/835"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Görsel Sanatlar",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/gorsel-sanatlar-dersi-temel-egitim/4",
+      "units": [
+        {
+          "title": "1. Tema: Hayat Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/836"
+        },
+        {
+          "title": "2. Tema: Sanatın Görsel Dili",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/837"
+        },
+        {
+          "title": "3. Tema: Sanatçılar Ve Eserleri",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/838"
+        },
+        {
+          "title": "4. Tema: Çizim Ve Görsel İfade",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/839"
+        },
+        {
+          "title": "5. Tema: Renk Ve Estetik",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/840"
+        },
+        {
+          "title": "6. Tema: Millî Değerler Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/841"
+        },
+        {
+          "title": "7. Tema: Müze Ve Kültür",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/842"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Görsel Sanatlar",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/gorsel-sanatlar-dersi-temel-egitim/5",
+      "units": [
+        {
+          "title": "1. Tema: Hayat Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/888"
+        },
+        {
+          "title": "2. Tema: Sanatın Görsel Dili",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/889"
+        },
+        {
+          "title": "3. Tema: Sanatçılar Ve Eserleri",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/890"
+        },
+        {
+          "title": "4. Tema: Çizim Ve Görsel İfade",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/891"
+        },
+        {
+          "title": "5. Tema: Renk Ve Estetik",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/892"
+        },
+        {
+          "title": "6. Tema: Millî Değerler Ve Sanat",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/893"
+        },
+        {
+          "title": "7. Tema: Müze Ve Kültür",
+          "url": "https://tymm.meb.gov.tr/gorsel-sanatlar-dersi-temel-egitim/unite/894"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Müzik",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/muzik-dersi-temel-egitim/2",
+      "units": [
+        {
+          "title": "1. Tema: Müzik Dili",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/628"
+        },
+        {
+          "title": "2. Tema: Müzik Kültürü",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/635"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Müzik",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/muzik-dersi-temel-egitim/3",
+      "units": [
+        {
+          "title": "1. Tema: Müzik Dili",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/636"
+        },
+        {
+          "title": "2. Tema: Müzik Kültürü",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/638"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Müzik",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/muzik-dersi-temel-egitim/4",
+      "units": [
+        {
+          "title": "1. Tema: Müzik Dili",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/640"
+        },
+        {
+          "title": "2. Tema: Müzik Kültürü",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/643"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Müzik",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/muzik-dersi-temel-egitim/5",
+      "units": [
+        {
+          "title": "1. Tema: Müzik Dili",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/644"
+        },
+        {
+          "title": "2. Tema: Müzik Kültürü",
+          "url": "https://tymm.meb.gov.tr/muzik-dersi-temel-egitim/unite/647"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Beden Eğitimi ve Oyun",
+      "grade": 1,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/beden-egitimi-ve-oyun-dersi/2",
+      "units": [
+        {
+          "title": "1. Tema: Hareket Ediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/613"
+        },
+        {
+          "title": "2. Tema: Oyunu Kuralına Göre Oynuyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/614"
+        },
+        {
+          "title": "3. Tema: Ritimle Hareket Ediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/616"
+        },
+        {
+          "title": "4. Tema: Fiziksel Aktiviteye Katılıyorum Sağlıklı Büyüyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/618"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Beden Eğitimi ve Oyun",
+      "grade": 2,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/beden-egitimi-ve-oyun-dersi/3",
+      "units": [
+        {
+          "title": "1.Tema: Hareketimi Geliştiriyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/619"
+        },
+        {
+          "title": "2. Tema: Oyunun Kurallarını Uyguluyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/620"
+        },
+        {
+          "title": "3. Tema: Ritimle Hareket Ediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/621"
+        },
+        {
+          "title": "4. Tema: Sağlığım İçin Fiziksel Aktiviteye Katılıyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/623"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Beden Eğitimi ve Oyun",
+      "grade": 3,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/beden-egitimi-ve-oyun-dersi/4",
+      "units": [
+        {
+          "title": "1. Tema: İş Birlikli Oyunlarla Hareket Ediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/625"
+        },
+        {
+          "title": "2. Tema: Oyunun Kurallarını Yeniden Oluşturuyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/626"
+        },
+        {
+          "title": "3. Tema: Farklı Ritimlerle Hareket Ediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/627"
+        },
+        {
+          "title": "4.Tema: Sağlığım İçin Fiziksel Aktiviteye Katılıyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/641"
+        },
+        {
+          "title": "5. Tema: Hareket Ederek Çevremi Keşfediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/645"
+        },
+        {
+          "title": "6. Tema: Kültürel Birikimlerimiz Ve Geleneksel Oyunlar",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/646"
+        }
+      ],
+      "active_model": "TYMM 2026–2027"
+    },
+    {
+      "subject": "Beden Eğitimi ve Oyun",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/beden-egitimi-ve-oyun-dersi/5",
+      "units": [
+        {
+          "title": "1. Tema: Hareket Ediyorum Ve Koordinasyonumu Geliştiriyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/726"
+        },
+        {
+          "title": "2. Tema: Dünya Çocuk Oyunlarını Oynuyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/727"
+        },
+        {
+          "title": "3. Tema: Yaratıcı Ritmik Adımlar Sergiliyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/728"
+        },
+        {
+          "title": "4. Tema: Fiziksel Aktiviteye Katılıyorum Ve Sağlıklı Besleniyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/731"
+        },
+        {
+          "title": "5. Tema: Hareket Ederek Doğayı Keşfediyorum",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/732"
+        },
+        {
+          "title": "6. Tema: Hareket Engel Tanımaz",
+          "url": "https://tymm.meb.gov.tr/beden-egitimi-ve-oyun-dersi/unite/733"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Din Kültürü ve Ahlak Bilgisi",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/5",
+      "units": [
+        {
+          "title": "1. Ünite: Günlük Hayat Ve Din",
+          "url": "https://tymm.meb.gov.tr/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/unite/4"
+        },
+        {
+          "title": "2. Ünite: Allah Sevgisi",
+          "url": "https://tymm.meb.gov.tr/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/unite/6"
+        },
+        {
+          "title": "3. Ünite: Peygamberlerin Sevgisi",
+          "url": "https://tymm.meb.gov.tr/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/unite/7"
+        },
+        {
+          "title": "4. Ünite: Ahlaki Değerlerimiz",
+          "url": "https://tymm.meb.gov.tr/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/unite/44"
+        },
+        {
+          "title": "5. Ünite: Haklar Ve Sorumluluklar",
+          "url": "https://tymm.meb.gov.tr/din-kulturu-ve-ahlak-bilgisi-dersi-temel-egitim/unite/50"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "İnsan Hakları, Vatandaşlık ve Demokrasi",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/insan-haklari-vatandaslik-ve-demokrasi-dersi/5",
+      "units": [
+        {
+          "title": "1.Öğrenme Alanı: Çocuk Olarak Haklarımla Varım",
+          "url": "https://tymm.meb.gov.tr/insan-haklari-vatandaslik-ve-demokrasi-dersi/unite/355"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Hayatımda Eşitlik Ve Adalet",
+          "url": "https://tymm.meb.gov.tr/insan-haklari-vatandaslik-ve-demokrasi-dersi/unite/358"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Etkin Bir Vatandaşım",
+          "url": "https://tymm.meb.gov.tr/insan-haklari-vatandaslik-ve-demokrasi-dersi/unite/370"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Hayatımda Demokrasi",
+          "url": "https://tymm.meb.gov.tr/insan-haklari-vatandaslik-ve-demokrasi-dersi/unite/371"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    },
+    {
+      "subject": "Trafik Güvenliği",
+      "grade": 4,
+      "url": "https://tymm.meb.gov.tr/ogretim-programlari/trafik-guvenligi-dersi/5",
+      "units": [
+        {
+          "title": "1. Öğrenme Alanı: Trafikte Güvenli Adımlar",
+          "url": "https://tymm.meb.gov.tr/trafik-guvenligi-dersi/unite/615"
+        },
+        {
+          "title": "2. Öğrenme Alanı: Ulaşım Araçları Ve Güvenli Yolculuk",
+          "url": "https://tymm.meb.gov.tr/trafik-guvenligi-dersi/unite/617"
+        },
+        {
+          "title": "3. Öğrenme Alanı: Trafikte Haklar, Sorumluluklar Ve İletişim",
+          "url": "https://tymm.meb.gov.tr/trafik-guvenligi-dersi/unite/622"
+        },
+        {
+          "title": "4. Öğrenme Alanı: Trafikte İlk Yardım Ve Acil Durumlar",
+          "url": "https://tymm.meb.gov.tr/trafik-guvenligi-dersi/unite/624"
+        }
+      ],
+      "active_model": "4. sınıf: uygulanan yıllık planı ayrıca doğrulayın"
+    }
+  ],
+  "errors": []
+}
