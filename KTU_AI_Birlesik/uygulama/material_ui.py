@@ -27,6 +27,7 @@ class MaterialWorker(QThread):
 
 
 class QuestionComposer(QWidget):
+    changed=pyqtSignal()
     def __init__(self,parent=None):
         super().__init__(parent);self.questions=[]
         layout=QVBoxLayout(self);layout.setContentsMargins(0,0,0,0)
@@ -45,6 +46,7 @@ class QuestionComposer(QWidget):
         self.list.clear()
         for index,q in enumerate(self.questions):
             self.list.addItem(f"{index+1}. {q['text']}\nDoğru cevap: {q['choices'][q['answer']]} · Kazanım: {q.get('concept','genel')}")
+        self.changed.emit()
     def remove(self):
         index=self.list.currentRow()
         if 0<=index<len(self.questions): self.questions.pop(index);self.refresh()
@@ -105,7 +107,9 @@ class MaterialDialog(QDialog):
         self.program_note=QLabel();self.program_note.setWordWrap(True);layout.addWidget(self.program_note)
         self.load=QPushButton('PDF / Word / metin belgesi seç');self.load.clicked.connect(self.choose_document);layout.addWidget(self.load)
         self.text=QPlainTextEdit();self.text.setPlaceholderText('Belgenin ilgili bölümünü buraya da yapıştırabilirsiniz.');self.text.setMaximumHeight(150);layout.addWidget(self.text)
-        self.ai=QPushButton('Belgeden taslak sorular üret');self.ai.clicked.connect(self.generate);layout.addWidget(self.ai)
+        self.offline=QPushButton('Seçili konunun hazır sorularını getir · İnternetsiz');self.offline.clicked.connect(self.load_ready);layout.addWidget(self.offline)
+        self.settings=QPushButton('Ses ve yapay zekâ bağlantısını ayarla');self.settings.clicked.connect(self.open_settings);layout.addWidget(self.settings)
+        self.ai=QPushButton('PDF sorularını analiz et · Benzer taslaklar üret');self.ai.clicked.connect(self.generate);layout.addWidget(self.ai)
         disclosure=QLabel('Bu düğmeye bastığınızda yukarıdaki metin Gemini hizmetine gönderilir. Öğrenci adı gibi kişisel bilgileri çıkarın. Elle soru eklemek internet gerektirmez.')
         disclosure.setWordWrap(True);layout.addWidget(disclosure)
         self.status=QLabel();self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -123,25 +127,60 @@ class MaterialDialog(QDialog):
         self.program_note.setText(course['active_model'] if course else 'Bu sınıf için MEB önbelleği bulunamadı.')
     def run_worker(self,mode,args):
         if self.worker and self.worker.isRunning(): return
-        for w in (self.ai,self.load,self.approve,self.grade,self.subject,self.unit,self.composer,self.text,self.count): w.setEnabled(False)
+        for w in (self.ai,self.offline,self.settings,self.load,self.approve,self.grade,self.subject,self.unit,self.composer,self.text,self.count): w.setEnabled(False)
         self.status.setText('Belge okunuyor…' if mode=='read' else 'Taslak sorular hazırlanıyor… Öğretmen onayı olmadan öğrenciye gösterilmez.')
         worker=MaterialWorker(mode,args);self.worker=worker;_WORKERS.add(worker)
         def done(value):
             if mode=='read': self.text.setPlainText(value);self.status.setText(f'{self.document_name} · {len(value)} karakter okundu.')
-            else: self.composer.set_questions(value);self.status.setText(f'{len(value)} taslak soru hazır. Her soruyu inceleyin; düzenleyebilir veya kaldırabilirsiniz.')
+            else:
+                self.composer.set_questions(value)
+                types=len({q.get('concept','genel') for q in value})
+                self.status.setText(f'{len(value)} benzer taslak soru · {types} soru türü/kazanım. Aynı türdeki sorular öğrenme takibinde birlikte değerlendirilir. Doğru cevapları ve açıklamaları kontrol edip onaylayın.')
         def failed(message): self.status.setText(message)
         def finished():
-            for w in (self.ai,self.load,self.approve,self.grade,self.subject,self.unit,self.composer,self.text,self.count): w.setEnabled(True)
+            for w in (self.ai,self.offline,self.settings,self.load,self.approve,self.grade,self.subject,self.unit,self.composer,self.text,self.count): w.setEnabled(True)
             _WORKERS.discard(worker)
         worker.done.connect(done);worker.failed.connect(failed);worker.finished.connect(finished);worker.start()
     def choose_document(self):
         path,_=QFileDialog.getOpenFileName(self,'Ders belgesi seç','','Ders belgeleri (*.pdf *.docx *.txt *.md)')
         if path:
             self.document_name=Path(path).name;self.run_worker('read',(path,))
+    def open_settings(self):
+        owner=self.parentWidget()
+        while owner is not None:
+            if hasattr(owner,'ai_settings'):
+                owner.ai_settings();return
+            owner=owner.parentWidget()
+        self.status.setText('Veli veya öğretmen ana ekranındaki Hesap ve sınıflar bölümünden bağlantıyı ayarlayabilirsiniz.')
+    def load_ready(self,checked=False,confirm=True):
+        if self.worker and self.worker.isRunning():return
+        if confirm and self.composer.questions and QMessageBox.question(self,'Hazır sorular','Mevcut taslağın yerine seçili konunun hazır soruları getirilsin mi?')!=QMessageBox.StandardButton.Yes:return
+        from curriculum_practice import topics,offline_bank
+        unit=self.unit.currentData()
+        topic=next((t for t in topics(self.grade.currentData()) if unit and t['subject']==self.subject.currentText() and t['title']==unit['title']),None)
+        if not topic:self.status.setText('Önce ders ve MEB temasını seçin.');return
+        from copy import deepcopy
+        bank=offline_bank(topic['skill']);seen=set();questions=[]
+        for q in bank:
+            text=' '.join(q['text'].casefold().split())
+            if text in seen:continue
+            seen.add(text);questions.append(deepcopy(q))
+            if len(questions)>=self.count.value():break
+        if not questions:self.status.setText('Bu tema için hazır soru bulunamadı. Elle soru ekleyebilirsiniz.');return
+        self.composer.set_questions(questions)
+        if not self.title.text().strip():self.title.setText(self.subject.currentText()+' · '+unit['title'])
+        self.document_name=''
+        self.status.setText(f'{len(questions)} hazır soru getirildi. Bunlar seçili MEB konusunun soru bankasındandır; yüklediğiniz belgeden üretilmedi. Kontrol edip paketi kaydedebilirsiniz.')
+
     def generate(self):
         if self.composer.questions and QMessageBox.question(self,'Taslağı yenile','Mevcut taslak soruların yerine yeni sorular üretilecek. Devam edilsin mi?')!=QMessageBox.StandardButton.Yes: return
         unit=self.unit.currentData()
         if not unit: self.status.setText('Önce MEB temasını seçin.');return
+        import os
+        if not os.getenv('GEMINI_GENERATOR_KEY','').strip():
+            self.load_ready(confirm=False)
+            self.status.setText('Belgeden yeni soru üretmek için yapay zekâ bağlantısı gerekir. '+self.status.text())
+            return
         self.run_worker('generate',(self.text.toPlainText(),self.grade.currentData(),self.subject.currentText(),unit['title'],self.count.value()))
     def save(self):
         try:

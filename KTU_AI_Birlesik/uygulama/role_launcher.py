@@ -84,6 +84,8 @@ def main():
         app.aboutToQuit.connect(shutdown_voice_requests)
         from material_ui import shutdown_material_workers
         app.aboutToQuit.connect(shutdown_material_workers)
+        from curriculum_practice import shutdown_workers
+        app.aboutToQuit.connect(shutdown_workers)
         from keyboard_guard import guard
         app.aboutToQuit.connect(guard.stop)
         app.aboutToQuit.connect(listener.close)

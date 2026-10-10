@@ -7,7 +7,7 @@ from pathlib import Path
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel,
     QPushButton, QLineEdit, QComboBox, QDialog, QFormLayout, QSpinBox, QDateEdit,
     QFrame, QScrollArea, QStackedWidget, QTableWidget, QTableWidgetItem,
-    QHeaderView, QAbstractItemView, QMessageBox, QInputDialog, QCheckBox, QTimeEdit, QPlainTextEdit, QSizePolicy)
+    QHeaderView, QAbstractItemView, QMessageBox, QInputDialog, QCheckBox, QTimeEdit, QPlainTextEdit, QSizePolicy, QListWidget, QListWidgetItem)
 import role_store as store
 
 
@@ -199,22 +199,24 @@ class RoleWindow(QWidget):
         content.addWidget(self.username);content.addWidget(self.password)
         self.login_error=label('', 'Error');content.addWidget(self.login_error)
         self.login_button=button('Giriş yap',self.login);content.addWidget(self.login_button)
-        self.child_chooser=QWidget();child_grid=QGridLayout(self.child_chooser);child_grid.setAlignment(Qt.AlignmentFlag.AlignTop)
+        self.student_entry=QWidget();entry=QFormLayout(self.student_entry)
+        self.student_name=QLineEdit();self.student_name.setPlaceholderText('Ad soyad')
+        self.student_number=QLineEdit();self.student_number.setPlaceholderText('Okul numaran')
+        self.student_class_code=QLineEdit();self.student_class_code.setPlaceholderText('İlk girişte öğretmeninin verdiği kod')
+        entry.addRow('Adın',self.student_name);entry.addRow('Numaran',self.student_number)
+        self.student_class_code.hide()
+        def student_enter():
+            try:self.enter(store.enter_student_by_number(self.student_name.text(),self.student_number.text(),self.student_class_code.text()))
+            except ValueError as error:self.login_error.setText(str(error))
+        entry.addRow(button('Maceraya başla',student_enter))
+        def join_first_time():
+            code,ok=QInputDialog.getText(self,'Sınıfına katıl','İlk kayıt için öğretmeninin verdiği sınıf kodu:')
+            if ok and code.strip():
+                self.student_class_code.setText(code.strip());student_enter()
+        entry.addRow(button('İlk kez giriş yapıyorum · Sınıfıma katıl',join_first_time,True))
+        self.student_number.returnPressed.connect(student_enter)
+        content.addWidget(self.student_entry)
         children=store.child_profiles()
-        for index,child in enumerate(children):
-            name=child['alias'].replace(' · Örnek','')
-            asset='design_girl.png' if store.avatar_for(child['id'])=='student_girl.png' else 'design_boy.png'
-            b=button(f"{name}\n{child['grade']}. sınıf",lambda _,sid=child['id']:self.enter(store.student_identity(sid)))
-            b.setToolTip(child['alias']);b.setIcon(QIcon(portrait(asset,64)))
-            b.setIconSize(QSize(64,64));b.setMinimumHeight(88)
-            b.setSizePolicy(QSizePolicy.Policy.Ignored,QSizePolicy.Policy.Fixed)
-            b.setStyleSheet('QPushButton { background: #edf9ef; color: #23664e; border: 2px solid #bee5c8; border-radius: 18px; padding: 8px; } QPushButton:hover { background: #d3f1db; }')
-            child_grid.addWidget(b,index//3,index%3)
-        if not children:child_grid.addWidget(label('Velin profilini oluştursun. Sonra resmine dokunarak başlayabilirsin!'))
-        chooser_scroll=QScrollArea();chooser_scroll.setWidgetResizable(True)
-        chooser_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        chooser_scroll.setMinimumHeight(160);chooser_scroll.setWidget(self.child_chooser)
-        content.addWidget(chooser_scroll,1)
         if not children:
             content.addWidget(button('Örnek hesaplarla keşfet',self.load_demo,True))
             content.addWidget(label('Örnek veli: demo.veli · Öğretmen: demo.ogretmen · Şifre: Demo123!','Muted'))
@@ -225,9 +227,9 @@ class RoleWindow(QWidget):
             self.selected_role=role
             for key,b in choices.items():b.setChecked(key==role)
             for w in (self.username,self.password,self.login_button,self.register_button):w.setVisible(role!='student')
-            chooser_scroll.setVisible(role=='student')
-            panel_title.setText('Resmini seç, maceranı başlat!' if role=='student' else ('Veli girişi' if role=='parent' else 'Öğretmen girişi'))
-            self.login_hint.setText('Resmine dokunman yeterli. Şifreye ihtiyacın yok.' if role=='student' else 'Kendi hesabınla sana özel gelişim ekranına gir.')
+            self.student_entry.setVisible(role=='student')
+            panel_title.setText('Adını ve numaranı yaz, maceranı başlat!' if role=='student' else ('Veli girişi' if role=='parent' else 'Öğretmen girişi'))
+            self.login_hint.setText('Adını ve okul numaranı yazman yeterli. Şifreye ihtiyacın yok.' if role=='student' else 'Kendi hesabınla sana özel gelişim ekranına gir.')
             self.login_error.clear()
         select(self.selected_role);self.password.returnPressed.connect(self.login)
         outer.addWidget(panel,1,Qt.AlignmentFlag.AlignHCenter)
@@ -370,7 +372,7 @@ class RoleWindow(QWidget):
         if self.identity.role == 'teacher':
             self.student_picker.addItem('Sınıfın tamamı', None)
         for child in store.students(self.identity, self.class_picker.currentData()):
-            self.student_picker.addItem(f"{child['alias']} · {child['grade']}. sınıf", child['id'])
+            self.student_picker.addItem(f"{child['alias']} · No: {store.school_number(child['id']) or '—'} · {child['grade']}. sınıf", child['id'])
         self.student_picker.blockSignals(False)
 
     def show_section(self, section):
@@ -402,7 +404,7 @@ class RoleWindow(QWidget):
 
     def overview(self, layout):
         sid, cid = self.student_picker.currentData(), self.class_picker.currentData()
-        data = store.analytics(self.identity, sid, cid)
+        data = store.analytics(self.identity, sid, cid,period_days=getattr(self,'report_days',None))
         if not store.students(self.identity, cid):
             welcome, contents = card('İlk adımı birlikte atalım')
             if self.identity.role == 'parent':
@@ -416,6 +418,13 @@ class RoleWindow(QWidget):
                 contents.addWidget(label('Veliler bu kodu kendi ekranından kullanarak çocuklarını sınıfına bağlayabilir.', 'Muted'))
                 contents.addWidget(label(classroom['code'] if classroom else '', 'Metric'))
             layout.addWidget(welcome)
+        period=QComboBox()
+        for text,value in [('Tüm zamanlar',None),('Son 7 gün',7),('Son 30 gün',30)]:period.addItem(text,value)
+        period.setCurrentIndex(max(0,period.findData(getattr(self,'report_days',None))))
+        def change_period():
+            self.report_days=period.currentData();self.show_section('overview')
+        period.currentIndexChanged.connect(change_period)
+        layout.addWidget(period)
         title = self.student_picker.currentText() or 'İlk kaydını oluştur'
         layout.addWidget(label(title, 'Section'))
         if self.identity.role == 'teacher' and sid is None:
@@ -428,6 +437,7 @@ class RoleWindow(QWidget):
             contents.addWidget(label(str(value), 'Metric'))
             metrics.addWidget(tile)
         layout.addLayout(metrics)
+        self.learning_needs(layout, data)
         charts = QHBoxLayout()
         success, l = card('Cevap dağılımı')
         l.addWidget(Chart('donut', (data['correct'], data['wrong'])))
@@ -453,12 +463,12 @@ class RoleWindow(QWidget):
         contents.addWidget(label('Az cevap olduğunda “Veri birikiyor” görünür. İpucuyla ve yardımsız verilen doğru cevaplar ayrı izlenir. Ek destek alıştırmaları rapora dahildir.','Muted'))
         rows=data['concepts']
         table=self.table(['Ders','Kazanım','Doğru','Yanlış','İpucu','Yardımsız doğru','Durum'],
-            [[r['subject'],r['concept'],r['correct'],r['wrong'],r['hints'],r['clean'],r['status']] for r in rows])
+            [[r['subject'],self.readable_topic(r),r['correct'],r['wrong'],r['hints'],r['clean'],r['status']] for r in rows])
         table.horizontalHeader().setSectionResizeMode(0,QHeaderView.ResizeMode.ResizeToContents)
         table.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeMode.Stretch)
         contents.addWidget(table)
         priorities=[r for r in rows if r['status']=='Tekrar önerilir']
-        if priorities: contents.addWidget(label('Pekiştirme önerisi: '+' · '.join(r['subject']+': '+r['concept'] for r in priorities[:3]),'Section'))
+        if priorities: contents.addWidget(label('Pekiştirme önerisi: '+' · '.join(r['subject']+': '+self.readable_topic(r) for r in priorities[:3]),'Section'))
         contents.addWidget(button('Gelişim raporunu CSV olarak indir',lambda:self.export_report(data),True))
         layout.addWidget(details)
         layout.addStretch()
@@ -514,6 +524,7 @@ class RoleWindow(QWidget):
             l.addWidget(label(f"{task['subject']} · {task['topic']} · {task['actual_count']} soru", 'Muted'))
             due = task.get('due_date') or 'Belirtilmedi'
             status = f"{task['completed']}/{task['actual_count']} soru tamamlandı" if 'completed' in task else f"{task['completed_students']}/{task['recipient_count']} öğrenci tamamladı"
+            if task.get('mastery_rate') is not None:status+=f" · Öğrenme: %{task['mastery_rate']} · "+('Hedef tamamlandı' if task.get('mastered') else 'Pekiştirme sürüyor')
             l.addWidget(label(f'Son tarih: {due}   ·   {status}'))
             if task.get('scheduled_at'):
                 from datetime import datetime
@@ -521,7 +532,7 @@ class RoleWindow(QWidget):
                 l.addWidget(label(f'Otomatik açılış: {when}', 'Section'))
                 if task.get('schedule_error'):
                     l.addWidget(label('Windows zamanlaması kurulamadı. Bu saatte uygulamayı açık tutun.','Error'))
-            if self.identity.role=='parent' and self.student_picker.currentData() and task.get('completed',0)<task['actual_count']:
+            if self.identity.role=='parent' and self.student_picker.currentData() and not task.get('mastered') and (task.get('mastery_rate') is not None or task.get('completed',0)<task['actual_count']):
                 l.addWidget(button('Başlangıç saatini ayarla',lambda _,aid=task['id']:self.schedule_task_dialog(aid),True))
             layout.addWidget(frame)
         layout.addStretch()
@@ -569,28 +580,62 @@ class RoleWindow(QWidget):
         if dialog.exec():
             self.show_section('materials')
 
+    @staticmethod
+    def readable_topic(row):
+        topic = str(row.get('topic') or '').strip()
+        concept = str(row.get('concept') or '').strip()
+        # Internal concept identifiers belong in storage, not parent-facing labels.
+        technical = '_' in concept or (concept.isascii() and concept.islower() and ' ' not in concept)
+        if not concept or technical or concept == topic:
+            return topic or 'Genel tekrar'
+        return topic + ' · ' + concept if topic else concept
+
+    def learning_needs(self, layout, data):
+        frame, contents = card('Tekrar edilmesi önerilen konular')
+        contents.addWidget(label('Çözülen sorulara göre hazırlanır. Başarı %80’in altındaysa veya ipucu kullanımı yüksekse konu pekiştirme için önerilir.', 'Muted'))
+        needs = [r for r in data['concepts'] if r['wrong'] or r['hints']]
+        needs = [r for r in needs if r['rate'] < 80 or r['hints'] / max(1, r['total']) > .5]
+        needs.sort(key=lambda r: (r['total'] < 5, r['rate'], -r['wrong']))
+        if needs:
+            table = self.table(['Ders', 'Konu / kazanım', 'Çözülen', 'Yanlış', 'Başarı', 'Öneri'],
+                [[r['subject'], self.readable_topic(r),
+                  r['total'], r['wrong'], f"%{r['rate']}",
+                  'Az veri · Birkaç soru daha çözmeli' if r['total'] < 5 else
+                  'İpucusuz alıştırma yapmalı' if r['rate'] >= 80 else 'Konuyu tekrar edip benzer sorular çözmeli'] for r in needs])
+            table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+            table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+            contents.addWidget(table)
+        elif not data['total']:
+            contents.addWidget(label('Henüz cevap kaydı yok. Soru çözüldükçe tekrar gerektiren konular burada görünecek.', 'Muted'))
+        else:
+            contents.addWidget(label('Mevcut cevaplarda tekrar önceliği görünen konu yok. Henüz çözülmemiş konular değerlendirilmez.', 'Muted'))
+        layout.addWidget(frame)
+
     def people_page(self, layout):
         layout.addWidget(label('Her öğrencinin gelişimini ayrı izle', 'Section'))
-        data = store.analytics(self.identity, class_id=self.class_picker.currentData())
+        data = store.analytics(self.identity, student_id=self.student_picker.currentData(), class_id=self.class_picker.currentData())
         rows = data['students']
-        table = self.table(['Öğrenci','Sınıf','Soru','Doğru','Yanlış','Başarı'],
-            [[r['alias'],r['grade'],r['total'],r['correct'],r['wrong'],f"%{round(100*r['correct']/r['total']) if r['total'] else 0}"] for r in rows])
+        table = self.table(['Öğrenci','Numara','Sınıf','Soru','Doğru','Yanlış','Başarı'],
+            [[r['alias'],store.school_number(r['id']) or '—',r['grade'],r['total'],r['correct'],r['wrong'],f"%{round(100*r['correct']/r['total']) if r['total'] else 0}"] for r in rows])
         def detail(row, _):
             if row < len(rows):
                 self.student_picker.setCurrentIndex(self.student_picker.findData(rows[row]['id']))
                 self.show_section('overview')
         table.cellDoubleClicked.connect(detail)
         layout.addWidget(table)
+        self.learning_needs(layout, data)
         layout.addWidget(label('Bir öğrencinin satırına çift tıklayarak kişisel grafiklerini aç.', 'Muted'))
         if not rows:
             layout.addWidget(label('Henüz öğrenci yok. Hesap ve sınıflar bölümünden başlayabilirsin.', 'Muted'))
         layout.addStretch()
 
     def manage_page(self, layout):
+        layout.addWidget(button('Yapay zekâ bağlantısını ayarla',self.ai_settings,True))
         if self.identity.role == 'parent':
             frame,l = card('Çocuk hesapları')
             l.addWidget(label('Çocuğun resmine dokunarak şifresiz giriş yapar. Veli ve öğretmen alanları şifreyle korunur.', 'Muted'))
             l.addWidget(button('Çocuk hesabı oluştur', self.child_dialog))
+            l.addWidget(button('Seçili çocuğun bilgilerini düzenle',self.edit_child_dialog,True))
             l.addWidget(button('Seçili çocuğu sınıfa bağla', self.join_dialog, True))
             l.addWidget(button('Serbest çalışma derslerini seç',self.practice_preferences,True))
             l.addWidget(button('Önceki tek öğrenci raporlarını bağla',self.import_history,True))
@@ -604,10 +649,43 @@ class RoleWindow(QWidget):
                 code = label(classroom['code'] or 'Bu eski sınıf için kod henüz oluşturulmadı.', 'Metric')
                 code.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
                 l.addWidget(code)
+                l.addWidget(button('Sınıf bilgilerini düzenle',lambda _,cl=classroom:self.class_dialog(cl),True))
                 l.addWidget(button('Kodu velilerle paylaş · Bildirim gönder',lambda _,cid=classroom['id']:self.share_code(cid)))
                 l.addWidget(label('Bu kodu velilerle paylaş. Veli, çocuğunu kendi hesabından bu sınıfa bağlayabilir.', 'Muted'))
                 layout.addWidget(frame)
         layout.addStretch()
+
+    def ai_settings(self):
+        if self.identity.role not in ('parent','teacher'):return
+        import os
+        d,f,error=self.form_dialog('Ses ve yapay zekâ ayarları')
+        f.addRow(label('Yerel ses internet veya API anahtarı gerektirmez. Anahtar alanları boş bırakıldığında mevcut anahtarlar korunur.','Muted'))
+        provider=QComboBox()
+        for title,value in [('Yerel Türkçe ses (Piper)','piper'),('ElevenLabs','elevenlabs'),('Gemini ses','gemini')]:provider.addItem(title,value)
+        provider.setCurrentIndex(max(0,provider.findData(os.getenv('AUDIO_PROVIDER','piper'))))
+        f.addRow('Seslendirme',provider)
+        edits={}
+        for title,name in [('Soru üretimi: Gemini','GEMINI_GENERATOR_KEY'),('ElevenLabs ses anahtarı','ELEVENLABS_API_KEY')]:
+            edit=QLineEdit();edit.setEchoMode(QLineEdit.EchoMode.Password)
+            edit.setPlaceholderText('Kayıtlı anahtar var; değiştirmek için yazın' if os.getenv(name) else 'İsteğe bağlı API anahtarı')
+            f.addRow(title,edit);edits[name]=edit
+        f.addRow(label('Soru üretiminde ders metni gönderilir; öğrenci adı ve gelişim kayıtları gönderilmez.','Muted'))
+        def save():
+            from dotenv import set_key
+            values={name:edit.text().strip() for name,edit in edits.items() if edit.text().strip()}
+            required={'elevenlabs':'ELEVENLABS_API_KEY','gemini':'GEMINI_GENERATOR_KEY'}.get(provider.currentData())
+            if required and not values.get(required,os.getenv(required,'')):
+                error.setText('Seçtiğiniz ses hizmetinin API anahtarını girin veya yerel sesi seçin.');return
+            values['AUDIO_PROVIDER']=provider.currentData()
+            path=Path(os.environ['OM_LOCAL_DATA_DIR'])/'.env' if os.getenv('OM_LOCAL_DATA_DIR') else Path(__file__).with_name('.env')
+            try:
+                for name,value in values.items():set_key(str(path),name,value)
+                os.environ.update(values)
+                for edit in edits.values():edit.clear()
+                d.accept()
+                QMessageBox.information(self,'Ayarlar kaydedildi','Yeni ayarlar bir sonraki seslendirme ve soru üretiminde kullanılacak.')
+            except OSError:error.setText('Ayar dosyası yazılamadı.')
+        f.addRow(button('Ayarları kaydet',save));d.exec()
 
     def child_dialog(self):
         d,f,error = self.form_dialog('Çocuk hesabı oluştur')
@@ -634,21 +712,39 @@ class RoleWindow(QWidget):
         f.addRow(button('Hesabı oluştur',save))
         d.exec()
 
-    def class_dialog(self):
-        d,f,error = self.form_dialog('Yeni sınıf')
+    def edit_child_dialog(self):
+        sid=self.student_picker.currentData()
+        if not sid:QMessageBox.information(self,'Çocuk seçimi','Önce çocuğu seçin.');return
+        child=store.require_student(self.identity,sid)
+        d,f,error=self.form_dialog('Çocuk bilgilerini düzenle')
+        name=QLineEdit(child['alias']);grade=QSpinBox();grade.setRange(1,4);grade.setValue(child['grade'])
+        avatar=QComboBox();avatar.addItem('Erkek öğrenci','student_boy.png');avatar.addItem('Kız öğrenci','student_girl.png')
+        avatar.setCurrentIndex(max(0,avatar.findData(store.avatar_for(sid))))
+        f.addRow('Ad soyad',name);f.addRow('Sınıf düzeyi',grade);f.addRow('Görsel',avatar)
+        def save():
+            try:
+                store.update_child(self.identity,sid,name.text(),grade.value());store.set_avatar(self.identity,sid,avatar.currentData())
+                d.accept();self.dashboard();self.show_section('manage')
+            except (ValueError,sqlite3.Error) as exc:error.setText(str(exc))
+        f.addRow(button('Değişiklikleri kaydet',save));d.exec()
+
+    def class_dialog(self,classroom=None):
+        d,f,error = self.form_dialog('Sınıfı düzenle' if classroom else 'Yeni sınıf')
         name,grade = QLineEdit(),QSpinBox()
         name.setPlaceholderText('Örneğin 3-A')
         grade.setRange(1,4)
+        if classroom:name.setText(classroom['name']);grade.setValue(classroom['grade'])
         f.addRow('Sınıf adı',name)
         f.addRow('Sınıf düzeyi',grade)
         def save():
             try:
-                store.add_class(self.identity,name.text(),grade.value())
+                if classroom:store.update_class(self.identity,classroom['id'],name.text(),grade.value())
+                else:store.add_class(self.identity,name.text(),grade.value())
                 d.accept()
                 self.dashboard()
                 self.show_section('manage')
-            except (ValueError,sqlite3.IntegrityError):
-                error.setText('Sınıf adı boş veya bu sınıf zaten mevcut.')
+            except (ValueError,sqlite3.IntegrityError) as exc:
+                error.setText(str(exc) or 'Sınıf adı boş veya bu sınıf zaten mevcut.')
         f.addRow(button('Sınıfı oluştur',save))
         d.exec()
 
@@ -698,12 +794,20 @@ class RoleWindow(QWidget):
         d,f,error = self.form_dialog('Yeni öğrenme görevi')
         import teaching_materials as materials
         from material_ui import QuestionComposer
-        packs=materials.owned_packs(self.identity,grade)
+        packs=materials.available_packs(self.identity,grade,sid)
         if selected_pack_id and selected_pack_id not in {p['id'] for p in packs}:
             QMessageBox.information(self,'Sınıf düzeyi','Bu paket için aynı sınıf düzeyindeki çocuğu veya sınıfı seçin.');return
         pack_picker=QComboBox();pack_picker.addItem('Hazır banka veya yeni sorular',None)
-        for pack in packs: pack_picker.addItem(pack['title'],pack)
+        for pack in packs: pack_picker.addItem(('Öğretmen: '+pack.get('owner_name','')+' · ' if pack.get('from_teacher') else '')+pack['title'],pack)
         f.addRow('Onaylı soru paketi',pack_picker)
+        def choose_teacher():
+            choices=[(i,pack_picker.itemText(i)) for i in range(1,pack_picker.count()) if pack_picker.itemData(i).get('from_teacher')]
+            if not choices:
+                QMessageBox.information(self,'Öğretmenin soruları','Çocuğunun sınıf öğretmeni Soru atölyesinden soru ekleyip paketi kaydettiğinde burada görünecek. Çocuğun doğru sınıfa bağlı olduğundan emin ol.');return
+            chosen,ok=QInputDialog.getItem(self,'Hocanın sorularını ekle','Öğretmenin onayladığı paket',[text for _,text in choices],0,False)
+            if ok:pack_picker.setCurrentIndex(next(i for i,text in choices if text==chosen))
+        if self.identity.role=='parent':f.addRow(button('Hocanın sorularını ekle',choose_teacher,True))
+
         title,topic,count,due = QLineEdit(),QComboBox(),QSpinBox(),QDateEdit()
         title.setPlaceholderText('Örneğin: Bu haftaki fen keşfim')
         from curriculum import catalogue, subject_for_skill, ready_skills
@@ -777,6 +881,33 @@ class RoleWindow(QWidget):
             f.addRow('Görev kime verilsin?',target)
         for text,w in [('Görev adı',title),('Ders / konu',topic),('Soru sayısı',count),('Başlangıç tarihi' if self.identity.role=='parent' else 'Son tarih',due)]:
             f.addRow(text,w)
+        preview=QListWidget();preview.setObjectName('TaskQuestionPreview');preview.setMinimumHeight(165);preview.setMaximumHeight(260);preview.setWordWrap(True)
+        preview_note=label('İstersen soruları önizleyip göreve eklenecekleri seçebilirsin.','Muted')
+        def show_preview(questions):
+            preview.clear()
+            for q in questions:
+                item=QListWidgetItem(q['text']+' → '+q['choices'][q['answer']])
+                item.setFlags(item.flags()|Qt.ItemFlag.ItemIsUserCheckable);item.setCheckState(Qt.CheckState.Checked)
+                item.setData(Qt.ItemDataRole.UserRole,q);item.setToolTip('İpucu: '+q.get('hint','')+'\nAçıklama: '+q.get('explanation',''))
+                preview.addItem(item)
+            preview_note.setText(f'{len(questions)} soru hazır. İşaretli sorular göreve eklenecek.')
+        def prepare_preview():
+            try:
+                if pack_picker.currentData():questions=pack_picker.currentData()['questions']
+                elif custom.isChecked():questions=materials.validate_questions(composer.questions)
+                else:
+                    skill=topic.currentData()
+                    if not skill:raise ValueError('Önce ders ve konuyu seçin.')
+                    questions=qb.reviewed_bank(skill,grade)[:count.value()]
+                if not questions:raise ValueError('Bu seçimde önizlenecek soru yok.')
+                show_preview(questions)
+            except ValueError as exc:error.setText(str(exc))
+        topic.currentIndexChanged.connect(lambda:preview.clear())
+        unit.currentIndexChanged.connect(lambda:preview.clear())
+        custom.toggled.connect(lambda:preview.clear())
+        composer.changed.connect(lambda:preview.clear())
+        count.valueChanged.connect(lambda:preview.clear())
+        f.addRow(button('Soruları önizle ve seç',prepare_preview,True));f.addRow(preview_note);f.addRow(preview)
         def load_pack():
             pack=pack_picker.currentData()
             subject.setEnabled(True);unit.setEnabled(True);count.setEnabled(True)
@@ -786,9 +917,9 @@ class RoleWindow(QWidget):
                 composer.set_questions(pack['questions'])
                 custom.setEnabled(True);custom.setChecked(True);custom.setEnabled(False)
                 subject.setEnabled(False);unit.setEnabled(False);count.setEnabled(False)
-                title.setText(pack['title']);count.setValue(len(pack['questions']))
+                title.setText(pack['title']);count.setValue(len(pack['questions']));show_preview(pack['questions'])
             else:
-                composer.set_questions([]);filter_subject()
+                preview.clear();composer.set_questions([]);filter_subject()
         pack_picker.currentIndexChanged.connect(load_pack)
         if selected_pack_id:
             pack_picker.setCurrentIndex(next(i for i in range(1,pack_picker.count()) if pack_picker.itemData(i)['id']==selected_pack_id))
@@ -810,6 +941,10 @@ class RoleWindow(QWidget):
                         if not 1<=len(custom_bank)<=30: raise ValueError('Bu temada hazır banka yok. 1–30 kendi sorunuzu ekleyin veya hazır alıştırmaları seçin.')
                         question_count=len(custom_bank)
                     selected_skill=selected_skill or next(iter(dict(qb.skills_for_grade(grade))))
+                if preview.count():
+                    selected=[preview.item(i).data(Qt.ItemDataRole.UserRole) for i in range(preview.count()) if preview.item(i).checkState()==Qt.CheckState.Checked]
+                    if not selected:raise ValueError('En az bir soruyu işaretleyin.')
+                    custom_bank=materials.validate_questions(selected);question_count=len(custom_bank)
                 if timed.isChecked():
                     from datetime import datetime
                     if datetime.fromisoformat(due.date().toString('yyyy-MM-dd')+'T'+clock.time().toString('HH:mm:ss')) <= datetime.now():
@@ -888,7 +1023,8 @@ class RoleWindow(QWidget):
         import questions as qb
         from curriculum import subject_for_skill
         grade=store.require_student(self.identity,self.identity.student_id)['grade']
-        catalogue=list(qb.skills_for_grade(grade))
+        from curriculum_practice import skills_for_grade as current_skills
+        catalogue=list(current_skills(grade))
         subjects=list(dict.fromkeys(subject_for_skill(skill,grade) for skill,_ in catalogue))
         self.practice_subject=QComboBox();self.practice_subject.setObjectName('PracticeSubject')
         self.practice_subject.addItems(subjects)
@@ -912,30 +1048,47 @@ class RoleWindow(QWidget):
         form.addRow('Ders',self.practice_subject);form.addRow('Konu',self.practice_topic)
         form.addRow('Kaç soru çözelim?',self.practice_count);l.addLayout(form)
         l.addWidget(self.practice_continuous)
+        self.practice_notice=label('', 'Muted');l.addWidget(self.practice_notice)
+        self.explore_button=button('Alıştırmaya başla',lambda:explore())
+        def availability():
+            import os
+            from curriculum_practice import offline_bank
+            skill=self.practice_topic.currentData()
+            available=bool(skill and (os.getenv('GEMINI_GENERATOR_KEY','').strip() or store.student_topic_bank(self.identity,skill)))
+            self.explore_button.setEnabled(available)
+            self.practice_notice.setText('Bu konu için sorular henüz hazır değil. Velin veya öğretmenin soru hazırlayabilir ya da yapay zekâ bağlantısını ayarlayabilir. Hazır olan başka bir konu seçebilirsin.' if skill and not available else '')
+        self.practice_topic.currentIndexChanged.connect(availability)
         def topics_changed():
             subject=self.practice_subject.currentText();self.practice_topic.clear()
-            self.practice_topic.addItem('Bu dersin tüm konuları',None)
+            self.practice_topic.addItem('Bir konu seç',None)
             for skill,_ in catalogue:
                 if subject_for_skill(skill,grade)==subject:self.practice_topic.addItem(qb.skill_name(skill),skill)
             for value,b in subject_buttons.items():b.setChecked(value==subject)
         self.practice_subject.currentIndexChanged.connect(topics_changed);topics_changed()
         def explore():
             skill=self.practice_topic.currentData()
-            skills=[skill] if skill else [k for k,_ in catalogue if subject_for_skill(k,grade)==self.practice_subject.currentText()]
+            if not skill:
+                QMessageBox.information(self,'Konu seç','Çalışmak istediğin konuyu seç.');return
+            skills=[skill]
             self.start_quiz(skills=skills,count=self.practice_count.value(),continuous=self.practice_continuous.isChecked())
-        l.addWidget(button('Alıştırmaya başla',explore));l.addStretch()
+        l.addWidget(self.explore_button);l.addStretch()
         columns.addWidget(practice,3)
         aside=QVBoxLayout();tasks=store.tasks(self.identity)
         buddy,bl=card('Öğrenme arkadaşın')
         owl=QLabel();owl.setPixmap(portrait('design_owl.png',100,'#fff3b0'));bl.addWidget(owl,0,Qt.AlignmentFlag.AlignHCenter)
         bl.addWidget(label('Her soru yeni bir keşif. Hazırsan sevdiğin dersle başlayalım!', 'Muted'))
         aside.addWidget(buddy)
+        review,rl=card('Yanlışlarımdan öğreniyorum')
+        wrong=store.wrong_questions(self.identity)
+        rl.addWidget(label(f'{len(wrong)} tekrar edilebilecek soru. Doğru çözdüğün soru listeden kalkar.','Muted'))
+        rl.addWidget(button('Yanlış yaptığım sorular',self.wrong_questions_page,True))
+        aside.addWidget(review)
         appointments,al=card('Planlı çalışmalarım')
         al.addWidget(label('Velinin seçtiği saat geldiğinde soru ekranın kendiliğinden açılır.', 'Muted'))
         for task in tasks:
             completed=task.get('completed',0)
             al.addWidget(label(task['title'],'Section'))
-            if completed>=task['actual_count']:
+            if task.get('mastered') or (task.get('mastery_rate') is None and completed>=task['actual_count']):
                 al.addWidget(label('Tamamlandı. Harika iş!'))
             elif task.get('scheduled_at'):
                 from datetime import datetime
@@ -947,18 +1100,70 @@ class RoleWindow(QWidget):
         aside.addWidget(appointments);aside.addStretch();columns.addLayout(aside,2)
         scroll.setWidget(body);outer.addWidget(scroll,1);self._replace(page)
 
+    def wrong_questions_page(self):
+        page=QWidget();page.setStyleSheet(STUDENT_QSS)
+        layout=QVBoxLayout(page);layout.setContentsMargins(30,24,30,24)
+        top=QHBoxLayout();top.addWidget(label('Yanlışlarımdan öğreniyorum','Title'),1)
+        top.addWidget(button('Derslerime dön',self.student_home,True));layout.addLayout(top)
+        questions=store.wrong_questions(self.identity)
+        layout.addWidget(label('Aynı soruyu yeniden çöz veya aynı kazanımdan yeni yapay zekâ alıştırmaları hazırla.','Muted'))
+        if questions:layout.addWidget(button('Hepsini tekrar çöz',lambda:self.open_questions(questions)))
+        scroll=QScrollArea();scroll.setWidgetResizable(True);body=QWidget();items=QVBoxLayout(body)
+        from curriculum import subject_for_skill
+        grade=store.require_student(self.identity,self.identity.student_id)['grade']
+        for q in questions:
+            frame,l=card((q.get('curriculum') or {}).get('subject') or subject_for_skill(q['skill'],grade))
+            l.addWidget(label(q['text'],'Section'))
+            buttons=QHBoxLayout()
+            buttons.addWidget(button('Bu soruyu tekrar çöz',lambda _,question=q:self.open_questions([question])))
+            buttons.addWidget(button('Benzer alıştırmalar hazırla',lambda _,question=q:self.generate_practice('similar',question,6),True))
+            l.addLayout(buttons);items.addWidget(frame)
+        if not questions:items.addWidget(label('Tekrar edilecek soru yok. Yeni keşiflere hazırsın!','Section'))
+        items.addStretch();scroll.setWidget(body);layout.addWidget(scroll,1);self._replace(page)
+
+    def generate_practice(self,mode,payload,count=12,continuous=False):
+        import os
+        if mode!='similar' and not os.getenv('GEMINI_GENERATOR_KEY','').strip():
+            QMessageBox.information(self,'Yapay zekâ ayarı','Yeni sorular hazırlamak için velin veya öğretmenin yapay zekâ bağlantısını ayarlamalı. Bu sırada hazır konuları veya yanlış yaptığın soruları çözebilirsin.')
+            return
+        if getattr(self,'practice_worker',None) and self.practice_worker.isRunning():
+            QMessageBox.information(self,'Sorular hazırlanıyor','Mevcut üretimin tamamlanmasını bekle.');return
+        from curriculum_practice import PracticeWorker
+        student_id=self.identity.student_id
+        grade=store.require_student(self.identity,student_id)['grade']
+        worker=PracticeWorker(mode,payload,grade,max(2,min(30,count)))
+        self.practice_worker=worker
+        self.generation_note=label('Yeni sorular hazırlanıyor… Ders ekranında bekleyebilirsin.','Section')
+        self.stack.currentWidget().layout().addWidget(self.generation_note)
+        def ready(questions):
+            if not self.identity or self.identity.role!='student' or self.identity.student_id!=student_id:return
+            if self.quiz and not self.quiz._allow_close:return
+            bank=[dict(q,id=i) for i,q in enumerate(questions[:count])]
+            if not bank:return
+            self.open_questions(bank,continuous=continuous,practice_skills=[questions[0]['skill']])
+        def failed(message):
+            if self.identity and self.identity.role=='student' and self.identity.student_id==student_id:
+                QMessageBox.information(self,'Sorular hazırlanamadı',message)
+        worker.ready.connect(ready);worker.failed.connect(failed)
+        worker.finished.connect(lambda:self.generation_note.setText('Soru hazırlama tamamlandı.') if not __import__('PyQt6.sip',fromlist=['isdeleted']).isdeleted(self.generation_note) else None)
+        worker.start()
+
+    def open_questions(self,questions,assignment_id=None,continuous=False,practice_skills=None):
+        from role_quiz import StudentQuiz
+        self.quiz=StudentQuiz(self.identity,questions,assignment_id,continuous=continuous,practice_skills=practice_skills)
+        self.quiz.finished.connect(self.quiz_finished)
+        self.quiz.showFullScreen();self.quiz.raise_();self.quiz.activateWindow();self.hide()
+
     def start_quiz(self, assignment_id=None, skill=None, skills=None, count=12, continuous=False):
-        from role_quiz import StudentQuiz, practice_questions
+        from role_quiz import practice_questions
         try:
-            questions = store.task_questions(self.identity,assignment_id) if assignment_id else practice_questions(self.identity,count=24 if continuous else count,skills=skills or ([skill] if skill else None))
-            self.quiz = StudentQuiz(self.identity,questions,assignment_id,continuous=continuous,practice_skills=skills or ([skill] if skill else None))
-            self.quiz.finished.connect(self.quiz_finished)
-            self.quiz.showFullScreen()
-            self.quiz.raise_()
-            self.quiz.activateWindow()
-            self.hide()
+            selected=skills or ([skill] if skill else None)
+            questions=store.task_questions(self.identity,assignment_id) if assignment_id else practice_questions(self.identity,count=24 if continuous else count,skills=selected)
+            self.open_questions(questions,assignment_id,continuous,selected)
         except ValueError as error:
-            QMessageBox.warning(self,'Çalışma açılamadı',str(error))
+            if assignment_id is None and selected and selected[0].startswith('cur_'):
+                self.generate_practice('topic',selected[0],24 if continuous else count,continuous)
+            else:QMessageBox.warning(self,'Çalışma açılamadı',str(error))
 
     def quiz_finished(self, status):
         parent = self.quiz.verified_parent if self.quiz else None

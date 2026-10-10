@@ -212,11 +212,14 @@ class RoleTests(unittest.TestCase):
         skills=[window.practice_topic.itemData(i) for i in range(1,window.practice_topic.count())]
         self.assertTrue(skills)
         self.assertTrue(all(subject_for_skill(k,3)=='Türkçe' for k in skills))
+        window.practice_subject.setCurrentText('İngilizce')
+        skills=[window.practice_topic.itemData(i) for i in range(1,window.practice_topic.count())]
+        window.practice_topic.setCurrentIndex(1)
         window.practice_count.setValue(37)
         with patch.object(window,'start_quiz') as launch:
             next(b for b in window.findChildren(QPushButton) if b.text()=='Alıştırmaya başla').click()
             self.assertEqual(launch.call_args.kwargs['count'],37)
-            self.assertEqual(launch.call_args.kwargs['skills'],skills)
+            self.assertEqual(launch.call_args.kwargs['skills'],[skills[0]])
         window.practice_continuous.setChecked(True)
         self.assertFalse(window.practice_count.isEnabled())
         Path('test_artifacts').mkdir(exist_ok=True)

@@ -1,9 +1,11 @@
 """Join the contributed animated UI to the preserved Windows learning loop."""
 import time
-from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, QPointF
+from PyQt6.QtCore import Qt, QTimer, QPropertyAnimation, QPointF, QSize
+from PyQt6.QtGui import QPainter, QFont, QFontMetrics, QPalette
 from PyQt6.QtWidgets import (QLabel, QPushButton, QProgressBar, QVBoxLayout,
                             QHBoxLayout, QScrollArea, QWidget, QDialog,
-                            QPlainTextEdit, QTabWidget, QGridLayout, QInputDialog, QCheckBox)
+                            QPlainTextEdit, QTabWidget, QGridLayout, QInputDialog, QCheckBox,
+                            QStyleOptionButton, QStyle)
 import homework_ui as ui
 from data import database as db
 from pin_security import pin_limiter
@@ -51,6 +53,27 @@ def _verified_parent_exit(page):
 ui.VeliPaneli._veli_pin_cikis = _verified_parent_exit
 
 
+class WrappedAnswerButton(QPushButton):
+    """Keep full answer text readable, including longer offline explanations."""
+    def sizeHint(self):return QSize(240,110)
+    def minimumSizeHint(self):return QSize(100,96)
+    def paintEvent(self,event):
+        option=QStyleOptionButton();self.initStyleOption(option)
+        text=option.text;option.text=''
+        painter=QPainter(self)
+        self.style().drawControl(QStyle.ControlElement.CE_PushButton,option,painter,self)
+        area=self.rect().adjusted(14,10,-14,-10)
+        flags=Qt.AlignmentFlag.AlignCenter.value|Qt.TextFlag.TextWordWrap.value
+        font=QFont(self.font())
+        if font.pointSizeF()<0 and font.pixelSize()>0:
+            font.setPointSizeF(font.pixelSize()*72/self.logicalDpiY())
+        while QFontMetrics(font).boundingRect(area,flags,text).height()>area.height() and font.pointSizeF()>11:
+            font.setPointSizeF(font.pointSizeF()-1)
+        painter.setFont(font)
+        painter.setPen(option.palette.color(QPalette.ColorRole.ButtonText))
+        painter.drawText(area,flags,text)
+
+
 class QuizCard(ui.OgrenciQuizEkrani):
     """Use all contributed quiz graphics; answer state belongs to LearningSession."""
     def _arayuz_olustur(self):
@@ -74,7 +97,7 @@ class QuizCard(ui.OgrenciQuizEkrani):
         grid = QGridLayout()
         grid.setSpacing(12)
         for index in range(4):
-            button = QPushButton()
+            button = WrappedAnswerButton()
             button.setObjectName('CevapButon')
             button.clicked.connect(lambda _, i=index: self.cevap_secildi(i))
             grid.addWidget(button, index // 2, index % 2)
@@ -140,8 +163,8 @@ def enhance_break_window(base_class, bars_class):
             self.question.setTextFormat(Qt.TextFormat.PlainText)
             self.choice_btns = card.butonlar
             for button in self.choice_btns:
-                button.setMinimumHeight(76)
-                button.setMaximumHeight(110)
+                button.setMinimumHeight(96)
+                button.setMaximumHeight(160)
             self.bars = bars_class()
             card.layout().insertWidget(2, self.bars)
             self.visual = LessonScene(card)
@@ -367,7 +390,7 @@ def enhance_break_window(base_class, bars_class):
                 self.writing_question.setText(self.question.text())
                 self.notes.clear()
                 self.pad.clear()
-            self.card._ozet_lbl.setText(f'Deneme: {self.learning.attempts}/{self.learning.max_attempts}')
+            self.card._ozet_lbl.setText(f'Öğrenme: %{self.learning.mastery_percent()} · Hedef %80' if getattr(self.learning,'mastery_mode',False) else f'Deneme: {self.learning.attempts}/{self.learning.max_attempts}')
             self.card.yildiz_lbl.setText(f'⭐ {self.learning.done_count()}')
             self.help_toggle.setChecked(False)
             self.card.giris_animasyonu_baslat()
@@ -378,7 +401,7 @@ def enhance_break_window(base_class, bars_class):
             correct = index == self.learning.current['answer']
             super()._on_choice(index)
             self.card._alan_flash('dogru' if correct else 'yanlis')
-            self.card._ozet_lbl.setText(f'Deneme: {self.learning.attempts}/{self.learning.max_attempts}')
+            self.card._ozet_lbl.setText(f'Öğrenme: %{self.learning.mastery_percent()} · Hedef %80' if getattr(self.learning,'mastery_mode',False) else f'Deneme: {self.learning.attempts}/{self.learning.max_attempts}')
             self.card.yildiz_lbl.setText(f'⭐ {self.learning.done_count()}')
             if correct:
                 self.next_btn.hide()
@@ -442,7 +465,8 @@ def enhance_break_window(base_class, bars_class):
                 from learning_engine.lesson_service import local_lesson
                 lesson = local_lesson(lesson)
             steps = lesson['steps']
-            illustration = LessonScene(dialog)
+            from animated_lessons import AnimatedLessonScene
+            illustration = AnimatedLessonScene(q,dialog)
             layout.addWidget(illustration, 1)
             text = QLabel()
             text.setWordWrap(True)
@@ -456,10 +480,15 @@ def enhance_break_window(base_class, bars_class):
             for b in (prev, listen, nxt):
                 row.addWidget(b)
             layout.addLayout(row)
+            automatic=QCheckBox("Sesli anlatım bitince sonraki adıma geç");automatic.setChecked(True)
+            layout.addWidget(automatic)
             state = [0]
+            generation=[0]
 
             def show(delta=0):
                 stop_narration()
+                generation[0]+=1
+                token=generation[0]
                 state[0] = max(0, min(len(steps)-1, state[0]+delta))
                 title, caption = steps[state[0]][:2]
                 title = {'setup': 'İşlemi hazırlayalım', 'units': 'Birler basamağı',
@@ -473,15 +502,59 @@ def enhance_break_window(base_class, bars_class):
                 status.clear()
                 prev.setEnabled(state[0] > 0)
                 nxt.setEnabled(state[0] < len(steps)-1)
-                start_narration(caption, on_error=status.setText)
+                def advance():
+                    if dialog.isVisible() and token==generation[0] and automatic.isChecked() and state[0]<len(steps)-1:show(1)
+                def audio_error(message):
+                    if dialog.isVisible() and token == generation[0]:
+                        status.setText(message)
+                status.setText('Ses hazırlanıyor…')
+                start_narration(caption,
+                    on_success=lambda: status.clear() if dialog.isVisible() and token == generation[0] else None,
+                    on_error=audio_error, on_finished=advance)
 
             prev.clicked.connect(lambda: show(-1))
             nxt.clicked.connect(lambda: show(1))
-            listen.clicked.connect(lambda: start_narration(steps[state[0]][1], on_error=status.setText))
-            dialog.finished.connect(lambda _: stop_narration())
+            listen.clicked.connect(lambda: show(0))
+            def close_narration(_):
+                generation[0] += 1
+                stop_narration()
+            dialog.finished.connect(close_narration)
             self._explanation_dialog = dialog
             show()
             dialog.show()
+            import os
+            from math_solution import is_math_question, MathSolutionWorker
+            if is_math_question(q):
+                cached = q.get('_worked_solution')
+                if cached:
+                    steps[:] = cached
+                    state[0] = 0
+                    show()
+                elif os.getenv('GEMINI_GENERATOR_KEY', '').strip():
+                    status.setText('Gemini işlemli çözümü hazırlıyor…')
+                    worker = MathSolutionWorker(q)
+                    if not hasattr(self, '_math_workers'):
+                        self._math_workers = []
+                    self._math_workers.append(worker)
+                    def received(value):
+                        q['_worked_solution'] = value
+                        if self._explanation_dialog is dialog and dialog.isVisible() and self.learning.current is q:
+                            steps[:] = value
+                            state[0] = 0
+                            listen.setEnabled(True)
+                            show()
+                    def failed(message):
+                        if self._explanation_dialog is dialog and dialog.isVisible():
+                            listen.setEnabled(True)
+                            show()
+                            status.setText(message)
+                    def finished():
+                        self._math_workers.remove(worker)
+                        worker.deleteLater()
+                    worker.ready.connect(received)
+                    worker.failed.connect(failed)
+                    worker.finished.connect(finished)
+                    worker.start()
 
         def _finish(self, status):
             self._advance_timer.stop()

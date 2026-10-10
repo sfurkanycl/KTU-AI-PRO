@@ -56,19 +56,27 @@ def refresh():
 
 
 def catalogue(grade):
-    if not CACHE.exists(): return []
-    return [r for r in json.loads(CACHE.read_text(encoding='utf-8'))['courses'] if r['grade']==grade]
+    active=Path(__file__).with_name('active_curriculum.json')
+    cache=active if active.exists() else CACHE
+    if not cache.exists(): return []
+    return [r for r in json.loads(cache.read_text(encoding='utf-8'))['courses'] if r['grade']==grade]
 
 
 def subject_for_skill(skill,grade):
+    if skill.startswith('cur_'):
+        from curriculum_practice import skill_details
+        return skill_details(skill)['subject']
     if 'turkce' in skill: return 'Türkçe'
     if skill in ('living_needs','matter_states','homework_science'): return 'Fen Bilimleri' if grade>=3 else 'Hayat Bilgisi'
     if skill in ('traffic','directions','homework_general'): return 'Sosyal Bilgiler' if grade==4 else 'Hayat Bilgisi'
     return 'Matematik'
 
 
-def ready_skills(subject,title,grade):
+def legacy_ready_skills(subject,title,grade):
     """Only offer automatic banks whose concepts match a downloaded theme."""
+    if subject=='İngilizce':
+        from curriculum_practice import topics
+        return [t['skill'] for t in topics(grade) if t['subject']==subject and t['title']==title]
     if grade==4: return []  # The 2026–27 fourth-grade programme has a separate rollout.
     text=title.casefold().replace('\u0307','')
     if subject=='Matematik' and 'işlemlerden' in text:
@@ -79,6 +87,13 @@ def ready_skills(subject,title,grade):
     if subject=='Fen Bilimleri' and ('madde' in text): return ['matter_states']
     if subject=='Fen Bilimleri' and ('canlı' in text or 'yaşam' in text): return ['living_needs']
     return []
+
+
+def ready_skills(subject,title,grade):
+    """Every active unit has an authored offline bank, plus matching legacy packs."""
+    from curriculum_practice import topics
+    current=[t['skill'] for t in topics(grade) if t['subject']==subject and t['title']==title]
+    return list(dict.fromkeys(current+legacy_ready_skills(subject,title,grade)))
 
 
 if __name__=='__main__':

@@ -43,6 +43,8 @@ def skills_for_grade(grade):
         result.setdefault('m3_toplama', SKILLS['m3_toplama'])
         for key in HOMEWORK_SKILLS:
             result[key] = SKILLS[key]
+    from curriculum_practice import skills_for_grade as curriculum_skills
+    result.update(dict(curriculum_skills(grade)))
     return list(result.items())
 
 
@@ -53,6 +55,9 @@ def concept_of(q):
 
 def reviewed_bank(skill, grade):
     """Adapt existing reviewed packs without modifying source IDs or indices."""
+    if skill.startswith('cur_'):
+        from curriculum_practice import offline_bank
+        return offline_bank(skill)
     if skill in HOMEWORK_SKILLS:
         return [q for q in homework_bank(skill) if q['verified']]
     keymap = {'m3_toplama': 'addition', 'm4_kesir': 'fraction_compare'}
@@ -83,6 +88,10 @@ def reviewed_bank(skill, grade):
 
 
 def make_question(skill_id, avoid=()):
+    if skill_id.startswith('cur_'):
+        bank=reviewed_bank(skill_id,int(skill_id.split('_')[1]))
+        if not bank:raise ValueError('Bu konuda hazır banka yok. Soru atölyesinde soru hazırlayın.')
+        return dict(random.choice(bank))
     if skill_id in HOMEWORK_SKILLS:
         candidates = [q for q in homework_bank(skill_id) if q['verified']]
         unused = [q for q in candidates if q['qkey'] not in avoid]
@@ -104,6 +113,17 @@ def make_question(skill_id, avoid=()):
 
 
 def make_pack(skill_id, count):
+    if skill_id.startswith('cur_'):
+        return reviewed_bank(skill_id,int(skill_id.split('_')[1]))[:count]
     if skill_id in HOMEWORK_SKILLS:
         return homework_bank(skill_id)[:count]
     return _original_make_pack(skill_id, count)
+
+
+# Keep the preserved legacy engine registry limited to its supported generators.
+_original_skill_name=skill_name
+def skill_name(skill):
+    if skill.startswith('cur_'):
+        from curriculum_practice import skill_details
+        return skill_details(skill)['title']
+    return _original_skill_name(skill)

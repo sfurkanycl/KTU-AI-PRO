@@ -76,6 +76,65 @@ Raporlar ders/kavram, ipucu, yardımsız doğru ve destek sorusu bilgilerini iç
 
 Öğrenci ekranında görev başlatma/devam düğmesi bulunmaz. Veli yeni görev verirken tarih ve saati seçer. Öğretmenin verdiği veya önceden saatsiz oluşturulmuş görev için veli **Görevler → Başlangıç saatini ayarla** yolunu kullanır. Zamanlama çocuk bazındadır; aynı sınıftaki kardeşin saatini etkilemez. Saat değiştirilince önceki bekleyen zamanlama iptal edilir. Uygulama açıkken saniyelik kontrol yapılır; kapalıyken Windows Görev Zamanlayıcısı açar. Bilgisayar ve Windows kullanıcı oturumu açık olmalıdır. Planlı çalışma, devam eden serbest alıştırmanın önüne geçer; kaydedilmiş cevaplar korunur.
 
-Serbest keşifte renkli ders kartı, konu ve 1–1000 soru seçilir. “Soru sınırı olmadan devam et” seçilirse sorular bitince aynı ders/konudan yeni bir grup yüklenir. Mevcut oturum süresi ve ebeveyn doğrulaması korunur. Öğrenciye sunulan konular uygulamadaki hazır soru kaynaklarıyla sınırlıdır.
+Serbest keşifte renkli ders kartı, konu ve 1–1000 soru seçilir. “Soru sınırı olmadan devam et” seçilirse sorular bitince aynı ders/konudan yeni bir grup yüklenir. Serbest çalışmada öğrenci Çalışmadan çık düğmesi, Escape veya Alt+F4 ile şifresiz döner. Velinin atanmış görevinde ebeveyn doğrulaması korunur.
 
 `homework 2.zip` arşivinden yalnızca rol/mascot görselleri ve görünüm fikirleri alındı: yuvarlak portreler, turuncu–mor–yeşil giriş geçişi, pastel ders kartları, yetişkin panellerinin rol renkleri ve quiz kartları. Arşivin hesap, veritabanı, PIN, ses veya soru çözme mantığı aktarılmadı.
+
+
+## Serbest çıkış, yanlışlar ve güncel dersler
+
+Serbest çalışma ve yanlış soruları tekrar çözme öğrenci tarafından şifresiz bırakılabilir. Bu oturumlarda klavye kilidi başlatılmaz. Velinin/öğretmenin atanmış görevi aynı çıkış korumasını sürdürür.
+
+Öğrenci ekranındaki **Yanlışlarımdan öğreniyorum** bölümünde tam soru verileri saklanan yanlışlar gösterilir. Doğru tekrar soruyu bu listeden kaldırır; önceki yanlış cevap rapordan silinmez. Görev yanlışının tekrarı serbest alıştırma olarak kaydedilir. Eski görev soruları ve mevcut bankayla eşleştirilebilen eski alıştırmalar da okunur. Seçenekleri/doğru yanıtı tutulmamış temsili örnek kayıtlar yeniden çözüm için uydurulmaz.
+
+**Benzer yeni sorular hazırla** aynı kazanımdan altı Gemini alıştırması üretir. Yalnızca soru içeriği, açıklama ve sınıf düzeyi gönderilir; öğrenci adı veya hesap bilgisi gönderilmez. Üretim ayrı iş parçacığındadır. Üretilen sorular AI alıştırması olarak etiketlenir; öğretmen onaylı bankaya otomatik eklenmez.
+
+Veli/öğretmen: **Hesap ve sınıflar → Yapay zekâ bağlantısını ayarla**. Anahtar bu bilgisayarın `.env` dosyasında tutulur. Anahtar olmadan yanlışların aynısını ve hazır İngilizce sorularını çözebilirsiniz. 1–4. sınıfların bütün mevcut konuları artık çevrimdışı başlangıç bankası içerir; bu sorular için anahtar gerekmez. Gerçek Gemini çağrısı anahtar olmadığı için bu geliştirmede yapılmamıştır; servis arayüzü ve hata akışı sahte yanıtlarla test edilir.
+
+`active_curriculum.json` MEB'in 2026–2027 yıllık planları esas alınarak 10.10.2026 tarihinde hazırlanmıştır. Ders/konu listeleri ilkokul 1–4. sınıf düzeyindedir. İngilizce 2–4. sınıfta sunulur; 1. sınıfta gösterilmez. 4. sınıfta önizleme TYMM temaları yerine uygulanacak yıllık plandaki konular gösterilir. İngilizce başlangıç bankası tema başına sekiz özgün kelime/ifade alıştırması içerir; MEB sorusu veya tüm kazanımların kapsamlı ölçümü olarak sunulmaz. Kaynak: https://tymm.meb.gov.tr/taslak-cerceve-planlari/temel-egitim
+
+
+Öğrenci adını ve okul numarasını yazarak şifresiz girebilir. İlk kayıt için öğretmenin sınıf kodu gerekir. Aynı sınıfta aynı numara ikinci kez kaydedilmez; sonraki girişlerde isim ve numara yeterlidir (aynı isim/numara birden çok sınıfta varsa sınıf kodu da istenir). Resimle giriş korunmuştur. Öğretmenin öğrenci listesinde okul numarası görünür, satıra çift tıklanarak bireysel gelişim açılır. Sınıf koduyla oluşturulan profil otomatik olarak bir veli hesabına bağlanmaz; veli bağlantısı ayrıca yetişkinlerce düzenlenmelidir.
+
+Mevcut 182 konunun tamamında çevrimdışı başlangıç soruları vardır. Yeni bir müfredat konusu ileride bankasız eklenirse teknik hata yerine kısa açıklama gösterilir. Sınıf öğretmeninin veya kendi velisinin onaylayıp kaydettiği konu paketleri serbest çalışmada çevrimdışı kullanılabilir. Başka sınıf/veli paketleri paylaşılmaz. Yapay zekâ üretimi gerçek API anahtarı gerektirir.
+
+
+## Bütün konularda çevrimdışı başlangıç soruları
+
+`authored_topics.py` her aktif ders/konuya özel özgün bilgi eşleştirme, okuduğunu anlama ve yerel matematik soruları içerir. MEB ders ve konu listesi kaynağıdır; bu sorular MEB'in yayımladığı resmî sorular değildir. Mevcut 182 konuda toplam 2621 banka kaydı vardır (aynı kavram farklı sınıflarda da çalışılabilir). Her konuda en az 8 soru bulunur. Bu bir başlangıç ve tekrar bankasıdır; her öğrenme çıktısının kapsamlı ölçümü veya öğretmen değerlendirmesinin yerine geçen bir sınav değildir. Türkçe metinleri özgündür, matematik sayısal seçenekleri hesaplanır.
+
+Serbest çalışmada soru sırası karıştırılır. Soru sayısı bankadaki soru sayısını aşarsa aynı konunun soruları tekrar edilir; farklı dersten dolgu soru kullanılmaz. Veli/öğretmenin 1–30 soruluk görevlerinde de aynı tekrar ilkesi uygulanır. Yepyeni Gemini soruları ve yapay zekâ ile benzer soru üretimi hâlâ API anahtarı gerektirir. Uzun cevap seçenekleri butonlarda satırlara bölünerek gösterilir.
+
+Trafik/ilk yardım başlangıç bölümündeki acil çağrı ve konum bilgisi için resmî kaynak: https://112.gov.tr/kurumlar/112.gov.tr/IcSite/ankara/ACIL_DURUM_KILAVUZU.pdf . Çocuklara tıbbi müdahale tarifi verilmez.
+
+
+## Öğretmenin sorularını veli saatinde açma
+
+1. Öğretmen **Soru atölyesi** bölümünde sorularını elle ekler veya ders belgesinden taslak hazırlar. Doğru cevapları kontrol edip paketi kaydeder.
+2. Veli kendi çocuğunu seçer. Çocuk öğretmenin sınıfına bağlı olmalıdır.
+3. **Görevler → Yeni görev ver → Hocanın sorularını ekle** düğmesiyle öğretmenin paketini seçer.
+4. Önizlemede istenmeyen soruların işaretini kaldırabilir. Başlangıç tarihi ve saati seçilip görev oluşturulur.
+5. Saat geldiğinde soru ekranı otomatik açılır; çocuk serbest alıştırma çözüyorsa saatli göreve geçilir. Bilgisayar ve Windows oturumu açık olmalıdır. Öğrencinin bir başlatma düğmesine basması gerekmez.
+
+Paketler bu bilgisayarın veritabanında paylaşılır. Ayrı bilgisayarlar arasında internet üzerinden eşitleme yapılmaz.
+
+**Genel bakış** raporları tüm zamanlar, son 7 gün ve son 30 gün için filtrelenebilir; CSV seçili raporu indirir. **Hesap ve sınıflar** bölümünden öğrenci veya sınıf adı düzenlenebilir. Kayıtlı öğrencilerin sınıf düzeyleri çelişecek şekilde değiştirilmez.
+
+**Ses ve yapay zekâ ayarları** penceresinde yerel Türkçe ses, ElevenLabs veya Gemini seçilir. Boş anahtar alanları kayıtlı anahtarları silmez. Anlatımda hareketli ders görselleri kullanılır; otomatik adım geçişi ses bittikten sonra olur ve kapatılabilir. Mevcut matematik/kesir çizimleri korunur.
+
+
+## Yanlış sorular için benzer alıştırmalar
+
+Öğrenci → Yanlışlarımdan öğreniyorum → Benzer alıştırmalar hazırla: Gemini anahtarı yoksa veya hizmet çalışmazsa aynı müfredat konusunun onaylı hazır soruları açılır. Aynı kazanımdaki sorular önceliklidir; kaynak soru ve tekrarlar hariç tutulur. Bu çevrimdışı sorular yapay zekâ üretimi olarak işaretlenmez. Yeterli farklı soru varsa altıya kadar alıştırma gelir; eksik sayı aynı soruyla doldurulmaz.
+
+
+Soru atölyesinde **Seçili konunun hazır sorularını getir · İnternetsiz** düğmesi belge yüklemeden kullanılabilir. Gemini anahtarı olmadan belgeden üretim istendiğinde de bu hazır banka getirilir ve durum mesajında belirtilir. Belgeye özel yeni soru üretimi için aynı ekrandaki **Ses ve yapay zekâ bağlantısını ayarla** düğmesiyle kendi Gemini anahtarınızı kaydedin.
+
+
+## Soru türüne göre %80 öğrenme hedefi
+
+Saatli/atanmış görevlerde süreye bağlı bitiş kaldırıldı. Her soru türünün son en fazla 5 yanıtındaki ipucusuz doğruluk oranı izlenir. Her türde en az %80 ve o tür için gerekli yanıt sayısına ulaşılınca **Uygulamadan çık** düğmesi açılır. En az 5 soruluk türlerde 5 yanıt aranır; daha küçük paketlerde mevcut tür kapsamı esas alınır. Yalnızca 1 doğru yanıtla büyük bir görev tamamlanmaz. Bu oran öğrenmeye yönelik bir uygulama göstergesidir.
+
+Yanlış yapılan türler öne alınır; onaylı aynı türdeki varyasyonlar ek destek olarak sunulur. Yeni varyasyon yoksa aralıklı tekrar yapılır. Ek destek yanıtları özgün görev cevaplarının üzerine yazılmaz. Öğrenme ilerlemesi kapanıp açılınca korunur. Veli doğrulamasıyla çıkış seçeneği devam eder. Serbest çalışmada çocuk istediği zaman çıkabilir.
+
+Öğretmen soru atölyesine PDF/Word/metin belgesini yükleyip **PDF sorularını analiz et · Benzer taslaklar üret** düğmesini kullanabilir. Gemini soru türü/kazanım etiketlerini belirler ve farklı bağlamlarda benzer sorular üretir. Öğretmen inceleyip onaylar; veli bu paketi saatli göreve ekler. Bu gerçek yapay zekâ işlemi için Gemini anahtarı gerekir; internetsiz hazır bankanın belgeden üretim olmadığı ayrıca gösterilir.

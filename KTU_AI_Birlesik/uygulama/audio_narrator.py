@@ -28,6 +28,7 @@ def shutdown_narration():
 
 class NarrationWorker(QThread):
     succeeded = pyqtSignal()
+    playback_finished = pyqtSignal()
     failed = pyqtSignal(str)
 
     def __init__(self, text):
@@ -54,18 +55,24 @@ class NarrationWorker(QThread):
                     raise RuntimeError("Ses oynatma kanalı açılamadı.")
                 _CHANNEL = channel
             self.succeeded.emit()
+            while channel.get_busy() and not self.isInterruptionRequested():
+                self.msleep(25)
+            if not self.isInterruptionRequested():
+                self.playback_finished.emit()
         except Exception as exc:
             self.failed.emit(str(exc))
 
 
-def start_narration(text, on_success=None, on_error=None):
+def start_narration(text, on_success=None, on_error=None, on_finished=None):
     stop_narration()
     worker = NarrationWorker(text)
     _ACTIVE_WORKERS.add(worker)
     if on_success:
-        worker.succeeded.connect(on_success)
+        worker.succeeded.connect(lambda: on_success() if not worker.isInterruptionRequested() else None)
     if on_error:
-        worker.failed.connect(on_error)
+        worker.failed.connect(lambda message: on_error(message) if not worker.isInterruptionRequested() else None)
+    if on_finished:
+        worker.playback_finished.connect(lambda: on_finished() if not worker.isInterruptionRequested() else None)
     worker.finished.connect(lambda: _ACTIVE_WORKERS.discard(worker))
     worker.start()
     return worker

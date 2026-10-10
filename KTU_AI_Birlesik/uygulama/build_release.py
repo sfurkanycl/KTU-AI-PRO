@@ -21,6 +21,7 @@ def main():
         '--add-data',str(ROOT/'legacy_runtime')+';legacy_runtime',
         '--add-data',str(ROOT/'sorular.json')+';.',
         '--add-data',str(ROOT/'meb_curriculum.json')+';.',
+        '--add-data',str(ROOT/'active_curriculum.json')+';.',
         '--add-data',str(ROOT/'learning_engine'/'question_bank.json')+';learning_engine',
         '--add-data',str(ROOT/'recognize_ink.ps1')+';.',
         '--hidden-import','main','--hidden-import','learning','--hidden-import','session_runner',

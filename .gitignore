@@ -19,3 +19,5 @@ _build_artifacts/
 dist/
 build/
 *.zip
+
+/Sunum/

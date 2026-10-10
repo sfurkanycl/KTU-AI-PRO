@@ -92,8 +92,8 @@ class MaterialTests(unittest.TestCase):
         self.assertEqual(session.progress_value(),(1,1))
         self.assertLessEqual(session._support_added,2)
     def test_ai_drafts_require_explicit_save_and_do_not_call_real_api(self):
-        response=SimpleNamespace(text=json.dumps({'questions':self.bank()[:2]},ensure_ascii=False))
-        fake=SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kw:response),close=lambda:None)
+        response=SimpleNamespace(output_text=json.dumps({'questions':self.bank()[:2]},ensure_ascii=False))
+        fake=SimpleNamespace(interactions=SimpleNamespace(create=lambda **kw:response),close=lambda:None)
         with patch.dict('os.environ',{'GEMINI_GENERATOR_KEY':'test-only'}),patch('google.genai.Client',return_value=fake):
             generated=materials.generate_questions('Örnek ders içeriği. '*15,3,'Türkçe','Okuma',2)
         self.assertFalse(any(q['verified'] for q in generated))
@@ -144,5 +144,26 @@ class MaterialTests(unittest.TestCase):
         self.assertIn('okudugunu_anlama',path.read_text(encoding='utf-8-sig'))
         self.assertEqual(store.analytics(self.other)['total'],0)
 
+
+    def test_workshop_without_key_loads_ready_unit_questions(self):
+        import os
+        from material_ui import MaterialDialog
+        dialog=MaterialDialog(self.teacher,3);self.windows.append(dialog)
+        dialog.text.setPlainText('Belgedeki bu cümle soru üretiminde kullanılmadı.')
+        with patch.dict(os.environ,{'GEMINI_GENERATOR_KEY':''}),patch.object(dialog,'run_worker') as worker:
+            dialog.generate()
+        worker.assert_not_called()
+        self.assertTrue(dialog.composer.questions)
+        self.assertIn('belgeden üretilmedi',dialog.status.text())
+        self.assertTrue(all(q['curriculum']['title']==dialog.unit.currentData()['title'] for q in dialog.composer.questions))
+        self.assertTrue(dialog.title.text())
+        dialog.save();self.assertIsNotNone(dialog.saved_pack_id)
+    def test_workshop_settings_uses_adult_settings_dialog(self):
+        from material_ui import MaterialDialog
+        from role_ui import RoleWindow
+        window=RoleWindow();self.windows.append(window);window.enter(self.teacher)
+        dialog=MaterialDialog(self.teacher,3,window)
+        with patch.object(window,'ai_settings') as settings:dialog.open_settings()
+        settings.assert_called_once();dialog.reject();window.schedule_timer.stop()
 
 if __name__=='__main__':unittest.main()

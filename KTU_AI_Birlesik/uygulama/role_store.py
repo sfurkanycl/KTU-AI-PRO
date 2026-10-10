@@ -144,6 +144,23 @@ def add_child(identity, name, grade, username=None, password=None):
     return sid
 
 
+def update_child(identity,student_id,name,grade):
+    child=require_student(identity,student_id)
+    if identity.role!='parent' or not name.strip() or grade not in range(1,5):raise ValueError('Çocuk bilgilerini kontrol edin.')
+    with school.get_connection() as c:
+        levels={r[0] for r in c.execute('SELECT cl.grade FROM classes cl JOIN class_students cs ON cs.class_id=cl.id WHERE cs.student_id=?',(student_id,))}
+        if levels and levels!={grade}:raise ValueError('Sınıfa bağlı çocuğun düzeyi, sınıfından farklı olamaz.')
+        c.execute('UPDATE students SET alias=?,grade=? WHERE id=? AND parent_id=?',(name.strip(),grade,child['id'],identity.user_id))
+
+
+def update_class(identity,class_id,name,grade):
+    if identity.role!='teacher' or class_id not in {c['id'] for c in classes(identity)} or not name.strip() or grade not in range(1,5):raise ValueError('Sınıf bilgilerini kontrol edin.')
+    with school.get_connection() as c:
+        levels={r[0] for r in c.execute('SELECT s.grade FROM students s JOIN class_students cs ON cs.student_id=s.id WHERE cs.class_id=?',(class_id,))}
+        if levels and levels!={grade}:raise ValueError('Öğrenciler kayıtlıyken sınıf düzeyi öğrencilerden farklı olamaz.')
+        c.execute('UPDATE classes SET name=?,grade=? WHERE id=? AND teacher_id=?',(name.strip(),grade,class_id,identity.user_id))
+
+
 def child_profiles():
     """Local device's child chooser; no adult data or credentials are exposed."""
     with school.get_connection() as c:
@@ -180,6 +197,15 @@ def init_extras():
             CREATE TABLE IF NOT EXISTS task_schedules(id INTEGER PRIMARY KEY,assignment_id INTEGER NOT NULL,
             student_id INTEGER NOT NULL,starts_at TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',system_error TEXT);
             CREATE TABLE IF NOT EXISTS demo_seed(version TEXT PRIMARY KEY);''')
+        c.execute("""CREATE TABLE IF NOT EXISTS answer_snapshots (
+            record_kind TEXT NOT NULL, record_id INTEGER NOT NULL, student_id INTEGER NOT NULL,
+            fingerprint TEXT NOT NULL, payload TEXT NOT NULL, is_correct INTEGER NOT NULL, recorded_order INTEGER NOT NULL DEFAULT 0,
+            answered_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY(record_kind,record_id))""")
+        if 'recorded_order' not in {r[1] for r in c.execute('PRAGMA table_info(answer_snapshots)')}:
+            c.execute('ALTER TABLE answer_snapshots ADD COLUMN recorded_order INTEGER NOT NULL DEFAULT 0')
+        c.execute('''CREATE TABLE IF NOT EXISTS student_school_numbers(student_id INTEGER PRIMARY KEY REFERENCES students(id), school_number TEXT NOT NULL)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS assignment_learning_state(assignment_id INTEGER NOT NULL,student_id INTEGER NOT NULL,payload TEXT NOT NULL,rate INTEGER NOT NULL DEFAULT 0,mastered INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(assignment_id,student_id))''')
         c.execute('CREATE TABLE IF NOT EXISTS student_avatars(student_id INTEGER PRIMARY KEY,asset TEXT NOT NULL)')
         c.execute('''CREATE TABLE IF NOT EXISTS answer_metadata(record_kind TEXT NOT NULL,record_id INTEGER NOT NULL,
             subject TEXT NOT NULL,concept TEXT NOT NULL,seconds REAL NOT NULL DEFAULT 0,is_support INTEGER NOT NULL DEFAULT 0,
@@ -330,9 +356,15 @@ def tasks(identity, student_id=None):
             task['recipient_count'] = len(recipients)
             completed_students = {r[0] for r in c.execute('''SELECT student_id FROM student_results WHERE assignment_id=?
                 GROUP BY student_id HAVING COUNT(DISTINCT question_id)>=?''', (task['id'], max(1,task['actual_count'])))}
+            learning_rows=c.execute('SELECT student_id,rate,mastered FROM assignment_learning_state WHERE assignment_id=?',(task['id'],)).fetchall()
+            completed_students-={r['student_id'] for r in learning_rows if not r['mastered']}
+            completed_students|={r['student_id'] for r in learning_rows if r['mastered']}
             task['completed_students'] = len(recipients & completed_students)
             if student_id is not None or identity.role == 'student':
                 sid = student_id or identity.student_id
+                learning_row=next((r for r in learning_rows if r['student_id']==sid),None)
+                task['mastered']=bool(learning_row and learning_row['mastered'])
+                task['mastery_rate']=learning_row['rate'] if learning_row else None
                 task['completed'] = c.execute('''SELECT COUNT(DISTINCT question_id) FROM student_results
                     WHERE student_id=? AND assignment_id=?''', (sid, task['id'])).fetchone()[0]
             schedule_student=student_id or (identity.student_id if identity.role=='student' else None)
@@ -384,10 +416,20 @@ def create_task(identity, title, skill, count, student_id=None, class_id=None, d
             q = qb._original_make_question(skill,avoid)
             avoid.add(q['qkey'])
             bank.append(q)
+    if skill.startswith('cur_') and bank and not custom_questions:
+        import random
+        bank=list(bank)
+        random.shuffle(bank)
+        originals=list(bank)
+        # Larger assignments are deliberate review of this unit, never filler
+        # from a different subject. Original attempts still get separate IDs.
+        while len(bank)<count:
+            bank.append(dict(originals[(len(bank)-len(originals))%len(originals)],repeat_review=True))
     if len(bank) < count:
         raise ValueError(f'Bu konuda {len(bank)} hazır soru var. Soru sayısını azaltın.')
     label = qb.skill_name(skill)
-    subject = 'Türkçe' if 'turkce' in skill else 'Fen Bilimleri' if skill in ('living_needs','matter_states','homework_science') else 'Sosyal Bilgiler' if skill in ('traffic','directions','homework_general') else 'Matematik'
+    from curriculum import subject_for_skill
+    subject=subject_for_skill(skill,grade)
     if curriculum:
         if curriculum.get('grade') != grade:
             raise ValueError('Müfredat sınıf düzeyi uyuşmuyor.')
@@ -423,9 +465,14 @@ def task_questions(identity, assignment_id):
     if identity.role != 'student' or not any(t['id'] == assignment_id for t in tasks(identity)):
         raise ValueError('Bu göreve erişiminiz yok.')
     with school.get_connection() as c:
+        state=c.execute('SELECT mastered FROM assignment_learning_state WHERE assignment_id=? AND student_id=?',(assignment_id,identity.student_id)).fetchone()
+        if state and state['mastered']:return []
         rows = c.execute('''SELECT q.*,d.payload FROM questions q LEFT JOIN question_details d ON d.question_id=q.id
             WHERE q.assignment_id=? AND q.id NOT IN (SELECT question_id FROM student_results WHERE student_id=? AND assignment_id=?)
             ORDER BY q.id''', (assignment_id, identity.student_id, assignment_id)).fetchall()
+        if not rows and state:
+            rows=c.execute('SELECT q.*,d.payload FROM questions q LEFT JOIN question_details d ON d.question_id=q.id WHERE q.assignment_id=? ORDER BY q.id',(assignment_id,)).fetchall()
+            rows=[dict(r,payload=json.dumps(dict(json.loads(r['payload']),_support_question=True))) if r['payload'] else r for r in rows]
         result = []
         for r in rows:
             if r['payload']:
@@ -471,12 +518,17 @@ def save_answer(identity, question, choice, hint, assignment_id=None,seconds=0):
             cursor=c.execute('''INSERT INTO practice_attempts(student_id,skill,topic,question_text,is_correct,hint_used)
                 VALUES (?,?,?,?,?,?)''',(identity.student_id,question['skill'],topic,question['text'],int(correct),int(hint)))
             kind='practice'
+        payload=dict(question)
+        fingerprint=question_fingerprint(question)
+        import time
+        c.execute('INSERT INTO answer_snapshots(record_kind,record_id,student_id,fingerprint,payload,is_correct,recorded_order) VALUES (?,?,?,?,?,?,?)',
+            (kind,cursor.lastrowid,identity.student_id,fingerprint,json.dumps(payload,ensure_ascii=False),int(correct),time.time_ns()))
         c.execute('INSERT INTO answer_metadata(record_kind,record_id,subject,concept,seconds,is_support) VALUES (?,?,?,?,?,?)',
             (kind,cursor.lastrowid,subject,concept,max(0,float(seconds)),int(bool(question.get('_support_question')))))
     return correct
 
 
-def analytics(identity, student_id=None, class_id=None):
+def analytics(identity, student_id=None, class_id=None,period_days=None):
     if student_id is not None:
         require_student(identity, student_id)
     ids = [student_id] if student_id else [s['id'] for s in students(identity, class_id)]
@@ -493,6 +545,11 @@ def analytics(identity, student_id=None, class_id=None):
             JOIN students s ON s.id=p.student_id LEFT JOIN answer_metadata m ON m.record_kind='practice' AND m.record_id=p.id
             WHERE p.student_id IN ({placeholders})'''
         rows = [dict(r) for r in c.execute(query, ids + ids)]
+    if period_days is not None:
+        if period_days not in (7,30):raise ValueError("Geçersiz rapor dönemi.")
+        from datetime import datetime,timezone
+        cutoff=(datetime.now(timezone.utc)-timedelta(days=period_days)).replace(tzinfo=None)
+        rows=[r for r in rows if datetime.fromisoformat(r["answered_at"])>=cutoff]
     topics, people, days = {}, {}, {}
     concepts,subjects={},{}
     for r in rows:
@@ -532,3 +589,95 @@ def analytics(identity, student_id=None, class_id=None):
                 subjects=[dict(subject=k,**assessment(v)) for k,v in subjects.items()],
                 concepts=[dict(subject=k[0],topic=k[1],concept=k[2],**assessment(v)) for k,v in concepts.items()],
                 students=[dict(s, **people.get(s['id'], {'total':0,'correct':0,'wrong':0,'hints':0})) for s in roster if s['id'] in ids])
+
+
+def question_fingerprint(question):
+    value=[question['skill'],question['text'].strip(),question['choices'],question['answer']]
+    return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+
+
+def wrong_questions(identity):
+    """Latest result per exact question, strictly scoped to the signed-in child."""
+    if identity.role!='student':raise ValueError('Öğrenci hesabı gerekli.')
+    require_student(identity,identity.student_id)
+    latest={}
+    with school.get_connection() as c:
+        # Old assignment attempts remain reconstructable from their immutable question details.
+        rows=c.execute("""SELECT d.payload,r.is_correct,r.answered_at FROM student_results r
+            JOIN question_details d ON d.question_id=r.question_id
+            WHERE r.student_id=? ORDER BY r.answered_at,r.id""",(identity.student_id,)).fetchall()
+        snapshots=c.execute('SELECT payload,is_correct,answered_at,recorded_order FROM answer_snapshots WHERE student_id=? ORDER BY answered_at,recorded_order',
+            (identity.student_id,)).fetchall()
+        legacy_practice=c.execute('''SELECT p.* FROM practice_attempts p LEFT JOIN answer_snapshots s
+            ON s.record_kind='practice' AND s.record_id=p.id WHERE p.student_id=? AND s.record_id IS NULL
+            ORDER BY p.answered_at,p.id''',(identity.student_id,)).fetchall()
+        import questions as qb
+        grade=require_student(identity,identity.student_id)['grade']
+        banks={}
+        reconstructed=[]
+        for attempt in legacy_practice:
+            skill=attempt['skill']
+            if skill not in banks:
+                try:banks[skill]={q['text']:q for q in qb.reviewed_bank(skill,grade)}
+                except ValueError:banks[skill]={}
+            q=banks[skill].get(attempt['question_text'])
+            if q:reconstructed.append(dict(payload=json.dumps(q,ensure_ascii=False),is_correct=attempt['is_correct'],answered_at=attempt['answered_at']))
+        for row in sorted([*rows,*reconstructed,*snapshots],key=lambda r:(r['answered_at'],dict(r).get('recorded_order',0))):
+            q=json.loads(row['payload']);key=question_fingerprint(q)
+            latest[key]=(bool(row['is_correct']),q,row['answered_at'])
+    return [dict(q,_review=True,_wrong_at=when) for correct,q,when in latest.values() if not correct]
+
+
+def school_number(student_id):
+    with school.get_connection() as c:
+        row=c.execute('SELECT school_number FROM student_school_numbers WHERE student_id=?',(student_id,)).fetchone()
+    return row[0] if row else ''
+
+
+def enter_student_by_number(name, number, class_code=''):
+    """Passwordless local student entry. Class code scopes first-time registration."""
+    name=name.strip();number=number.strip();class_code=class_code.strip().upper()
+    if not 2<=len(name)<=80 or not number.isascii() or not number.isdigit() or not 1<=len(number)<=10:
+        raise ValueError('Adını ve 1–10 rakamdan oluşan okul numaranı gir.')
+    with school.get_connection() as c:
+        classroom=None
+        if class_code:
+            classroom=c.execute('SELECT cl.* FROM classes cl JOIN class_invites i ON i.class_id=cl.id WHERE i.code=?',(class_code,)).fetchone()
+            if classroom is None:raise ValueError('Sınıf kodunu kontrol et. Öğretmeninden öğrenebilirsin.')
+        rows=c.execute('SELECT s.* FROM students s JOIN student_school_numbers n ON n.student_id=s.id WHERE n.school_number=?',(number,)).fetchall()
+        matched=[r for r in rows if r['alias'].casefold()==name.casefold() and (classroom is None or c.execute('SELECT 1 FROM class_students WHERE class_id=? AND student_id=?',(classroom['id'],r['id'])).fetchone())]
+        if len(matched)>1:raise ValueError('Sınıf kodunu da girerek kendi sınıfını seç.')
+        if matched:sid=matched[0]['id']
+        else:
+            if classroom is None:raise ValueError('İlk girişinde öğretmeninin verdiği sınıf kodunu da gir.')
+            occupied=c.execute('SELECT 1 FROM student_school_numbers n JOIN class_students cs ON cs.student_id=n.student_id WHERE cs.class_id=? AND n.school_number=?',(classroom['id'],number)).fetchone()
+            if occupied:raise ValueError('Bu numara sınıfta kayıtlı. Adını ve numaranı kontrol et.')
+            candidates=[r for r in c.execute('SELECT s.* FROM students s JOIN class_students cs ON cs.student_id=s.id LEFT JOIN student_school_numbers n ON n.student_id=s.id WHERE cs.class_id=? AND n.student_id IS NULL',(classroom['id'],)) if r['alias'].casefold()==name.casefold()]
+            if len(candidates)>1:raise ValueError('Aynı isimli kayıtlar var. Öğretmeninden yardım iste.')
+            if candidates:sid=candidates[0]['id']
+            else:
+                # A local placeholder preserves the mandatory parent foreign key; no adult login is created.
+                owner=c.execute("SELECT id FROM users WHERE username='__local_student_profiles__'").fetchone()
+                uid=owner[0] if owner else c.execute("INSERT INTO users(username,display_name,role) VALUES ('__local_student_profiles__','Yerel öğrenci profilleri','parent')").lastrowid
+                sid=c.execute('INSERT INTO students(alias,grade,parent_id) VALUES (?,?,?)',(name,classroom['grade'],uid)).lastrowid
+                c.execute('INSERT INTO parent_settings(student_id) VALUES (?)',(sid,))
+                c.execute('INSERT INTO class_students VALUES (?,?)',(classroom['id'],sid))
+            c.execute('INSERT INTO student_school_numbers VALUES (?,?)',(sid,number))
+    return student_identity(sid)
+
+
+def student_topic_bank(identity, skill):
+    child=require_student(identity,identity.student_id)
+    from curriculum_practice import skill_details,offline_bank
+    topic=skill_details(skill)
+    if topic['grade']!=child['grade']:raise ValueError('Konu sınıfına uygun değil.')
+    from teaching_materials import init as init_packs
+    init_packs()
+    with school.get_connection() as c:
+        rows=c.execute("""SELECT p.questions_json FROM teaching_packs p WHERE p.grade=? AND p.subject=? AND p.unit_title=?
+            AND (p.owner_id=? OR p.owner_id IN (SELECT cl.teacher_id FROM classes cl JOIN class_students cs ON cs.class_id=cl.id WHERE cs.student_id=?))""",(child['grade'],topic['subject'],topic['title'],child['parent_id'],child['id'])).fetchall()
+    result=list(offline_bank(skill))
+    for row in rows:
+        for q in json.loads(row[0]):
+            result.append(dict(q,skill=skill,verified=True,source='adult-approved',curriculum=dict(grade=topic['grade'],subject=topic['subject'],title=topic['title'],source=topic['url'])))
+    return result
